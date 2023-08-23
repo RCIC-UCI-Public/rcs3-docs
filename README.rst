@@ -20,7 +20,7 @@ Building HTML locally for testing
 
    .. code-block:: console
 
-	  git clone git@github.com:RCIC-UCI-Public/rcs3-docs.git
+      git clone git@github.com:RCIC-UCI-Public/rcs3-docs.git
       cd rcs3-docs/docs
       make html
 
