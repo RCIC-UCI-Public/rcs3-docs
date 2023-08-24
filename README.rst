@@ -27,3 +27,9 @@ Building HTML locally for testing
 3. Point your local browser to `build/html/index.html`.
 
 
+File .readthedocs.yaml
+----------------------
+
+2023-08-23
+
+Updated per https://blog.readthedocs.com/migrate-configuration-v2/
