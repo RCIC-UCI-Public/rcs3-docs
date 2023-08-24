@@ -32,6 +32,9 @@ intersphinx_disabled_domains = ['std']
 
 templates_path = ['_templates']
 
+# -- Options for HTML output
+html_theme = 'sphinx_rtd_theme'
+
 # -- Options for EPUB output
 epub_show_urls = 'footnote'
 
@@ -47,26 +50,21 @@ master_doc = 'index'
 # directories to ignore when looking for source files.
 exclude_patterns = []
 
-
-# -- Options for HTML output
-
-html_theme = 'sphinx_rtd_theme'
-
 # custom dir for storing pdf files
-html_static_path = [ '_static', 'pdfs']
+#html_static_path = [ '_static', 'pdfs']
 
 # top sidebar image image (relative to this dir)
-html_logo = 'images/rcic-logo.png'
+#html_logo = 'images/rcic-logo.png'
 
 # If not '', a 'Last updated on:' timestamp is inserted at every page bottom,
 # using the given strftime format.
-html_last_updated_fmt = '%Y-%m-%d'
+#html_last_updated_fmt = '%Y-%m-%d'
 
 #keep for reference
-html_theme_options = {
+#html_theme_options = {
     # use this to show only logo on top of the side bar without
     # home button link as it is on every page at the top already
-    'logo_only': True,
+#    'logo_only': True,
 	##### the following are for a reference #####
     # top portion of sidebar background
     #'style_nav_header_background': '#353130',
@@ -79,4 +77,4 @@ html_theme_options = {
     #'navigation_depth': 4,
     #'includehidden': True,
     #'titles_only': False
-}
+#}
