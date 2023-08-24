@@ -48,9 +48,7 @@ master_doc = 'index'
 exclude_patterns = []
 
 
-# --------------------------------
-#      Options for HTML output
-# --------------------------------
+# -- Options for HTML output
 
 html_theme = 'sphinx_rtd_theme'
 
