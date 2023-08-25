@@ -67,12 +67,12 @@ Useful info links
 
 - Useful RTD project links
 
-   Only maintainer/admin can access  these:
+  Only maintainer/admin can access  these:
 
-   - console https://readthedocs.org/projects/rcs3/
-   - build info https://readthedocs.org/projects/rcs3/builds/
+  - console https://readthedocs.org/projects/rcs3/
+  - build info https://readthedocs.org/projects/rcs3/builds/
 
-   Email about failed builds is sent to the admin/maintainer.
+  Email about failed builds is sent to the admin/maintainer.
 
 - read the docs build process explanation https://github.com/readthedocs/readthedocs.org/blob/main/docs/user/builds.rst
 - continuous documentation deployment https://docs.readthedocs.io/en/latest/integrations.html
