@@ -101,7 +101,7 @@ File docs/requirements.txt
 This file affects how the website docs are built on the RTD server.
 It is not  used for local builds.
 
-This file is specified in ``..readthedocs.yaml``. RTD server build fails if the
+This file is specified in ``.readthedocs.yaml``. RTD server build fails if the
 dependencies are not implicitly specified.
 
 This file does not need to be modified  unless RTD server builds fail and the build logs
@@ -117,6 +117,7 @@ File docs/source/conf.py
 ------------------------
 
 Configuration file for sphinx docs builder, used locally and on RTD server.
+This file is specified in ``.readthedocs.yaml``.
 
 Minimal changes may be needed :
 
@@ -130,5 +131,5 @@ Minimal changes may be needed :
   - docs/source/_static/
   - docs/source/pdfs/
 
-  file ``keepme`` in respective directory can be removed. Currently, keep me
+  file ``keepme`` in respective directory can be removed. Currently, ``keepme``
   is a place holder.
