@@ -138,6 +138,78 @@ Minimal changes may be needed :
 Updates
 -------
 
-orig webhook https://readthedocs.org/api/v2/webhook/rcs3/248158/
+**2023-11-21**
 
-new  webhook https://readthedocs.org/api/v2/webhook/rcs3/255799/
+Received email from RTD about a need to update webhook integration:
+
+Previously, manually configured webhooks from integrations did not have a secret attached to them.
+In order to improve security, we have deployed an update so that all new integrations will be created
+with a secret, and we are deprecating old integrations without a secret. You must migrate your
+integration by January 31, 2024, when they will stop working without a secret.
+
+We are contacting you because you have at least one integration that does not have a secret set. These integrations are:
+
+- https://readthedocs.org/dashboard/yaml2rpm/integrations/238314/
+- https://readthedocs.org/dashboard/rcs3/integrations/248158/
+
+If you aren't using an integration, you can delete it. Otherwise, we recommend clicking on "Resync webhook"
+to generate a new secret, and then update the secret in your provider's settings as well. You can check our
+documentation for more information on how to do this.  You can read more information about this in our
+blog post: https://blog.readthedocs.com/security-update-on-incoming-webhooks/.
+
+
+1. Login to RTD console https://readthedocs.org/projects/rcs3/
+
+   In **Admin->Integrations**  click on the existing "GitHub incoming webhook":
+
+   .. image:: images/webhook-1.png
+      :width: 450
+      :alt: Original webhook
+
+2. The new popup window shows the original  webhook https://readthedocs.org/api/v2/webhook/rcs3/248158/
+   errors at the top of the window and the last successful syncs that
+   were triggered by the builds:
+
+   .. image:: images/webhook-2.png
+      :width: 450
+      :alt: Original webhook last activity
+
+   Not shown on the image at the bottom of the window there is "Delete
+   webhook" button, click to delete this webhook.
+
+3. Go back to **Admin->Integrations** and click on "Add integration" button
+
+   .. image:: images/webhook-3.png
+      :width: 450
+      :alt: Add new webhook
+
+4. In a new popup window there is a new webhook URL and now available secret.
+   Copy both as they are needed to be added to the git repo:
+
+   .. image:: images/webhook-4.png
+      :width: 450
+      :alt: New webhook URL and secret
+
+   New webhook https://readthedocs.org/api/v2/webhook/rcs3/255799/
+
+5. Go to the github repo  and in **Settings->Webhooks**, click on the existing webhook
+   link. When opened  in the "Settings" tab  change only the Payload URL and Secret to the ones from previous step. 
+   The rest of the already configure webhook settings are valid. Click "Update
+   webhook" button at the bottom of the page (not shown here)
+
+   .. image:: images/webhook-5.png
+      :width: 450
+      :alt: Update github webhook URL and secret
+
+   In the "Recent deliveries" tab there will be nothing.
+   The first confirmd push delivery of the webhook will be triggered by the
+   RTD build process. 
+
+6. Go back to RTD console and trigger a build in **Admin->Builds** 
+   via a click on "Build version" button. This should  trigger a build
+   and the **Admin->INtegrations** will show a recent activity:
+
+   .. image:: images/webhook-6.png
+      :width: 450
+      :alt: Integration confirmation
+
