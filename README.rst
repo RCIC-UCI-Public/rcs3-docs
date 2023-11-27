@@ -213,3 +213,21 @@ blog post: https://blog.readthedocs.com/security-update-on-incoming-webhooks/.
       :width: 450
       :alt: Integration confirmation
 
+**2023-11-27**
+
+Build are randomly failing without any changes to either git repo or RTD
+settings. All failed builds have the signature ( in RTD console builds info):
+
+.. code-block:: console
+
+   git clone --depth 1 https://github.com/RCIC-UCI-Public/rcs3-docs .
+   git fetch origin --force --prune --prune-tags --depth 50 refs/heads/master:refs/remotes/origin/master
+   fatal: couldn't find remote ref refs/heads/master
+   Command time: 0s Return: 128
+
+All successful builds have no **refs/heads/master:refs/remotes/origin/master**
+in the git fetch command.
+
+To fix, in Admin->Advanced settings  change the *Default branch*  from
+"--------" to "main", and save. The next build is successful
+
