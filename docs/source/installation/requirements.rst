@@ -28,6 +28,12 @@ of RCS3 reference a specific version and location for rclone and not rely on sys
                 allows Python developers to write software that makes use of services like Amazon S3 and Amazon EC2.
                 (https://pypi.org/project/boto3/)
 
+   - ``psutil``: 
+                Cross-platform lib for process and system monitoring in Python (https://pypi.org/project/psutil/)
+
+   - ``distro``:
+                Distro - an OS platform information API (https://pypi.org/project/distro/)
+
 .. note::
    Python 3.8 or higher is required for the cloud admin in RCS3 because boto3 no longer supports 
    Python 3.7 and older. We use both Python 3.11.x and 3.12.x with no observed issues.
@@ -74,7 +80,7 @@ to different targets.  We've successfully run on
   - Microsoft Windows 11
 
 Basic Config - High-level View 
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 RCS3 is designed around *two* different administrators: the *sysadmin* and the *cloudadmin*.  In rare instances,
 this may be the same person.  In all setups, it is critical to have **completely independent root-level credentials for
