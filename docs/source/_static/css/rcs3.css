@@ -19,15 +19,9 @@
 .rcicblue {color: #00579e;}
 .proposed {color: #00afaf; font-weight: bold;}
 .bluelight {color: #0092e0;}
-.bluegray {color: #88bfd1};
+.bluegray {color: #4B798B;}
 
 /* define a word */
-.tt {
-    font-size: 90%;
-    font-weight: bold;
-    background-color: #efefff !important;
-}
-
 .silver {
     color: #7b97a8;
     font-style: italic;
@@ -45,4 +39,12 @@
     font-size: 90%;
     font-weight: bold;
     background-color: #efefff !important;
+}
+
+/* === for no scroll tables ==== */
+.noscroll-table td {
+    white-space: normal !important;
+}
+.noscroll-table th {
+    background-color:var(--paleblue);
 }

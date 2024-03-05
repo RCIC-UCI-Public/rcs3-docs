@@ -65,8 +65,8 @@
 
 .. role:: rcicorange
 .. role:: bluelight
+.. role:: bluegray
 .. role:: underline
-.. role:: tt
 .. role:: section
 .. role:: silver
 .. role:: fname
