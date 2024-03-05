@@ -1,0 +1,48 @@
+:root{
+--highlightcolor:#e57728;    /* Features Orange */
+--sidebarbackground:#EBEBEF; /* toc background */
+--red:#FF0000;               /* for debugging */
+--paleorange:#ffeecc;        /* pale orange */
+--rcicorange:#e56306;
+--paleblue:#e1effa;
+--bluelight: #0092e0;
+--proposed: #00afaf;
+}
+
+/* these colors can be used in roles */
+.cyan { color: cyan; }
+.aqua { color: aqua; }
+.blue { color: blue; }
+.navy { color: navy; }
+.red {color: #f00;}
+.rcicorange {color: #e56306;}
+.rcicblue {color: #00579e;}
+.proposed {color: #00afaf; font-weight: bold;}
+.bluelight {color: #0092e0;}
+.bluegray {color: #88bfd1};
+
+/* define a word */
+.tt {
+    font-size: 90%;
+    font-weight: bold;
+    background-color: #efefff !important;
+}
+
+.silver {
+    color: #7b97a8;
+    font-style: italic;
+    font-weight: bold;
+    font-size: 15px;
+    text-decoration: underline;
+}
+
+.underline {
+    font-weight: bold;
+    text-decoration: underline;
+}
+
+.fname {
+    font-size: 90%;
+    font-weight: bold;
+    background-color: #efefff !important;
+}

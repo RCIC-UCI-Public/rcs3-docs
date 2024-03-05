@@ -50,8 +50,18 @@ master_doc = 'index'
 # directories to ignore when looking for source files.
 exclude_patterns = []
 
+# for roles creation
+rst_prolog = """
+.. include:: /roles.txt
+.. default-role::
+
+"""
+
 # custom dir for storing pdf files
 html_static_path = [ '_static', 'pdfs']
+
+# custom css files
+html_css_files = [ 'css/rcs3.css' ]
 
 # top sidebar image image (relative to this dir)
 html_logo = 'images/rcic-logo.png'
