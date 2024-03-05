@@ -54,6 +54,7 @@ technologies.
    installation/requirements
    installation/quickstart
    installation/cloudadmin
+   installation/cloudmanage
 
 .. toctree::
    :maxdepth: 1

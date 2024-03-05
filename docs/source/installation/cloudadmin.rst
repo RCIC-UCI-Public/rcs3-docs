@@ -137,7 +137,7 @@ to replace :rcicorange:`uci` with :rcicorange:`ucsb-ece` placing the results in 
    cd $RCS3_ROOT/rcs3/POC
    sed 's/uci/ucsb-ece/g' templates/aws-settings.yaml > config/aws-settings.yaml
 
-This step will get down the road quite a ways for your local customization.  We will assume that you have completed
+This step will get you down the road quite a ways for your local customization.  We will assume that you have completed
 the above step substituting your institutional name appropriately
 
 The next subsections call out the specific areas of the :fname:`aws-settings.yaml` file that you need to address.
@@ -167,8 +167,8 @@ Your :fname:`$RCS3_ROOT/.aws/credentials` file should look similar to the follow
    aws_secret_access_key=1N4EX4BTU-R2&Z3Aa1o2enaNuzPtd5xrjpf/eoSf3
    aws_session_token=IQoJb3JpZ2luX2VjEIP//////////wEaCXVzLXdlc3QtMiJIMEYCIQCG/lvaXGYZuzSZcYooOlmeOfXe9saVApHJKy+ ...
 
-You also need to add a :rcicorange:`region=xxx` to this block, where *xxx* is a valid AWS region identifier.  In this example,
-:rcicorange:`us-west-2` is the region and this file then looks like:
+You also need to add a :rcicorange:`region=xxx` to this block, where *xxx* is a valid AWS region identifier. 
+In this example, :rcicorange:`us-west-2` is the region and this file then looks like:
 
 .. code-block:: text
 
@@ -194,7 +194,8 @@ region for your circumstances.
 
 .. note::
    The tokens are time-limited (often valid for 60 minutes).  It's good practice to get fresh tokens and paste
-   them into :fname:`$RCS3_ROOT/.aws/credentials` file before you begin any administrative actions. Always make certain that
+   them into :fname:`$RCS3_ROOT/.aws/credentials` file before you begin any administrative actions. 
+   Always make certain that
    when you update the contents of this file, that the *region=* line remains intact.
 
 
@@ -280,13 +281,17 @@ to make various metrics available:
 **Step 2: Create emails for administrative notifications**
 
 Determine the email addresses of your administrators who should receive notifications for various events and alarms.
-You can re-run this at any time. Each invocation *replaces* the full set of emails for the topic:
+You can re-run this at any time.
+Each invocation *adds* the emails to the full set of emails for the topic.  Duplicates are ignored:
 
 .. code-block:: bash
 
        cd $RCS3_ROOT/rcs3/POC
        cloudadmin/create-admin-sns-topic.py -e <email1> [<email> ...]
 
+.. note::
+   There is no command-line method provided by AWS to *delete* and email.  In the online AWS web console, you can
+   open the Simple Notification Service, go to your admin topic and delete an email from there.
 
 **Step 3: Create the Custom Cost-Estimates Dashboard**
 
