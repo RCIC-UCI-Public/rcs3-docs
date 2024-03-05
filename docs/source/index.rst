@@ -21,7 +21,7 @@ Central IT (cloud admin) provisions per-server backup buckets, applies appropria
 and provides initial guidance on setting up daily backups.   
 The lab sysadmin configures their system for backup using buckets and credentials created by the cloud 
 admins. Lab sysadmins can initiate restores to that backup bucket, but do not have the authority to permanently 
-delete backups. Intentional adminstrative isolation means that complete data loss requires two 
+delete backups. Intentional administrative isolation means that complete data loss requires two 
 different sets of elevated privilege credentials - 
 one to delete primary data on the server, and a different set to permanently delete data on the backup. 
 Object versioning in S3 
@@ -53,6 +53,7 @@ technologies.
 
    installation/requirements
    installation/quickstart
+   installation/cloudadmin
 
 .. toctree::
    :maxdepth: 1
