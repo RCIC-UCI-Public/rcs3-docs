@@ -24,9 +24,8 @@ User requests restore of files from AWS Glacier
       ./scripts/athena-query-from-file.py <user> <host> <file with list of files to restore>
       ./scripts/athena-query-job-status.py <user> <host> <output from previous command>
 	
-   Loop here until successful or errors (manual cleanup after investigation)
-
-   If errors, halt and send notification to rcic-admin
+   Loop here until successful or errors (manual cleanup after investigation).
+   If errors, halt and send notification to rcic-admin.
 
    .. code-block:: console
 
@@ -34,11 +33,10 @@ User requests restore of files from AWS Glacier
       ./scripts/glacier-restore-from-file.py <user> <host> <output from athena-query-job-status.py>
       ./scripts/glacier-query-job-status.py <user> <host> <output from previous command>
 
-   loop here until successful or errors (manual cleanup after investigation)
+   Loop here until successful or errors (manual cleanup after investigation)
+   If errors, halt and send notification to rcic-admin
 
-If errors, halt and send notification to rcic-admin
-
-Send notification to user and delete EC2 instance
+   Send notification to user and delete EC2 instance
 
 Retrieve files
 ---------------
