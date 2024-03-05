@@ -7,70 +7,69 @@ Prerequisites
 --------------
 
 RCS3 requires some very common support software to work properly.  On Windows, we provide a Powershell script 
-that downloads local versions of all requirments so that RCS3 is fully self-contained. For Synology, we provide a 
-docker image with appropriate software pre-installed.  For generic Linux, the system versions of Python3 and Git are
+that downloads local versions of all requirements so that RCS3 is fully self-contained. For Synology, we provide a 
+docker image with appropriate software pre-installed.  For generic Linux, the system versions of **Python3** and **Git** are
 almost-always sufficient for our needs. Because rclone is a standalone executable, we recommend that a local install
 of RCS3 reference a specific version and location for rclone and not rely on system-supplied packages.
 
-1. Python 3.x
+1. **Python** version 3.8 or newer
 
-   The main backup driver script ``gen-backup.py`` is Python3 only. It has a reasonably light requirement set in
+   The main backup driver script fname:`gen-backup.py` is Python3 only. It has a reasonably light requirement set in
    terms of Python modules (e.g., installed via ``pip3`` ) that go beyond core libraries provided by the most common
    OS-specific Python packages.  This includes:
 
-   - ``pyyaml``: 
-                 PyYAML features a complete YAML 1.1 parser, Unicode support, pickle support 
-                 capable extension API, and sensible error messages. Backup jobs are decscribed in a simple,
-                 yaml-formatted file. (https://pypi.org/project/pyyaml) 
+   :rcicorange:`pyyaml`
+       PyYAML https://pypi.org/project/pyyaml features a complete YAML 1.1 parser, Unicode support, pickle support 
+       capable extension API, and sensible error messages. Backup jobs are decscribed in a simple,
+       yaml-formatted file.
 
-   - ``boto3``: 
-                Boto3 is the Amazon Web Services (AWS) Software Development Kit (SDK) for Python, which 
-                allows Python developers to write software that makes use of services like Amazon S3 and Amazon EC2.
-                (https://pypi.org/project/boto3/)
+   :rcicorange:`boto3`
+       Boto3 https://pypi.org/project/boto3 is the Amazon Web Services (AWS) Software Development Kit (SDK) for Python, which 
+       allows Python developers to write software that makes use of services like Amazon S3 and Amazon EC2.
 
-   - ``psutil``: 
-                Cross-platform lib for process and system monitoring in Python (https://pypi.org/project/psutil/)
+   :rcicorange:`psutil`
+       Cross-platform lib for process and system monitoring in Python (https://pypi.org/project/psutil/)
 
-   - ``distro``:
-                Distro - an OS platform information API (https://pypi.org/project/distro/)
+   :rcicorange:`distro`
+       Distro - an OS platform information API (https://pypi.org/project/distro/)
 
-.. note::
-   Python 3.8 or higher is required for the cloud admin in RCS3 because boto3 no longer supports 
-   Python 3.7 and older. We use both Python 3.11.x and 3.12.x with no observed issues.
+   .. note::
+      Python 3.8 or higher is required for the :silver:`cloudadmin` in RCS3 because boto3 no longer supports 
+      Python 3.7 and older. We use both Python 3.11.x and 3.12.x with no observed issues.
 
-2. Rclone 
+2. **Rclone** version 1.65 or newer
 
-   Rclone https://rclone.org/ does the heavy lifting for RCS3.  Version >= 1.65 is currently required. 
+   Rclone https://rclone.org/ does the heavy lifting for RCS3.
    Even with this version, there are some known bugs that are likely to be addressed in future rclone releases.
    We highly recommend that RCS3 use its own copy of rclone so that it can be updated. Precompiled versions of rclone
    are standalone executables.
 
 
-3. Git
+3. **Git**
    
-   Until RCS3 is "close to final", updates to our small code base, templates, helper scripts, and other items will be
-   via git.  The particular version of git is relatively unimportant because RCS3 utilizes no real advanced features 
-   of git (https://git-scm.com/).  
+   The particular version of git https://git-scm.com/ is relatively unimportant because RCS3 utilizes no real
+   advanced features of git.  Until RCS3 is "close to final", updates to our small code base, templates,
+   helper scripts, and other items will be via git.  
 
 
-4. AWS Cli (cloud admin only)
+4. **AWS Cli** version 2.11.21 or newer (for :silver:`cloudadmin` only)
 
-   The AWS Command Line Interface (AWS CLI) is a unified tool to manage your AWS services. 
+   The AWS Command Line Interface (AWS CLI) https://aws.amazon.com/cli is a unified tool to manage your AWS services. 
    With just one tool to download and configure, you can control multiple AWS services from the command line and 
-   automate them through scripts. Version 2.11.21 or newer is required (https://aws.amazon.com/cli/)
+   automate them through scripts.
 
 
 Install Overview
 ----------------
 
-There are two "halves" of RCS3: the *sysdamin* and the *cloudadmin*.  Initially, the cloudadmin requires more 
+There are two "halves" of RCS3: the :silver:`sysdamin` and the :silver:`cloudadmin`.  Initially, the :silver:`cloudadmin` requires more 
 steps to setup because a) RCS3 needs to be lightly customized to reflect a new institution 
-(customizing ``config/aws-settings.yaml``)
-and b) Some one-time setup in AWS itself is needed to create a StorageLens instance and a basic 
-CloudWatch dashboard for monitoring.  
+(customizing :fname:`config/aws-settings.yaml`)
+and b) Some one-time setup in AWS itself is needed to create a **StorageLens** instance and a basic 
+**CloudWatch** dashboard for monitoring.  
 
-The *sysadmin* is only "complex" because backup job(s) need to be specified and a outine (cron) invocation of 
-the driving python-based wrapper (``gen-backup.py``) that invokes rclone.  The *sysadmin* side must be adaptable
+The :silver:`sysadmin` is only "complex" because backup job(s) need to be specified and a outine (cron) invocation of 
+the driving python-based wrapper :fname:`gen-backup.py` that invokes ``rclone``.  The :silver:`sysadmin` side must be adaptable
 to different targets.  We've successfully run on
 
   - RHEL (and clone) Linux Systems
@@ -79,39 +78,53 @@ to different targets.  We've successfully run on
   - TrueNAS (FreeBSD-based) Linux
   - Microsoft Windows 11
 
-Basic Config - High-level View 
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Basic Config High-level Overview 
+--------------------------------
 
-RCS3 is designed around *two* different administrators: the *sysadmin* and the *cloudadmin*.  In rare instances,
-this may be the same person.  In all setups, it is critical to have **completely independent root-level credentials for
-system administrators and cloud adminstrators.**  This *administrative separation prevents a single credential
-compromise* from being able to destroy both backups (in S3)  and primary data (on in-lab storage servers).
+RCS3 is designed around *two* different administrators: the :silver:`sysadmin` and the
+:silver:`cloudadmin`.  In rare instances, this may be the same person.
 
-To make RCS3 work, some initial configuration and setup in S3 needs to be completed by the *cloudadmin*.  Once that
+.. important:: In all setups, it is critical to have **completely independent root-level credentials for
+               system administrators and cloud adminstrators.**  This *administrative separation prevents a single credential
+               compromise* from being able to destroy both backups (in S3)  and primary data (on in-lab storage servers).
+
+To make RCS3 work, some initial configuration and setup in S3 needs to be
+completed by the :silver:`cloudadmin`.  Once that
 initial configuration is completed, new systems can be onboarded. All configuration steps are accomplished from
-a command-line prompt (Linux for the cloudadmin, Linux flavors and Microsoft Windows Powershell for a sysadmin)
+a command-line prompt (Linux for the :silver:`cloudadmin`, Linux flavors and Microsoft Windows Powershell for a :silver:`sysadmin`)
 
-Roughly speaking, both sysadmin and cloudadmin follow a similar path:
+Roughly speaking, both :silver:`sysadmin` and :silver:`cloudadmin` follow a similar path:
 
-  - Install pre-requisite software (Python3, PyYAML, Boto3, Git, Rclone, AWS Cli (cloud admin only)
-  - Clone the git repository ``git clone https://github.com/RCIC-UCI-Public/rcs3.git``
-  - Configure a system for backup (there is a cloudadmin-specific setup and a sysadmin-specific setup)
+  - Install pre-requisite software
+   
+    - **Python3** and Python packages PyYAML, boto3, psutls, distro
+	- **Git**
+	- **Rclone**
+	- **AWS Cli** (:silver:`cloudadmin` only)
+
+  - Clone the git repository
+
+    .. code-block:: console
+
+	   git clone https://github.com/RCIC-UCI-Public/rcs3.git
+
+  - Configure a system for backup. There is a :silver:`cloudadmin`-specific setup and a :silver:`sysadmin`-specific setup)
   - Run the backup the first time
   - Schedule the backup for daily and weekly updates
-  - Cloudadmin - set quotas and update dashboards to reflect the new system (optional)
+  - :silver:`Cloudadmin` - set quotas and update dashboards to reflect the new system (optional)
 
 
- The *cloudamdmin* runs a single command for each new system that is onboarded. This command creates backup and
- inventory buckets for the new system, creates a service account for the new system, and applies appropriate policy.
- The AWS access key and secret key created by the cloudadmin needs to be transmitted to the sysadmin.
+The :silver:`cloudamdmin` runs a single command for each new system that is onboarded. This command creates backup and
+inventory buckets for the new system, creates a service account for the new system, and applies appropriate policy.
+The AWS access key and secret key created by the :silver:`cloudadmin` needs to be transmitted to the :silver:`sysadmin`.
 
 
 .. note::
 
-   The file ``config/aws-settings.yaml`` MUST be the same for all clients and the cloudadmin. 
-   This file is listed in ``config/.gitignore`` so that local changes are not overwritten.  
+   The file :fname:`config/aws-settings.yaml` MUST be the same for all clients and the :silver:`cloudadmin`. 
+   This file is listed in :fname:`config/.gitignore` so that local changes are not overwritten.  
    One way to handle this at your site is to define a web location for your site's version 
-   of ``config/aws-settings`` and have your users copy that *once* as part of their installation.
+   of :fname:`config/aws-settings` and have your users copy that *once* as part of their installation.
 
    These settings should not change over the course of time.  Further ``git pull`` updates from the UCI master 
    branch will leave these settings alone.

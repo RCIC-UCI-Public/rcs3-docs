@@ -1,7 +1,10 @@
 .. _Cloud admin Install:
 
-Cloud Admin Installation and Configuration
-==========================================
+Cloud Admin 
+============
+
+.. contents::
+   :local:
 
 Overview
 --------
@@ -16,30 +19,25 @@ enables admins to look at various dashboards.
 **Major Steps of configuration**
 
 1. Ready a local system or use our Docker Image for all software pre-requisites
-
 2. Clone the rcs3 repository and keep it in a non-volatile location
-
 3. Make some one-time configuration decisions and make those configuration decisions available to sysadmins
-
 4. Build out some basic infrastructure components in AWS 
-
 5. On board your first server that you want to back up
 
-
-
-Ready a local system
---------------------
+1. Ready a local system
+-----------------------
 
 We maintain a docker image ``rcs3uci/rcs3-rocky8``  on  `DockerHub <https://hub.docker.com/r/rcs3uci/rcs3-rocky8>`_ that
-can be used on both backup servers and for the cloudadmin. For the cloudadmin, this same image can be used under 
+can be used on both backup servers and for the :silver:`cloudadmin`. For the :silver:`cloudadmin`, this same image can be used under 
 `Singularity <https://docs.sylabs.io/guides/3.5/user-guide/introduction.html>`_.
 
 The admin configuration needs to be held outside of the docker image. For brevity, we use the environment
-variable ``RCS3_ROOT``  (persistent store). This directory holds the cloned rcs3 git repository, 
+variable :fname:`RCS3_ROOT`  (persistent store). This directory holds the cloned rcs3 git repository, 
 localized configuration, and ephemeral AWS credentials.   This diretory should be bind-mounted so that it is reachable 
-from within the image. The image defaults ``RCS3_ROOT=/.rcs3``. 
+from within the image. The image defaults :fname:`RCS3_ROOT=/.rcs3`. 
 
-To start the Docker image using Singularity and persistently storing data in the existing directory``/my/rcs3``, use:
+To start the Docker image using Singularity and persistently storing data in
+the existing directory :fname:`/my/rcs3`, use:
 
 .. code-block:: bash
 
@@ -72,8 +70,8 @@ and you should see the Docker prompt
      Examples in this guide will assume that you are using our Docker image running under either Singularity 
      or Docker. And that you have mapped a persistent storage area into /.rcs3
 
-Clone the rcs3 repository
--------------------------
+2. Clone the rcs3 repository
+----------------------------
 
 The `rcs3 repository <https://github.com/RCIC-UCI-Public/rcs3>`_ is how software is currently being distributed.
 To clone the repo 
@@ -83,46 +81,48 @@ To clone the repo
    cd $RCS3_ROOT 
    git clone https://github.com/RCIC-UCI-Public/rcs3 
 
-Directory Structure
-^^^^^^^^^^^^^^^^^^^
+The following briefly describes the directory structure under :fname:`rcs3/POC`
 
-The following briefly describes the directory structure under ``rcs3/POC``
-
-  - ``sysadmin`` :
-     Python scripts utilized sysadmins to localize and run the backup
-  - ``cloudadmin``:
+  :fname:`cloudadmin`
      Python and Bash Scripts to configure the AWS environment, define backup buckets, set quotas, upload dashboards
-  -  ``outputs``:
+  :fname:`common`
+     Shared code between :silver:`sysadmin` and :silver:`cloudadmin`.
+  :fname:`config`
+     Location of localized configuration including quotas, :fname:`jobs.yaml`, :fname:`aws-settings.yaml`. 
+  :fname:`outputs`
      Temporary output files. Used by some scripts.
-  -  ``common``: 
-     Shared code between sysadmin and cloudadmin.
-  -  ``templates``: 
+  :fname:`scripts`
+     Python scripts
+  :fname:`sysadmin`
+     Python scripts utilized sysadmins to localize and run the backup
+  :fname:`templates`
      Various "generic" template files (often JSON) that are localized by configuration scripts. These include backup
      job templates, lifecycle rules, templates for dashboards, policy templates and more.
-  -  ``config``:
-     Location of localized configuration including quotas, jobs.yaml, aws-settings.yaml. 
 
-One time Configuration - aws-settings.yaml
-------------------------------------------
+3. One time Configuration 
+-------------------------
 
 Before any preparation of your AWS environment can be made, the cloudadmin **MUST** change various settings in
-``config/aws-settings.yaml`` to reflect the local institution.  A template settings file is in the 
-``templates/aws-settings.yaml`` and is the working configuration file that UCI uses.  
+:fname:`config/aws-settings.yaml` to reflect the local institution.  A template settings file is in the 
+:fname:`templates/aws-settings.yaml` and is the working configuration file that UCI uses.  
 
 .. warning::
 
-  You **MUST** change the contents of the ``aws-settings.yaml`` file and not use it as-is
+  You **MUST** change the contents of the :fname:`aws-settings.yaml` file and not use it as-is
 
-Step 1. Replace UCI with your Institution Name
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+3.1. Set your Institution Name
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Replace ``uci``  with your Institution Name in the AWS settings file.
 AWS S3 requires all bucket names to have globally unique names. Our approach is to suffix every bucket with
 as string that begins with ``uci-p`` ("UCI Production").  If you are deploying for an entire
-institution, e.g., `UCSB <https://www.ucsb.edu>`_ then you can simply substitute all occurences of ``uci`` with 
-``ucsb``.  If you are a department, for example, `Electrical and Computer Engineering (ECE) <https://www.ece.ucsb.edu/>`_ then you could subsitute ``uci`` with ``ucsb-ece``.  Use an appropriate substitution for your circumstances  
+institution, e.g., `UCSB <https://www.ucsb.edu>`_ then you can simply substitute all occurrences of ``uci`` with 
+``ucsb``.  If you are a department, for example, `Electrical and Computer Engineering (ECE) <https://www.ece.ucsb.edu/>`_ 
+then you could subsitute ``uci`` with ``ucsb-ece``.  Use an appropriate substitution for your circumstances  
 
 The following code snippet is an example of using the venerable `sed <https://linux.die.net/man/1/sed>`_ command
-to replace ``uci`` with ``ucsb-ece`` placing the results in the ``config`` directory.  
+to replace ``uci`` with ``ucsb-ece`` placing the results in the :fname:`config` directory.  
 
 .. code-block:: bash
 
@@ -132,11 +132,12 @@ to replace ``uci`` with ``ucsb-ece`` placing the results in the ``config`` direc
 This step will get down the road quite a ways for your local customization.  We will assume that you have completed
 the above step substituting your institutional name appropriately
 
-The next subsections call out the specific areas of the aws-settings file that you need to address
+The next subsections call out the specific areas of the :fname:`aws-settings.yaml` file that you need to address
 
-Step 2. Login into your AWS Console for Credentials
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+3.2. Get your AWS Credentials
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Login into your AWS Console for Credentials
 It is beyond the scope of this guide to explain how to access your AWS web-based console. You should be
 able to see a screen image similar to
 
@@ -144,14 +145,14 @@ able to see a screen image similar to
    :alt: Access Command Line Credentials
 
 Option to access the web console or command-line access.  **Click on Command Line Access** and then paste the contents
-of option 2 into the credentials files ``$RCS3_ROOT/.aws/credentials``
+of option 2 into the credentials files :fname:`$RCS3_ROOT/.aws/credentials`
 
 .. image:: /images/cloudadmin/Short-Term-Credentials.png
    :alt: Paste Short Term Credentials
 
-Your ``$RCS3_ROOT/.aws/credentials`` file should look similar to the following (Keys and tokens below are invalid)
+Your :fname:`$RCS3_ROOT/.aws/credentials` file should look similar to the following (Keys and tokens below are invalid)
 
-.. code-block:: bash
+.. code-block:: text
 
    [291988307276_AWSAdministratorAccess]
    aws_access_key_id=ASIAX3D737VGKZWY2CBF
@@ -161,7 +162,7 @@ Your ``$RCS3_ROOT/.aws/credentials`` file should look similar to the following (
 You also need to add a ``region=xxx`` to this block, where *xxx* is a valid AWS region identifier.  In this example, 
 ``us-west-2`` is the region and this file then looks like
 
-.. code-block:: bash
+.. code-block:: text
 
    [291988307276_AWSAdministratorAccess]
    region=us-west-2
@@ -169,11 +170,12 @@ You also need to add a ``region=xxx`` to this block, where *xxx* is a valid AWS 
    aws_secret_access_key=1N4EX4BTU-R2&Z3Aa1o2enaNuzPtd5xrjpf/eoSf3
    aws_session_token=IQoJb3JpZ2luX2VjEIP//////////wEaCXVzLXdlc3QtMiJIMEYCIQCG/lvaXGYZuzSZcYooOlmeOfXe9saVApHJKy+ ...
 
-You can find valid regions using the AWS command line itself by first setting a few environment variables: ``AWS_SHARED_CREDENTIALS_FILE`` (set up by default in the Docker/Singularity Container) and ``AWS_PROFILE``.  For the AWS_PROFILE,
-need to select the string between the first '[' and ']' pair of the credentials file.  The full sequence using
-the account above is
+You can find valid regions using the AWS command line itself by first setting a few environment variables:
+:fname:`AWS_SHARED_CREDENTIALS_FILE` (set up by default in the Docker/Singularity Container) and :fname:`AWS_PROFILE`.
+For the AWS_PROFILE, need to select the string between the first :fname:`'['` and fname:`']'` pair of the credentials file.
+The full sequence using the account above is
 
-.. code-block:: bash
+.. code-block:: text
 
    export AWS_PROFILE=291988307276_AWSAdministratorAccess
    export AWS_SHARED_CREDENTIALS_FILE=$RCS3_ROOT/.aws/credentials
@@ -184,49 +186,48 @@ region for your circumstances
 
 .. note::
    The tokens are time-limited (often valid for 60 minutes).  It's good practice to get fresh tokens and paste
-   them into ``$RCS3_ROOT/.aws/credentials`` file before you begin any administrative actions. Always make certain that
+   them into :fname:`$RCS3_ROOT/.aws/credentials` file before you begin any administrative actions. Always make certain that
    when you update the contents of this file, that the *region=* line remains intact
 
 
-Step 3. Substitute your AWS Identifying Accounts
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+3.3. Update your AWS Identifying Accounts
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 You must replace your AWS account and region, the original looks similar to
 
-.. code-block:: bash
+.. code-block:: text
 
     #@@@@ The following MUST be localized to the AWS Account @@@@
     profile: "291988307276_AWSAdministratorAccess"
     accountid: "291988307276"
     region: "us-west-2"
 
-
 .. note::
-    The region id here must match the one in ``$RCS3_ROOT/.aws/credentials``   
+    The region id here must match the one in :fname:`$RCS3_ROOT/.aws/credentials`.
 
 
-Step 4. Update the name the admin notification team
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+3.4. Update the admin team notifications
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 RCS3 uses AWS's  `SNS (Simple Notification Service) <https://aws.amazon.com/sns/>`_ to send email alerts.
-The admin team name should reflect something meaningful to you.  Replace "rcic" with something that reflects
-your organization
+The admin team name should reflect something meaningful to you.  Replace ``rcic`` with something that reflects
+your organization.
 
-.. code-block:: bash
+.. code-block:: text
 
    # 4. Notification for the cloud admin team (region, account, sns-team name)
    admin_notify: "rcic-team-notify"
 
 
-Step 5. Update *trusted* IP addresses 
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+3.5. Update *trusted* IP addresses 
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 There are numerous locks and safeguards that can be put in place to limit access to backup buckets. The default
 is that only a per-server service account and the admins can access a servers backup bucket.  We've added IP address
 ranging as another obstacle to access.   For UCI, we allow access from on-campus address ranges. These are specific to
 UCI and should be changed to reflect your institution. 
 
-.. code-block:: bash
+.. code-block:: text
 
     # 6. Restrict service accounts to specific array of IP addresses using
     # condition statments in policy definiations. Expected format is d.d.d.d/d
@@ -236,27 +237,27 @@ UCI and should be changed to reflect your institution.
       - "192.5.19.0/24"
 
 
-Step 6. Make your aws-settings.yaml file available
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+3.6. Make your aws-settings.yaml file available
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-There are no *secrets* in the ``aws-settings.yaml`` file. However, it contains some basic configuration that 
+There are no *secrets* in the :fname:`aws-settings.yaml` file. However, it contains some basic configuration that 
 every client system must know.  You **must make your aws-settings.yaml file available to the systems that backup**.
 How you make it available is up to you. Source code repositories, private cloud storage, even an email-attachment could
-work 
+work.
 
 
-Initialize the Cloud Backup Environment
----------------------------------------
+4. Initialize the Cloud Backup Environment
+------------------------------------------
 
-Once you have settled on the precise configuration of ``aws-settings.yaml`` file and made it available to your
-community, the next step is to initialize the cloud backup enviroment.  These are one-time actions that put essential
+Once you have settled on the precise configuration of :fname:`aws-settings.yaml` file and made it available to your
+community, the next step is to initialize the cloud backup environment.  These are one-time actions that put essential
 components in place. 
 
 .. note:: 
    These steps assume current credentials
 
-Step 1. Create the default Storage Lens Configuration
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+4.1. Create the default Storage Lens Configuration
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Many of the custom dashboards require `Storage Lens <https://aws.amazon.com/s3/storage-lens/>`_ to be configured
 to make various metrics available
@@ -267,10 +268,10 @@ to make various metrics available
        cloudadmin/create-storage-lens.sh
 
 
-Step 2. Create emails for administrative notifications
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+4.2. Create emails for administrative notifications
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Determine the email addresses of your adminstrators who should receive notifications for various events and alarms.
+Determine the email addresses of your administrators who should receive notifications for various events and alarms.
 You can re-run this at any time. Each invocation *replaces* the full set of emails for the topic
 
 .. code-block:: bash
@@ -279,12 +280,11 @@ You can re-run this at any time. Each invocation *replaces* the full set of emai
        cloudadmin/create-admin-sns-topic.py -e <email1> [<email> ...]
 
 
-Step 3. Create the Custom Cost-Estimates Dashboard
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+4.3. Create the Custom Cost-Estimates Dashboard
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 RCS3 creates a custom `Cloudwatch <https://aws.amazon.com/cloudwatch/>`_ monitoring dashboard to give
 an overview of resource usage.   
-
 
 .. code-block:: bash
 
