@@ -212,10 +212,10 @@ You must replace your AWS account and region, the original looks similar to:
 
 .. code-block:: text
 
-    #@@@@ The following MUST be localized to the AWS Account @@@@
-    profile: "314159307276_AWSAdministratorAccess"
-    accountid: "314159307276"
-    region: "us-west-2"
+   #@@@@ The following MUST be localized to the AWS Account @@@@
+   profile: "314159307276_AWSAdministratorAccess"
+   accountid: "314159307276"
+   region: "us-west-2"
 
 .. note::
     The region id here must match the one in :fname:`$RCS3_ROOT/.aws/credentials`.
@@ -244,9 +244,9 @@ UCI and should be changed to reflect your institution:
 
 .. code-block:: text
 
-    # 6. Restrict service accounts to specific array of IP addresses using
-    # condition statments in policy definiations. Expected format is d.d.d.d/d
-    iprestrictions:
+   # 6. Restrict service accounts to specific array of IP addresses using
+   # condition statments in policy definiations. Expected format is d.d.d.d/d
+   iprestrictions:
       - "128.200.0.0/16"
       - "128.195.0.0/16"
       - "192.5.19.0/24"
@@ -280,8 +280,8 @@ to make various metrics available:
 
 .. code-block:: bash
 
-       cd $RCS3_ROOT/rcs3/POC
-       cloudadmin/create-storage-lens.sh
+   cd $RCS3_ROOT/rcs3/POC
+   cloudadmin/create-storage-lens.sh
 
 
 **Step 2: Create emails for administrative notifications**
@@ -292,8 +292,8 @@ Each invocation *adds* the emails to the full set of emails for the topic.  Dupl
 
 .. code-block:: bash
 
-       cd $RCS3_ROOT/rcs3/POC
-       cloudadmin/create-admin-sns-topic.py -e <email1> [<email> ...]
+   cd $RCS3_ROOT/rcs3/POC
+   cloudadmin/create-admin-sns-topic.py -e <email1> [<email> ...]
 
 .. note::
    There is no command-line method provided by AWS to *delete* and email.  In the online AWS web console, you can
@@ -306,17 +306,25 @@ an overview of resource usage:
 
 .. code-block:: bash
 
-       cd $RCS3_ROOT/rcs3/POC
-       cloudadmin/set-cloudwatch-dashboards.py
+   cd $RCS3_ROOT/rcs3/POC
+   cloudadmin/set-cloudwatch-dashboards.py
 
 Once you have created the dashboard above AND you have on-boarded servers for backup, you will eventually see a
-display similar to the following.  Please note that the metrics used to create this dashboard utilize AWS-supplied
-measurements. Those measurements are updated *daily*, so this is not a real-time view.
-
-The top-line graph describes total data, number of files, cost of storage and API over time, how much is Glacier, and
-how much data is in "snapshots" (either deleted or overwritten data). The two line graphs show API cost over time and
-storage costs over time.  The time frame is settable (standard Cloudwatch), but we find that 4 week and 3 month graphs
-are the most useful.
+display similar to the following:
 
 .. image:: /images/cloudadmin/Cost-Estimates-Dashboard.png
    :alt: Cost Estimates Dashboard
+
+:1:
+  The top 7 line graphs describe total data, number of files, cost of storage and API over time, how much is Glacier
+  storage vs. Standard storage, and how much data is in "snapshots" (either deleted or overwritten data).
+
+:2:
+  The line graphs on the left show API cost over time
+
+:3:
+  The line graphs on the right show storage costs over time.
+
+The time frame is settable (standard Cloudwatch), but we find that 4 week and 3 month graphs
+are the most useful.  Please note that the metrics used to create this dashboard utilize AWS-supplied
+measurements. Those measurements are updated *daily*, so this is not a real-time view.
