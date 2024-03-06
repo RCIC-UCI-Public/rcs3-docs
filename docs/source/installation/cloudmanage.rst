@@ -9,7 +9,8 @@ Cloud  Management
 Overview
 --------
 
-The cloud admin (usually multiple people) control the AWS-side of the infrastructure. This guide covers some of
+The :bluelight:`cloudadmin` (usually multiple people) control the AWS-side of the infrastructure. 
+This guide covers some of
 ongoing management.  Your AWS cloud infrastructure must have already been initialized using :ref:`cloud admin install`
 and that your time-limited credentials are current as described in :ref:`Get Your AWS Credentials <aws credentials>` 
 
@@ -115,6 +116,30 @@ The :fname:`templates` directory holds the JSON files where policies are defined
 system and then is applied as a permissions policy (notably, removing the service account's ability to delete
 non-current (snapshot) data or it's ability to change any bucket policy).
 
+Host IP Restrictions
+^^^^^^^^^^^^^^^^^^^^
+
+When  :fname:`config/aws-settings.yaml` was localized, a set of valid IP subnetworks should have been declared to 
+reflect your instituion.  The effect of this is that any host on these subnets that has a copy of the service 
+account secrets can access the backup bucket.   
+A tighter restriction is to limit specifically to the backup host IP address or its subnet. 
+
+The following example uses the option :bluelight:`-n` (network) argument when creating the bucket. In this case, 
+it limits to a single IPv4 address. Attempting to access the backup bucket using the service account from any other
+address will be denied.
+
+.. code-block:: bash
+
+   create-bucket-with-inventory.sh -n 128.195.216.147/32 panteater labstorage
+
+You can validate this restriction by logging on to your AWS web console, accessing the IAM service dashboard, and 
+selecting user-defined policies. In this example, it is the policy named 
+:bluelight:`panteater-labstorage-uci-bkup-policy`.  The summary view of this policy shows explict Deny and Allow 
+Sections. Please take note of the *SourceIP| IP address* restriction that has been properly set to 
+:bluelight:`128.195.216.147/32`. 
+
+.. image:: /images/cloudadmin/IP-Policy-Restriction.png
+   :alt: IP Host Restriction 
 
 Creating System Owner Notifications
 -----------------------------------

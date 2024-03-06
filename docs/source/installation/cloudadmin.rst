@@ -1,7 +1,7 @@
 .. _cloud admin install:
 
-Cloud Admin
-===========
+Cloud Installation 
+==================
 
 .. contents::
    :local:
@@ -9,22 +9,22 @@ Cloud Admin
 Overview
 --------
 
-The cloud admin (usually multiple people) control the AWS-side of the infrastructure. It is beyond the scope of this
+The :bluelight:`cloudadmin` (usually multiple people) control the AWS-side of the infrastructure. 
+It is beyond the scope of this
 document to describe in detail the web-portal console provided by Amazon. Screenshots will simply presume you know how
 to access your AWS account and are comfortable with copying time-limited access keys to a local credentials file for
 command-line access.
 
-Cloud admins must be comfortable at the Linux command line prompt. All RCS3 configuration and
+Cloudadmins *must be comfortable at the Linux command line prompt*. All RCS3 configuration and
 implementation is performed with command-line tools from within a local Linux environment.  Access to the AWS console
 enables admins to look at various dashboards.
 
-**Major Steps of configuration**
+**Major Steps of Installation**
 
 1. Ready a local system or use our Docker Image for all software prerequisites.
 2. Clone the rcs3 repository and keep it in a non-volatile location.
 3. Make some one-time configuration decisions and make those configuration decisions available to sysadmins.
 4. Build out some basic infrastructure components in AWS.
-5. On board your first server that you want to back up.
 
 1. Ready a local system
 -----------------------
