@@ -10,8 +10,8 @@ Overview
 --------
 
 The cloud admin (usually multiple people) control the AWS-side of the infrastructure. This guide covers some of
-ongoing management.  Your AWS cloud infrastructure must have already been initialized using :ref:`Cloud Admin Install`
-and that your time-limited credentials are current as described in :ref:`Get your AWS Credentials` 
+ongoing management.  Your AWS cloud infrastructure must have already been initialized using :ref:`cloud admin install`
+and that your time-limited credentials are current as described in :ref:`Get Your AWS Credentials <aws credentials>` 
 
 **Common Adminstrative Tasks**
 
@@ -27,7 +27,7 @@ On-board a new server
 ------------------------
 
 On-boarding a new server is wrapped into a single administrative script  :fname:`create-bucket-with-inventory.sh`. 
-This script requires two arguments: *id of owner*, *name of system*.   This wrapper performs a number of operations
+This script requires two arguments: *id of owner*, *name of system*.   This wrapper performs a number of operations:
 
     1. Creates a backup bucket
     2. Creates an inventory bucket
@@ -38,7 +38,9 @@ This script requires two arguments: *id of owner*, *name of system*.   This wrap
     7. Prints out access key and secret access key for service account (must securely transfer to sysadmin)
 
 
-Example:  suppose the owner *panteater* has the system *labstorage*, the cloudadmin would do the following
+**Example** 
+
+Suppose the owner *panteater* has the system *labstorage*, the :silver:`cloudadmin` would do the following:
 
 .. _Cloudadmin New Server:
 
@@ -48,14 +50,9 @@ Example:  suppose the owner *panteater* has the system *labstorage*, the cloudad
     ./create-bucket-with-inventory.sh panteater labstorage
 
 The output from this script is fairly terse. Here's the full output onboarding :bluelight:`panteater's labstorage` 
-system in UCI's staging environment.  The :bluelight:`Location` blocks show the backup and inventory buckets S3 URLs. 
-The :bluelight:`Policy` shows that
-attachment of the full policy document.  The :bluelight:`User` shows the name of the service account user 
-(*panteater-labstorage-sa*). The :bluelight:`AccessKey` section shows the access key and secret key for the service account user. 
+system in UCI's staging environment.  
 
-
-
-.. code-block:: bash
+.. code-block:: json
 
     {
         "Location": "http://panteater-labstorage-uci-s-bkup-bucket.s3.amazonaws.com/"
@@ -95,6 +92,19 @@ attachment of the full policy document.  The :bluelight:`User` shows the name of
             "CreateDate": "2024-03-05T19:02:33+00:00"
         }
     }
+
+
+In the above output the sections are:
+
+:Location:
+  shows the backup and inventory buckets S3 URLs. Can be more than one.
+:Policy:
+  shows the attachment of the full policy document.
+:User: 
+  shows the name of the service account user :fname:`panteater-labstorage-sa`.
+:AccessKey:
+  shows the access key and secret key for the service account user.
+
 
 .. note:: 
    The fields **AccessKeyID** and the **SecretAccessKey** need to be transmitted to sysadmin when they "localize" 
