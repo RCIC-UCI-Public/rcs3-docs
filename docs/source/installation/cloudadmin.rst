@@ -47,7 +47,9 @@ the existing directory :fname:`/my/rcs3`, use:
    export SINGULARITY_BIND=/my/rcs3:/.rcs3
    singularity shell docker://rcs3uci/rcs3-rocky8
 
-   Singularity />   # you should see this Singularity prompt
+.. code-block:: bash
+
+   RCS3 Singularity />   # you should see this Singularity prompt
 
 
 The *PS1* line sets a slightly more meaningful prompt by adding the working
@@ -60,7 +62,9 @@ command above with the docker command):
 
    docker run -it --volume /my/rcs3:/.rcs3 rcs3uci/rcs3-rocky8 /bin/bash
 
-   Docker />    # you should see this Docker prompt
+.. code-block:: bash
+
+   RCS3 Docker />    # you should see this Docker prompt
 
 
 .. note::
@@ -162,7 +166,7 @@ Your :fname:`$RCS3_ROOT/.aws/credentials` file should look similar to the follow
 
 .. code-block:: text
 
-   [291988307276_AWSAdministratorAccess]
+   [314159307276_AWSAdministratorAccess]
    aws_access_key_id=ASIAX3D737VGKZWY2CBF
    aws_secret_access_key=1N4EX4BTU-R2&Z3Aa1o2enaNuzPtd5xrjpf/eoSf3
    aws_session_token=IQoJb3JpZ2luX2VjEIP//////////wEaCXVzLXdlc3QtMiJIMEYCIQCG/lvaXGYZuzSZcYooOlmeOfXe9saVApHJKy+ ...
@@ -172,7 +176,7 @@ In this example, :rcicorange:`us-west-2` is the region and this file then looks 
 
 .. code-block:: text
 
-   [291988307276_AWSAdministratorAccess]
+   [314159307276_AWSAdministratorAccess]
    region=us-west-2
    aws_access_key_id=ASIAX3D737VGKZWY2CBF
    aws_secret_access_key=1N4EX4BTU-R2&Z3Aa1o2enaNuzPtd5xrjpf/eoSf3
@@ -185,7 +189,7 @@ The full sequence using the account above is:
 
 .. code-block:: text
 
-   export AWS_PROFILE=291988307276_AWSAdministratorAccess
+   export AWS_PROFILE=314159307276_AWSAdministratorAccess
    export AWS_SHARED_CREDENTIALS_FILE=$RCS3_ROOT/.aws/credentials
    aws account list-regions
 
@@ -207,8 +211,8 @@ You must replace your AWS account and region, the original looks similar to:
 .. code-block:: text
 
     #@@@@ The following MUST be localized to the AWS Account @@@@
-    profile: "291988307276_AWSAdministratorAccess"
-    accountid: "291988307276"
+    profile: "314159307276_AWSAdministratorAccess"
+    accountid: "314159307276"
     region: "us-west-2"
 
 .. note::
