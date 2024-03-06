@@ -1,4 +1,4 @@
-.. _Cloud admin Install:
+.. _cloud admin install:
 
 Cloud Admin
 ===========
@@ -141,6 +141,8 @@ This step will get you down the road quite a ways for your local customization. 
 the above step substituting your institutional name appropriately
 
 The next subsections call out the specific areas of the :fname:`aws-settings.yaml` file that you need to address.
+
+.. _aws credentials:
 
 3.2. Get your AWS Credentials
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
