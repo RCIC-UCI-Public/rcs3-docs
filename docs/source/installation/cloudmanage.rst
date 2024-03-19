@@ -9,7 +9,7 @@ Cloud  Management
 Overview
 --------
 
-The :bluelight:`cloudadmin` (usually multiple people) control the AWS-side of the infrastructure. 
+The :silver:`cloudadmin` (usually multiple people) control the AWS-side of the infrastructure.
 This guide covers some of
 ongoing management.  Your AWS cloud infrastructure must have already been initialized using :ref:`cloud admin install`
 and that your time-limited credentials are current as described in :ref:`Get Your AWS Credentials <aws credentials>` 
@@ -146,14 +146,14 @@ Creating System Owner Notifications
 
 AWS `SNS (Simple Notification Service) <https://aws.amazon.com/sns/>`_ is used to inform system owners/administrators
 of alarms for their bucket.  Every system should have its own notification channel, but it is not a strict requirement.
-The script ``cloudadmin/create-sns-topic.py``  is used to create a notification list (topic). An example call looks like
+The script :fname:`cloudadmin/create-sns-topic.py`  is used to create a notification list (topic). An example call looks like
 
 .. code:: bash
 
    RCS3 Docker /.rcs3/rcs3/POC/cloudadmin> ./create-sns-topic.py panteater labstorage -e ppapadop@uci.edu
    RCS3 Docker /.rcs3/rcs3/POC/cloudadmin> 
 
-You can supply multiple emails and/or make multiple invocations of ``create-sns-topic.py``.  The recipient of the SNS
+You can supply multiple emails and/or make multiple invocations of :fname:`create-sns-topic.py`.  The recipient of the SNS
 notification must *confirm their subscription*. They will be sent an e-mail from AWS that is similar to:
 
 .. image:: /images/cloudadmin/User-SNS-email.png
@@ -163,48 +163,49 @@ Using CLI to Verify Subscriptions
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 This section is optional, but one can view the details of subscriptions without logging on to the AWS console. 
-Both the  *cloudadmin* and the *sysadmin* can use the aws cli to list all available topics (permissions limit the sysadmin to only list their topic).  One can also view the details of a specific topic.
-Here's example output for UCI's testing environment
+Both the  :silver:`cloudadmin` and the :silver:`sysadmin` can use the aws cli to list all available topics
+(permissions limit the sysadmin to only list their topic).  One can also view the details of a specific topic.
+Here's example output for UCI's testing environment:
 
 .. code:: bash
 
-    RCS3 Docker /.rcs3/rcs3/POC/cloudadmin> export AWS_PROFILE=166566894905_AWSAdministratorAccess
-    RCS3 Docker /.rcs3/rcs3/POC/cloudadmin> aws sns list-topics
-    {
-        "Topics": [
-            {
-                "TopicArn": "arn:aws:sns:us-west-2:166566894905:aws-controltower-SecurityNotifications"
-            },
-            {
-                "TopicArn": "arn:aws:sns:us-west-2:166566894905:panteater-labstorage-uci-notify"
-            },
-            {
-                "TopicArn": "arn:aws:sns:us-west-2:166566894905:ppapadop-mass-uci-notify"
-            },
-            {
-                "TopicArn": "arn:aws:sns:us-west-2:166566894905:rcic-team-notify"
-            }
-        ]
-    }
+   RCS3 Docker /.rcs3/rcs3/POC/cloudadmin> export AWS_PROFILE=166566894905_AWSAdministratorAccess
+   RCS3 Docker /.rcs3/rcs3/POC/cloudadmin> aws sns list-topics
+   {
+       "Topics": [
+           {
+               "TopicArn": "arn:aws:sns:us-west-2:166566894905:aws-controltower-SecurityNotifications"
+           },
+           {
+               "TopicArn": "arn:aws:sns:us-west-2:166566894905:panteater-labstorage-uci-notify"
+           },
+           {
+               "TopicArn": "arn:aws:sns:us-west-2:166566894905:ppapadop-mass-uci-notify"
+           },
+           {
+               "TopicArn": "arn:aws:sns:us-west-2:166566894905:rcic-team-notify"
+           }
+       ]
+   }
 
 The topic that was created in the previous step has the Amazon Resource Name (ARN) of
-``arn:aws:sns:us-west-2:166566894905:panteater-labstorage-uci-notify``.  To see the details of the particular topic,
+:fname:`arn:aws:sns:us-west-2:166566894905:panteater-labstorage-uci-notify`.  To see the details of the particular topic,
 one uses the ``list-subscriptions-by-topic`` subcommand of ``sns``:
 
 .. code:: bash
 
-    RCS3 Docker /.rcs3/rcs3/POC/cloudadmin> aws sns list-subscriptions-by-topic --topic-arn=arn:aws:sns:us-west-2:166566894905:panteater-labstorage-uci-notify
-    {
-        "Subscriptions": [
-            {
-                "SubscriptionArn": "arn:aws:sns:us-west-2:166566894905:panteater-labstorage-uci-notify:7ae82878-ae6e-4721-8c38-b03fc53eb244",
-                "Owner": "166566894905",
-                "Protocol": "email",
-                "Endpoint": "ppapadop@uci.edu",
-                "TopicArn": "arn:aws:sns:us-west-2:166566894905:panteater-labstorage-uci-notify"
-            }
-        ]
-    }
+   RCS3 Docker /.rcs3/rcs3/POC/cloudadmin> aws sns list-subscriptions-by-topic --topic-arn=arn:aws:sns:us-west-2:166566894905:panteater-labstorage-uci-notify
+   {
+       "Subscriptions": [
+           {
+               "SubscriptionArn": "arn:aws:sns:us-west-2:166566894905:panteater-labstorage-uci-notify:7ae82878-ae6e-4721-8c38-b03fc53eb244",
+               "Owner": "166566894905",
+               "Protocol": "email",
+               "Endpoint": "ppapadop@uci.edu",
+               "TopicArn": "arn:aws:sns:us-west-2:166566894905:panteater-labstorage-uci-notify"
+           }
+       ]
+   }
 
 
 Setting Quotas and Alarms
