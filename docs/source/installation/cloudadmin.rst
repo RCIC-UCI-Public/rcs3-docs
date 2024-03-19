@@ -325,6 +325,7 @@ display similar to the following:
 :3:
   The line graphs on the right show storage costs over time.
 
-The time frame is settable (standard Cloudwatch), but we find that 4 week and 3 month graphs
-are the most useful.  Please note that the metrics used to create this dashboard utilize AWS-supplied
-measurements. Those measurements are updated *daily*, so this is not a real-time view.
+.. note::
+   The time frame is settable (standard Cloudwatch), but we find that 4 week and 3 month graphs
+   are the most useful.  Please note that the metrics used to create this dashboard utilize AWS-supplied
+   measurements. Those measurements are updated *daily*, so this is not a real-time view.
