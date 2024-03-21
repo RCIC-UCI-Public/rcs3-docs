@@ -45,10 +45,10 @@ Suppose the owner *panteater* has the system *labstorage*, the :silver:`cloudadm
 
 .. _Cloudadmin New Server:
 
-.. code-block:: bash
+.. parsed-literal::
 
-    cd $RCS3_ROOT/rcs3/POC/cloudadmin
-    ./create-bucket-with-inventory.sh panteater labstorage
+   **cd $RCS3_ROOT/rcs3/POC/cloudadmin**
+   **./create-bucket-with-inventory.sh panteater labstorage**
 
 The output from this script is fairly terse. Here's the full output onboarding :bluelight:`panteater's labstorage` 
 system in UCI's staging environment.  
@@ -128,9 +128,9 @@ The following example uses the option :bluelight:`-n` (network) argument when cr
 it limits to a single IPv4 address. Attempting to access the backup bucket using the service account from any other
 address will be denied.
 
-.. code-block:: bash
+.. parsed-literal::
 
-   create-bucket-with-inventory.sh -n 128.195.216.147/32 panteater labstorage
+   **create-bucket-with-inventory.sh -n 128.195.216.147/32 panteater labstorage**
 
 You can validate this restriction by logging on to your AWS web console, accessing the IAM service dashboard, and 
 selecting user-defined policies. In this example, it is the policy named 
@@ -148,10 +148,9 @@ AWS `SNS (Simple Notification Service) <https://aws.amazon.com/sns/>`_ is used t
 of alarms for their bucket.  Every system should have its own notification channel, but it is not a strict requirement.
 The script :fname:`cloudadmin/create-sns-topic.py`  is used to create a notification list (topic). An example call looks like
 
-.. code:: bash
+.. parsed-literal::
 
-   RCS3 Docker /.rcs3/rcs3/POC/cloudadmin> ./create-sns-topic.py panteater labstorage -e ppapadop@uci.edu
-   RCS3 Docker /.rcs3/rcs3/POC/cloudadmin> 
+   :bluelight:`RCS3 Docker /.rcs3/rcs3/POC/cloudadmin>` **./create-sns-topic.py panteater labstorage -e ppapadop@uci.edu**
 
 You can supply multiple emails and/or make multiple invocations of :fname:`create-sns-topic.py`.  The recipient of the SNS
 notification must *confirm their subscription*. They will be sent an e-mail from AWS that is similar to:
@@ -167,10 +166,10 @@ Both the  :silver:`cloudadmin` and the :silver:`sysadmin` can use the aws cli to
 (permissions limit the sysadmin to only list their topic).  One can also view the details of a specific topic.
 Here's example output for UCI's testing environment:
 
-.. code:: bash
+.. parsed-literal::
 
-   RCS3 Docker /.rcs3/rcs3/POC/cloudadmin> export AWS_PROFILE=166566894905_AWSAdministratorAccess
-   RCS3 Docker /.rcs3/rcs3/POC/cloudadmin> aws sns list-topics
+   :bluelight:`RCS3 Docker /.rcs3/rcs3/POC/cloudadmin>` **export AWS_PROFILE=166566894905_AWSAdministratorAccess**
+   :bluelight:`RCS3 Docker /.rcs3/rcs3/POC/cloudadmin>` **aws sns list-topics**
    {
        "Topics": [
            {
@@ -192,9 +191,9 @@ The topic that was created in the previous step has the Amazon Resource Name (AR
 :fname:`arn:aws:sns:us-west-2:166566894905:panteater-labstorage-uci-notify`.  To see the details of the particular topic,
 one uses the ``list-subscriptions-by-topic`` subcommand of ``sns``:
 
-.. code:: bash
+.. parsed-literal::
 
-   RCS3 Docker /.rcs3/rcs3/POC/cloudadmin> aws sns list-subscriptions-by-topic --topic-arn=arn:aws:sns:us-west-2:166566894905:panteater-labstorage-uci-notify
+   :bluelight:`RCS3 Docker /.rcs3/rcs3/POC/cloudadmin>` **aws sns list-subscriptions-by-topic --topic-arn=arn:aws:sns:us-west-2:166566894905:panteater-labstorage-uci-notify**
    {
        "Subscriptions": [
            {
@@ -211,42 +210,46 @@ one uses the ``list-subscriptions-by-topic`` subcommand of ``sns``:
 Setting Quotas and Alarms
 -------------------------
 
-It is highly recommended that *informational* quotas be set on backup buckets.  This allows cloudadmins to set soft
-limits on total storage and number of objects (files).  Setting quotas translates to creating four AWS-managed alarms:
-two for space and object limits and two activity alarms.   Since AWS knows nothing of the details of rcs3, the activity alarms help detect over use (too many API calls) and little to no activity (too few API calls).  The latter helps find
+It is highly recommended that *informational* quotas be set on backup buckets. This allows :silver:`cloudadmins` to set soft
+limits on total storage and number of objects (files). Setting quotas translates to creating four AWS-managed alarms:
+two for space and object limits and two activity alarms. Since AWS knows nothing of the details of rcs3, the activity alarms
+help detect over use (too many API calls) and little to no activity (too few API calls).  The latter helps find
 backups that are not running on a regular basis. 
 
 The file  :fname:`templates/quotas.csv` contains UCI's current quota settings and must be copied to
 :fname:`config/quotas.csv` and edited to meet your quota specification.   The CSV format is simple:
-``<owner>,<system>,<object quota (Millions)>,<space quota (TB)``. The ``#`` is a comment line and blank lines are
-skipped.  A valid quota file for setting the panteater's labstorage system to 1M objects and 10TB is
+
+  ``ID,System,Object Quota (Millions),Storage Quota (TB)``
+
+The ``#`` is a comment line and blank lines are
+skipped.  A valid quota file for setting the panteater's labstorage system to 1M objects and 10TB is:
 
 .. code:: bash
 
-     # This file can be processed to set quotas
-     # It's format is comma separated value (CSV)
-     # Any line that begins with a # is ignored
-     # ID,Systems,Object Quota (Millions), Storage Quota (TB)
+   # This file can be processed to set quotas
+   # It's format is comma separated value (CSV)
+   # Any line that begins with a # is ignored
+   # ID,Systems,Object Quota (Millions), Storage Quota (TB)
      
-     ID,SYSTEM,QUOTA_OBJECT,QUOTA_STORAGE
+   ID,SYSTEM,QUOTA_OBJECT,QUOTA_STORAGE
      
-     panteater,labstorage,1,10
-     lopez,fedaykin,1,1
+   panteater,labstorage,1,10
+   lopez,fedaykin,1,1
 
-The Header line *must* remain.   To set quotas for all systems in the :fname:`quotas.csv` file, just issue the 
-``set-quotas.py`` as in the following example
+The header line *must* remain.   To set quotas for all systems in the :fname:`quotas.csv` file, just issue the 
+``set-quotas.py`` command as in the following example:
 
-.. code:: bash
+.. parsed-literal::
 
-     RCS3 Docker /.rcs3/rcs3/POC> cloudadmin/set-quotas.py
-     Putting Alarm:  panteater-labstorage exceeded number objects quota into cloudwatch
-     Putting Alarm:  panteater-labstorage excessive daily activity into cloudwatch
-     Putting Alarm:  panteater-labstorage exceeded storage quota into cloudwatch
-     Putting Alarm:  panteater-labstorage no activity into cloudwatch
-     Putting Alarm:  lopez-fedaykin exceeded number objects quota into cloudwatch
-     Putting Alarm:  lopez-fedaykin excessive daily activity into cloudwatch
-     Putting Alarm:  lopez-fedaykin exceeded storage quota into cloudwatch
-     Putting Alarm:  lopez-fedaykin no activity into cloudwatch
+   :bluelight:`RCS3 Docker /.rcs3/rcs3/POC>` **cloudadmin/set-quotas.py**
+   Putting Alarm:  panteater-labstorage exceeded number objects quota into cloudwatch
+   Putting Alarm:  panteater-labstorage excessive daily activity into cloudwatch
+   Putting Alarm:  panteater-labstorage exceeded storage quota into cloudwatch
+   Putting Alarm:  panteater-labstorage no activity into cloudwatch
+   Putting Alarm:  lopez-fedaykin exceeded number objects quota into cloudwatch
+   Putting Alarm:  lopez-fedaykin excessive daily activity into cloudwatch
+   Putting Alarm:  lopez-fedaykin exceeded storage quota into cloudwatch
+   Putting Alarm:  lopez-fedaykin no activity into cloudwatch
 
 It will tell you that the four alarms specific to the labstorage server have been successfully 
 uploaded into cloudwatch.
@@ -264,9 +267,9 @@ After you have created alarms for a system, you can create/update two per-bucket
 **cost-estimates-buckets** and **system-alarms**.  The systems listed on these dashboards are driven by the content
 of :fname:`quotas.csv`.  Simply issue the :fname:`cloudadmin/set-cloudwatch-composite-dashboards.py` 
 
-.. code-block:: bash
+.. parsed-literal::
 
-    RCS3 Docker /.rcs3/rcs3/POC> cloudadmin/set-cloudwatch-composite-dashboards.py
+    :bluelight:`RCS3 Docker /.rcs3/rcs3/POC>` **cloudadmin/set-cloudwatch-composite-dashboards.py**
     Putting Dashboard:  Cost-Estimates-Bucket into cloudwatch
     Putting Dashboard:  System-Alarms into cloudwatch
 
@@ -277,7 +280,11 @@ The next screenshot shows the cost estimates dashboard by bucket. In this case w
 .. image:: /images/cloudadmin/Cost-Estimates-Bucket.png
    :alt: Cost Estimation Per Bucket 
 
+.. parsed-literal::
 
+    :bluelight:`RCS3 Docker /.rcs3/rcs3/POC>` **cloudadmin/set-cloudwatch-composite-dashboards.py**
+    Putting Dashboard:  Cost-Estimates-Bucket into cloudwatch
+    Putting Dashboard:  System-Alarms into cloudwatch
 
 Interpreting Dashboards and Storage Lens
 ----------------------------------------

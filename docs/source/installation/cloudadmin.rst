@@ -41,15 +41,13 @@ from within the image. The image default is :fname:`RCS3_ROOT=/.rcs3`.
 To start the Docker image using Singularity and persistently storing data in
 the existing directory :fname:`/my/rcs3`, use:
 
-.. code-block:: bash
+.. parsed-literal::
 
-   export SINGULARITYENV_PS1='RCS3 Singularity \w> '
-   export SINGULARITY_BIND=/my/rcs3:/.rcs3
-   singularity shell docker://rcs3uci/rcs3-rocky8
+   **export SINGULARITYENV_PS1='RCS3 Singularity \w> '**
+   **export SINGULARITY_BIND=/my/rcs3:/.rcs3**
+   **singularity shell docker://rcs3uci/rcs3-rocky8**
+   :bluelight:`RCS3 Singularity />`   # you should see this Singularity prompt
 
-.. code-block:: bash
-
-   RCS3 Singularity />   # you should see this Singularity prompt
 
 
 The *PS1* line sets a slightly more meaningful prompt by adding the working
@@ -58,13 +56,10 @@ directory while reminding the :silver:`cloudadmins` that they are inside of the 
 Optionally, run under Docker instead of Singularity (replace the singularity
 command above with the docker command):
 
-.. code-block:: bash
+.. parsed-literal::
 
-   docker run -it --volume /my/rcs3:/.rcs3 rcs3uci/rcs3-rocky8 /bin/bash
-
-.. code-block:: bash
-
-   RCS3 Docker />    # you should see this Docker prompt
+   **docker run -it --volume /my/rcs3:/.rcs3 rcs3uci/rcs3-rocky8 /bin/bash**
+   :bluelight:`RCS3 Docker />`   # you should see this Docker prompt
 
 
 .. note::
@@ -77,10 +72,10 @@ command above with the docker command):
 The `rcs3 repository <https://github.com/RCIC-UCI-Public/rcs3>`_ is how software is currently being distributed.
 To clone the repo:
 
-.. code-block:: bash
+.. parsed-literal::
 
-   cd $RCS3_ROOT
-   git clone https://github.com/RCIC-UCI-Public/rcs3
+   **cd $RCS3_ROOT**
+   **git clone https://github.com/RCIC-UCI-Public/rcs3**
 
 The following table briefly describes the repo directory structure under :fname:`rcs3/POC`:
 
@@ -136,10 +131,10 @@ then you could substitute :rcicorange:`uci` with :rcicorange:`ucsb-ece`. Use an 
 The following code snippet is an example of using the venerable `sed <https://linux.die.net/man/1/sed>`_ command
 to replace :rcicorange:`uci` with :rcicorange:`ucsb-ece` placing the results in the :fname:`config` directory:
 
-.. code-block:: bash
+.. parsed-literal::
 
-   cd $RCS3_ROOT/rcs3/POC
-   sed 's/uci/ucsb-ece/g' templates/aws-settings.yaml > config/aws-settings.yaml
+   **cd $RCS3_ROOT/rcs3/POC**
+   **sed 's/uci/ucsb-ece/g' templates/aws-settings.yaml > config/aws-settings.yaml**
 
 This step will get you down the road quite a ways for your local customization.  We will assume that you have completed
 the above step substituting your institutional name appropriately
@@ -278,10 +273,10 @@ components in place.
 Many of the custom dashboards require `Amazon Storage Lens <https://aws.amazon.com/s3/storage-lens/>`_ to be configured
 to make various metrics available:
 
-.. code-block:: bash
+.. parsed-literal::
 
-   cd $RCS3_ROOT/rcs3/POC
-   cloudadmin/create-storage-lens.sh
+   **cd $RCS3_ROOT/rcs3/POC**
+   **cloudadmin/create-storage-lens.sh**
 
 
 **Step 2: Create emails for administrative notifications**
@@ -290,10 +285,10 @@ Determine the email addresses of your administrators who should receive notifica
 You can re-run this at any time.
 Each invocation *adds* the emails to the full set of emails for the topic.  Duplicates are ignored:
 
-.. code-block:: bash
+.. parsed-literal::
 
-   cd $RCS3_ROOT/rcs3/POC
-   cloudadmin/create-admin-sns-topic.py -e <email1> [<email> ...]
+   **cd $RCS3_ROOT/rcs3/POC**
+   **cloudadmin/create-admin-sns-topic.py -e <email1> [<email> ...]**
 
 .. note::
    There is no command-line method provided by AWS to *delete* and email.  In the online AWS web console, you can
@@ -304,10 +299,10 @@ Each invocation *adds* the emails to the full set of emails for the topic.  Dupl
 RCS3 creates a custom `Cloudwatch <https://aws.amazon.com/cloudwatch/>`_ monitoring dashboard to give
 an overview of resource usage:
 
-.. code-block:: bash
+.. parsed-literal::
 
-   cd $RCS3_ROOT/rcs3/POC
-   cloudadmin/set-cloudwatch-dashboards.py
+   **cd $RCS3_ROOT/rcs3/POC**
+   **cloudadmin/set-cloudwatch-dashboards.py**
 
 Once you have created the dashboard above AND you have on-boarded servers for backup, you will eventually see a
 display similar to the following:
