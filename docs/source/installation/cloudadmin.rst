@@ -311,8 +311,9 @@ display similar to the following:
    :alt: Cost Estimates Dashboard
 
 :1:
-  The top 7 line graphs describe total data, number of files, cost of storage and API over time, how much is Glacier
-  storage vs. Standard storage, and how much data is in "snapshots" (either deleted or overwritten data).
+  The top 7 line graphs describe total data, data in archive, data in standard, number of objects (files),
+  cost of storage and API calls over time, how much data is in "snapshots" (either deleted or overwritten data),
+  and percentage overhead of snaphots.
 
 :2:
   The line graphs on the left show API cost over time
@@ -321,6 +322,6 @@ display similar to the following:
   The line graphs on the right show storage costs over time.
 
 .. note::
-   The time frame is settable (standard Cloudwatch), but we find that 4 week and 3 month graphs
+   The time frame is settable (standard Cloudwatch), but we find that 4 weeks (default) and 3 month graphs
    are the most useful.  Please note that the metrics used to create this dashboard utilize AWS-supplied
    measurements. Those measurements are updated *daily*, so this is not a real-time view.

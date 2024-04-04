@@ -130,13 +130,14 @@ address will be denied.
 
 .. parsed-literal::
 
-   **create-bucket-with-inventory.sh -n 128.195.216.147/32 panteater labstorage**
+   **create-bucket-with-inventory.sh -n 129.195.216.147/32 panteater labstorage**
 
 You can validate this restriction by logging on to your AWS web console, accessing the IAM service dashboard, and 
 selecting user-defined policies. In this example, it is the policy named 
 :bluelight:`panteater-labstorage-uci-bkup-policy`.  The summary view of this policy shows explict Deny and Allow 
 Sections. Please take note of the *SourceIP| IP address* restriction that has been properly set to 
-:bluelight:`128.195.216.147/32`. 
+:bluelight:`129.195.216.147/32`. The policy also allows the *service account* to publish to a very particular SNS
+Notification Stream, if it exists.
 
 .. image:: /images/cloudadmin/IP-Policy-Restriction.png
    :alt: IP Host Restriction 
@@ -274,10 +275,12 @@ of :fname:`quotas.csv`.  Simply issue the :fname:`cloudadmin/set-cloudwatch-comp
     Putting Dashboard:  System-Alarms into cloudwatch
 
 
-The next screenshot shows the cost estimates dashboard by bucket. In this case we have two test buckets:
-*fedaykin* and *labstorage*.  One can customize the timeframe (4 days in this sample). 
+The next screenshot shows the cost estimates dashboard by bucket. In this case we have numerous buckets, and their
+names have been blurred. Each line shows storage utilization, number of objects, cost, data held in snapshots, 
+and percentage overhead of snapshots.
+One can customize the timeframe (4 weeks is the default). 
 
-.. image:: /images/cloudadmin/Cost-Estimates-Bucket.png
+.. image:: /images/cloudadmin/Cost-Estimates-Bucket-Dashboard.png
    :alt: Cost Estimation Per Bucket 
 
 .. parsed-literal::
