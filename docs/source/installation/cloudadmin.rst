@@ -115,6 +115,9 @@ The following table briefly describes the repo directory structure under :fname:
 A template settings file is in the
 :fname:`templates/aws-settings.yaml` and is the working configuration file that UCI uses.
 
+.. warning:: A number of one-time decisions made by the :silver:`cloudadmin` in terms of naming (e.g., institution
+             name, bucket postfix, and others) **CANNOT** be changed later. A large number of AWS services and
+             names rely on static strings. For example you cannot change the name of a bucket once created. 
 
 3.1. Set your Institution Name
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -168,36 +171,6 @@ Your :fname:`$RCS3_ROOT/.aws/credentials` file should look similar to the follow
    aws_secret_access_key=1N4EX4BTU-R2&Z3Aa1o2enaNuzPtd5xrjpf/eoSf3
    aws_session_token=IQoJb3JpZ2luX2VjEIP//////////wEaCXVzLXdlc3QtMiJIMEYCIQCG/lvaXGYZuzSZcYooOlmeOfXe9saVApHJKy+ ...
 
-You also need to add a :rcicorange:`region=xxx` to this block, where *xxx* is a valid AWS region identifier. 
-In this example, :rcicorange:`us-west-2` is the region and this file then looks like:
-
-.. code-block:: text
-
-   [314159307276_AWSAdministratorAccess]
-   region=us-west-2
-   aws_access_key_id=ASIAX3D737VGKZWY2CBF
-   aws_secret_access_key=1N4EX4BTU-R2&Z3Aa1o2enaNuzPtd5xrjpf/eoSf3
-   aws_session_token=IQoJb3JpZ2luX2VjEIP//////////wEaCXVzLXdlc3QtMiJIMEYCIQCG/lvaXGYZuzSZcYooOlmeOfXe9saVApHJKy+ ...
-
-You can find valid regions using the AWS command line itself by first setting a few environment variables:
-:fname:`AWS_SHARED_CREDENTIALS_FILE` (set up by default in the Docker/Singularity Container) and :rcicorange:`AWS_PROFILE`.
-For the :fname:`AWS_PROFILE`, need to select the string between the first :rcicorange:`[...string...]`  brackets pair of the credentials file.
-The full sequence using the account above is:
-
-.. code-block:: text
-
-   export AWS_PROFILE=314159307276_AWSAdministratorAccess
-   export AWS_SHARED_CREDENTIALS_FILE=$RCS3_ROOT/.aws/credentials
-   aws account list-regions
-
-This will output a JSON-formatted string that lists all available regions for your account. Select the appropriate
-region for your circumstances.
-
-.. note::
-   The tokens are time-limited (often valid for 60 minutes).  It's good practice to get fresh tokens and paste
-   them into :fname:`$RCS3_ROOT/.aws/credentials` file before you begin any administrative actions. 
-   Always make certain that
-   when you update the contents of this file, that the *region=* line remains intact.
 
 
 3.3. Update your AWS Identifying Accounts
@@ -212,9 +185,25 @@ You must replace your AWS account and region, the original looks similar to:
    accountid: "314159307276"
    region: "us-west-2"
 
-.. note::
-    The region id here must match the one in :fname:`$RCS3_ROOT/.aws/credentials`.
 
+You can find **valid** regions using the AWS command line itself by first setting a few environment variables:
+:fname:`AWS_SHARED_CREDENTIALS_FILE` (set up by default in the Docker/Singularity Container) and :rcicorange:`AWS_PROFILE`.
+For the :fname:`AWS_PROFILE`, you need to use the string between the first :rcicorange:`[...string...]`  
+brackets pair of the credentials file.
+The full sequence using the account above is:
+
+.. code-block:: text
+
+   export AWS_PROFILE=314159307276_AWSAdministratorAccess
+   export AWS_SHARED_CREDENTIALS_FILE=$RCS3_ROOT/.aws/credentials
+   aws account list-regions
+
+This will output a JSON-formatted string that lists all available regions for your account. Select the appropriate
+region for your circumstances.
+
+.. note::
+   The tokens are time-limited (often valid for 60 minutes).  It's good practice to get fresh tokens and paste
+   them into :fname:`$RCS3_ROOT/.aws/credentials` file before you begin any administrative actions. 
 
 3.4. Update the admin team notifications
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -233,7 +222,7 @@ The admin team name should reflect something meaningful to you.  Replace
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 There are numerous locks and safeguards that can be put in place to limit access to backup buckets. The default
-is that only a per-server service account and the admins can access a servers backup bucket.  We've added IP address
+is that only a per-server service account and the admins can access a server's backup bucket.  We've added IP address
 ranging as another obstacle to access.   For UCI, we allow access from on-campus address ranges. These are specific to
 UCI and should be changed to reflect your institution:
 
@@ -291,8 +280,9 @@ Each invocation *adds* the emails to the full set of emails for the topic.  Dupl
    **cloudadmin/create-admin-sns-topic.py -e <email1> [<email> ...]**
 
 .. note::
-   There is no command-line method provided by AWS to *delete* and email.  In the online AWS web console, you can
-   open the Simple Notification Service, go to your admin topic and delete an email from there.
+   There is no simple command-line method provided by AWS to *delete* an email.  It is straightforward to do this
+   interactively in the online AWS web console. Open
+   the Simple Notification Service, go to your admin topic and delete an email from there.
 
 **Step 3: Create the Custom Cost-Estimates Dashboard**
 
