@@ -259,14 +259,15 @@ uploaded into cloudwatch.
     
    :fname:`set-quotas.py` can limit quota setting to just an owner with the ``-o`` option. 
 
-
-
 Updating Dashboards that have per-bucket components
 ---------------------------------------------------
 
-After you have created alarms for a system, you can create/update two per-bucket cloudwatch dashboards called 
-**cost-estimates-buckets** and **system-alarms**.  The systems listed on these dashboards are driven by the content
-of :fname:`quotas.csv`.  Simply issue the :fname:`cloudadmin/set-cloudwatch-composite-dashboards.py` 
+| After you have created alarms for a system, you can create/update two per-bucket cloudwatch dashboards called:
+|   :ref:`cost estimates buckets`
+|   :ref:`system alarms`
+
+The systems listed on these dashboards are driven by the content
+of :fname:`quotas.csv`.  Simply issue the command ``cloudadmin/set-cloudwatch-composite-dashboards.py``:
 
 .. parsed-literal::
 
@@ -276,12 +277,11 @@ of :fname:`quotas.csv`.  Simply issue the :fname:`cloudadmin/set-cloudwatch-comp
 
 
 The next screenshot shows the cost estimates dashboard by bucket. In this case we have numerous buckets, and their
-names have been blurred. Each line shows storage utilization, number of objects, cost, data held in snapshots, 
-and percentage overhead of snapshots.
-One can customize the timeframe (4 weeks is the default). 
+names have been blurred. Each line shows storage utilization, number of objects, cost, data held in snapshots,
+and percentage overhead of snapshots.  One can customize the timeframe (4 weeks is the default).
 
 .. image:: /images/cloudadmin/Cost-Estimates-Bucket-Dashboard.png
-   :alt: Cost Estimation Per Bucket 
+   :alt: Cost Estimation Per Bucket
 
 .. parsed-literal::
 
@@ -293,57 +293,73 @@ Interpreting Dashboards and Storage Lens
 ----------------------------------------
 
 The custom Cloudwatch dashboards **Cost-Estimates**, **Cost-Estimates-Bucket** and **System-Alarms** contain some
-useful summary information about the state of items and are available from the Cloudwatch service tab in your AWS 
+useful summary information about the state of items and are available from the Cloudwatch service tab in your AWS
 console.
 
 .. image:: /images/cloudadmin/Cloudwatch-Dashboards.png
    :alt: Cloudwatch Custom Dashboards
 
-*Cost-Estimates* provides the account-level view of storage. It categorizes storage bytes used into "Standard (S3 Standard)" and "Archive (Sum of Glacier and Deep Archive)".  It counts objects (files) so that mean file size can be easily derived (Total Bytes/Number Objects). It estimates cost by applying discounts (geared toward our contract with AWS).
-All discounts can be removed to see an approximation of total cost.  The final two sparkline charts are Snapshot Bytes
-(how many bytes are in non-current objects or deleted objects that have not yet been permanently deleted) and
-Snapshot overhead as percentage of total storage.   Mean figures are provided for some of these metrics.  The two 
-lower line charts break out some detail of cost of API calls and the components of storage.  If the integrated 
-view of Archive storage is not enough, you can mouse over any point in your range to see more details:
+.. _cost estimates:
 
-.. image:: /images/cloudadmin/Cloudwatch-Storage-Detail.png
-   :alt: Cloudwatch Storage Detail 
+:bluelight:`Cost-Estimates`
+  provides the account-level view of storage.
 
-In the above example, on April 07, 
+  - It categorizes storage bytes used into *Standard (S3 Standard)* and *Archive (Sum of Glacier and Deep Archive)*.
+  - It counts objects (files) so that mean file size can be easily derived (Total Bytes/Number Objects).
+  - It estimates cost by applying discounts (geared toward our contract with AWS).
+    All discounts can be removed to see an approximation of total cost.
+  - The final two sparkline charts are *Snapshot Bytes* (how many bytes are in non-current objects or deleted
+    objects that have not yet been permanently deleted) and *Snapshot overhead* (as percentage of total storage).
+    Mean figures are provided for some of these metrics.
+  -	The two lower line charts break out some detail of cost of API calls and the components of storage.
 
-* 1.97 PiB were in Glacier
-* 257.5 TiB in Deep Archive
-* 27.6 TiB in S3 standard.  
-  
-GB-Months for each storage level is also reported to better reflect what a user would see
-when looking at AWS' Cost Explorer widget.  
+  If the integrated view of Archive storage is not enough, you can mouse over any point in your range to see more details:
 
-.. note:: Baseline metrics are reported in Bytes, but AWS bills
-          in  GB (=1024^3 bytes).  The sparkline storage measurements convert. 
-          For example, 27.6TiB is reflected as 25.7TB in the sparkline summary and should read as "25,700 GB". 
-          It's posted this way to reflect the rates posted by AWS.
+  .. image:: /images/cloudadmin/Cloudwatch-Storage-Detail.png
+     :alt: Cloudwatch Storage Detail
 
-*Cost-Estimates-Bucket* provides the same sparkline graphs, but on a per-bucket basis.  you **MUST** regenerate this
-dashboard each time you add a new server *and* have set a quota for the server. 
+  In the above example, on April 07,
 
-*System-Alarms* shows the alarm limits and states for each bucket the next two figures compare *expected* or *normal*
-operation and *unexpected* activity
+  * 1.97 PiB were in Glacier
+  * 257.5 TiB in Deep Archive
+  * 27.6 TiB in S3 standard.
 
-.. image:: /images/cloudadmin/Activity-Normal.png
-   :alt: Normal Activity 
+  GB-Months for each storage level is also reported to better reflect what a user would see
+  when looking at AWS' Cost Explorer widget.
 
-In the above figure the rightmost graphs show a periodic (weekly) spike in activity. The spike occurs when rclone 
-performs a deep sync of the contents on the server with backup in the cloud. If the Bucket Activity peak is in the rangeof 1x - 2x the number of objects (seen in the object quota), then the inference is that rclone is properly 
-comparing the metadata of all files. 
+  .. note:: Baseline metrics are reported in Bytes, but AWS bills in  GB (1024 :sup:`3` bytes).
+            The sparkline storage measurements are converted. For example, 27.6TiB is reflected as 25.7TB
+            in the sparkline summary and should read as 25,700 GB.
+            It's posted this way to reflect the rates posted by AWS.
 
-.. image:: /images/cloudadmin/Activity-Gap.png
-   :alt: Activity Gap 
+.. _cost estimates buckets:
 
-This shows an activity gap (highlighted in yellow) where the tell-tale bump in activity was not present. On this
-server, daily "top up" backups were active but there was an error in defining the "weekly sync". The responsible
-system administrator corrected the issue.   
+:bluelight:`Cost-Estimates-Bucket`
+  provides the same sparkline graphs, but on a per-bucket basis.  You **MUST** regenerate this
+  dashboard each time you add a new server *and* have set a quota for the server.
 
-By adjusting the timeframe of the dashboard, you can see how a particular server has evolved over time. 
+.. _system alarms:
+
+:bluelight:`System-Alarms`
+  shows the alarm limits and states for each bucket the next two figures compare *expected* or *normal*
+  operation and *unexpected* activity:
+
+  .. image:: /images/cloudadmin/Activity-Normal.png
+     :alt: Normal Activity
+
+  In the above figure the rightmost graphs show a periodic (weekly) spike in activity. The spike occurs when rclone
+  performs a deep sync of the contents on the server with backup in the cloud. If the Bucket Activity peak is in
+  the rangeof 1x - 2x the number of objects (seen in the object quota), then the inference is that rclone is properly
+  comparing the metadata of all files.
+
+  .. image:: /images/cloudadmin/Activity-Gap.png
+     :alt: Activity Gap
+
+  This shows an activity gap (highlighted in yellow) where the tell-tale bump in activity was not present. On this
+  server, daily "top up" backups were active but there was an error in defining the "weekly sync". The responsible
+  system administrator corrected the issue.
+
+  By adjusting the timeframe of the dashboard, you can see how a particular server has evolved over time.
 
 
 Emptying and Deleting a backup bucket
