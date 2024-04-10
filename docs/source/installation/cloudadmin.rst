@@ -26,6 +26,8 @@ enables admins to look at various dashboards.
 3. Make some one-time configuration decisions and make those configuration decisions available to sysadmins.
 4. Build out some basic infrastructure components in AWS.
 
+.. _cloudadmin ready:
+
 1. Ready a local system
 -----------------------
 
@@ -65,6 +67,8 @@ command above with the docker command):
 .. note::
      Examples in this guide will assume that you are using our Docker image running under either Singularity
      or Docker and that you have mapped a persistent storage area into :fname:`/.rcs3`.
+
+.. _cloudadmin clone:
 
 2. Clone the rcs3 repository
 ----------------------------

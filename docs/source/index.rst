@@ -52,7 +52,7 @@ technologies.
    :caption: Installation
 
    installation/requirements
-   installation/quickstart
+   installation/sysadmin
    installation/cloudadmin
    installation/cloudmanage
 
