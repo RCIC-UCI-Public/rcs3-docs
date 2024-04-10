@@ -34,8 +34,9 @@ of RCS3 reference a specific version and location for rclone and not rely on sys
        https://pypi.org/project/distro/ is an OS platform information API.
 
    .. note::
-      Python 3.8 or higher is required for the :silver:`cloudadmin` in RCS3 because boto3 no longer supports 
-      Python 3.7 and older. We use both Python 3.11.x and 3.12.x with no observed issues.
+      Python 3.8 or higher is required for the :silver:`cloudadmin` because
+      boto3 no longer supports older versions of Python.
+      We use Python 3.11.x and 3.12.x with no observed issues.
 
 2. **Rclone** version 1.65 or newer
 
@@ -63,15 +64,18 @@ of RCS3 reference a specific version and location for rclone and not rely on sys
 Install Overview
 ----------------
 
-There are two "halves" of RCS3: the :silver:`sysdamin` and the :silver:`cloudadmin`.  Initially, the :silver:`cloudadmin` requires more 
-steps to setup because a) RCS3 needs to be lightly customized to reflect a new institution 
-(customizing :fname:`config/aws-settings.yaml`)
-and b) Some one-time setup in AWS itself is needed to create a **StorageLens** instance and a basic 
-**CloudWatch** dashboard for monitoring.  
+There are two "halves" of RCS3: the :silver:`sysdamin` and the :silver:`cloudadmin`. 
 
-The :silver:`sysadmin` is only "complex" because backup job(s) need to be specified in an outline (cron) invocation of 
+Initially, the :silver:`cloudadmin` requires more steps to setup because:
+
+a) RCS3 needs to be lightly customized using :fname:`config/aws-settings.yaml` to reflect a new institution 
+
+b) Some one-time setup in AWS itself is needed to create a **StorageLens** instance and a basic 
+   **CloudWatch** dashboard for monitoring.  
+
+The :silver:`sysadmin` is only "complex" because backup jobs need to be specified in an outline (cron) invocation of 
 the driving python-based wrapper :fname:`gen-backup.py` that invokes ``rclone``.  The :silver:`sysadmin` side must be adaptable
-to different targets.  We've successfully run on
+to different targets.  We've successfully run on:
 
   - RHEL Linux and its derivatives
   - Ubuntu Linux and Debian-derived
@@ -97,27 +101,27 @@ a command-line prompt (Linux for the :silver:`cloudadmin`, Linux flavors and Mic
 
 Roughly speaking, both :silver:`sysadmin` and :silver:`cloudadmin` follow a similar path:
 
-  - Install pre-requisite software
+1. Install pre-requisite software
    
-    - **Python3** and Python packages PyYAML, boto3, psutls, distro
-	- **Git**
-	- **Rclone**
-	- **AWS Cli** (only for :silver:`cloudadmin`)
+   - **Python3** and Python packages PyYAML, boto3, psutls, distro
+   - **Git**
+   - **Rclone**
+   - **AWS Cli** (only for :silver:`cloudadmin`)
 
-  - Clone the git repository
+2. Clone the git repository
 
-    .. code-block:: console
+   .. code-block:: console
 
-	   git clone https://github.com/RCIC-UCI-Public/rcs3.git
+      git clone https://github.com/RCIC-UCI-Public/rcs3.git
 
-  - Configure a system for backup. There is a :silver:`cloudadmin`-specific setup and a :silver:`sysadmin`-specific setup).
-  - Run the backup the first time.
-  - Schedule the backup for daily and weekly updates.
-  - :silver:`Cloudadmin` - set quotas and update dashboards to reflect the new system (optional).
+3. Configure a system for backup. There is a :silver:`cloudadmin`-specific setup and a :silver:`sysadmin`-specific setup).
+4. Run the backup the first time.
+5. Schedule the backup for daily and weekly updates.
+6. Optional for :silver:`Cloudadmin` - set quotas and update dashboards to reflect the new system.
 
 The :silver:`cloudamdmin` runs a single command for each new system that is on-boarded. This command creates backup and
 inventory buckets for the new system, creates a service account for the new system, and applies appropriate policy.
-The AWS access key and secret key created by the :silver:`cloudadmin` needs to be transmitted to the :silver:`sysadmin`.
+The AWS access key and secret key created by the :silver:`cloudadmin` need to be transmitted to the :silver:`sysadmin`.
 
 .. note::
    The file :fname:`config/aws-settings.yaml` MUST be the same for all clients and the :silver:`cloudadmin`. 
