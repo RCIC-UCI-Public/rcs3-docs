@@ -9,10 +9,10 @@ Client Installation
 Overview
 --------
 
-The :bluelight:`sysadmin` is responsible for readying the server to be backed up, defining backup job(s) (paths
-to be included and excluded), and setting up a scheduled invocations of the backup (:fname:`gen-backup.py`).
+The :silver:`sysadmin` is responsible for readying the server to be backed up, defining backup job(s) (paths
+to be included and excluded), and setting up a scheduled invocations of the backup via :fname:`gen-backup.py`.
 
-Sysadmins *must be willing to perform some tasks at the Linux/Windows Powershell command line*. 
+:silver:`Sysadmins` *must be willing to perform some tasks at the Linux/Windows Powershell command line*. 
 All RCS3 configuration and implementation is performed with text-based tools with no native GUI.
 
 **Major Steps of Installation**
@@ -33,46 +33,50 @@ variable :fname:`RCS3_ROOT`  (persistent store). This directory holds the cloned
 localized configuration, and the *crontab* for the root user running inside the container. 
 The image default is :fname:`RCS3_ROOT=/.rcs3`.
 
-:ref:`More Details <cloudadmin ready>` on running under Singularity or Docker are provided in the cloudadmin's setup
+:ref:`More Details <cloudadmin ready>` on running under Singularity or Docker are provided in the :silver:`cloudadmin`'s setup.
 
-Mapping Persistent Storage 
+1.1 Map Persistent Storage 
 ^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 A Docker image is both stateless and read-only. This means that when stopped and then restarted, 
-it behaves as if the the image has been reinstalled from scratch. This means that any configuration to define
+it behaves as if the image has been reinstalled from scratch. This means that any configuration to define
 the backup must be held in *persistent* storage. This is a folder that is mapped to a certain path in the Docker image.
 There are three "volume mappings" required:
 
-1. The folder of the data to be backed up (e.g., ``/volume1``)
-2. A folder to hold the backup configuration (Git clone of the rcs3 repository)
-3. A folder to hold the crontab for the container's root user
+1. A folder to hold the backup configuration (for git checkout of the rcs3 repository)
+2. A folder to hold the crontab for the container's root user
+3. A folder of the data to be backed up (e.g., :fname:`/volume1`)
 
-For brevity, it is assumed that before you start the container for the  very first time
+For brevity, it is assumed that before you start the container for the very first time
+you will create these folders using your favorite method on your system:
 
-1. ``/backup-config`` is an **existing** (empty) folder to hold the backup configuration 
-2. ``/backup-config/crontab`` is an **existing** (empty) folder to hold the crontab 
+1. :fname:`/backup-config` is an **existing** (empty) folder to hold the backup configuration 
+2. :fname:`/backup-config/crontab` is an **existing** (empty) folder to hold the crontab 
 
-Create these folders using your favorite method on your system
-
-At the command line, you can use the docker run command to map the above volumes appropriately and get an
-interactive shell prompt:
+At the command line, you can use the ``docker run`` command to map the above volumes appropriately and get an
+interactive shell prompt. The command here is broken into separate lines for
+readability:
 
 .. _sysadmin docker shell:
 
 .. parsed-literal::
 
-   **docker run -it --volume /volume1:/volume1 --volume /backup-config:/.rcs3 --volume /backup-config/crontab:/var/spool/cron rcs3uci/rcs3-rocky8 /bin/bash**
+   **docker run -it \\
+              --volume /volume1:/volume1 \\
+              --volume /backup-config:/.rcs3 \\
+              --volume /backup-config/crontab:/var/spool/cron \\
+              rcs3uci/rcs3-rocky8 /bin/bash**
    :bluelight:`RCS3 Docker />`   # you should see this Docker prompt
 
-* The first ``--volume`` map makes your real data available to the container
-* The second ``--volume`` map provides the space for the git repository and configuration (``/.rcs3``)
-* The third ``--volume`` map provides the space for the crontab configuration (``/var/spool/cron``)
+| 1 :sup:`st` ``--volume`` map makes your real data available to the container
+| 2 :sup:`nd` ``--volume`` map provides the space for the git repository and configuration (maps to :fname:`/.rcs3`)
+| 3 :sup:`rd` ``--volume`` map provides the space for the crontab configuration (maps to :fname:`/var/spool/cron`)
 
 When you type ``exit`` at the :bluelight:`RCS3 Docker />` prompt, the container will stop running.
 
 .. note::
      Examples in this guide will assume that you are using our Docker image running under either Singularity
-     or Docker and that you have mapped a persistent storage areas into the path  
+     or Docker and that you have mapped a persistent storage areas into the path.
 
 2. Clone the rcs3 repository
 ----------------------------
@@ -85,7 +89,7 @@ At the command prompt of the container, clone the rcs3 github repository:
    **cd $RCS3_ROOT**
    **git clone https://github.com/RCIC-UCI-Public/rcs3**
 
-Please see :ref:`more details of folder structure<cloudadmin clone>` in the cloudadmin guide
+Please see :ref:`more details of folder structure<cloudadmin clone>` in the :silver:`cloudadmin` guide.
 
 3. Copy your Organization's aws-settings.yaml
 ---------------------------------------------
@@ -111,20 +115,24 @@ commands on a scheduled basis.  The command is very similar to :ref:`the interac
 
 .. parsed-literal::
 
-   **docker run --name rcs3-backup --volume /volume1:/volume1 --volume /backup-config:/.rcs3 --volume /backup-config/crontab:/var/spool/cron rcs3uci/rcs3-rocky8 &**
+   **docker run** :red:`--name rcs3-backup` \\
+              **--volume /volume1:/volume1 \\
+              --volume /backup-config:/.rcs3 \\
+              --volume /backup-config/crontab:/var/spool/cron \\
+              rcs3uci/rcs3-rocky8** :red:`&`
 
 The notable changes from the interactive prompt, are
 
-1. The running container is given a specific name, *rcs3-backup*
-2. The container is being run in the background (``&``) 
+1. The running container is given a specific name :red:`rcs3-backup`
+2. The container is being run in the background :red:`&` 
 
 You can see the that this container is running by executing ``docker ps`` on the physical host:
 
 .. parsed-literal::
 
-    **# docker ps**
-    **CONTAINER ID   IMAGE                 COMMAND                  CREATED         STATUS         PORTS     NAMES**
-    **76ed12ab78c0   rcs3uci/rcs3-rocky8   "/bin/sh -c '/sbin/c…"   6 minutes ago   Up 6 minutes             rcs3-backup**
+    **docker ps**
+    **CONTAINER ID IMAGE               COMMAND                CREATED       STATUS       PORTS NAMES**
+    **76ed12ab78c0 rcs3uci/rcs3-rocky8 "/bin/sh -c '/sbin/c…" 6 minutes ago Up 6 minutes       rcs3-backup**
 
 
 .. _sysadmin docker shell running:
@@ -136,8 +144,8 @@ You can obtain a shell prompt within this *runnning* docker container:
 
 .. parsed-literal::
 
-    **# docker exec -it rcs3-backup /bin/bash**
-    **RCS3 Docker />** 
+    **docker exec -it rcs3-backup /bin/bash**
+    :bluelight:`RCS3 Docker />`
 
 
 .. attention::
