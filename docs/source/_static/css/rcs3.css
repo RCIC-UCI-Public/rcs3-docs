@@ -20,6 +20,7 @@
 .proposed {color: #00afaf; font-weight: bold;}
 .bluelight {color: #0092e0;}
 .bluegray {color: #4B798B;}
+.gray {color: #888888;}  /* for command stdout */
 
 /* define a word */
 .silver {

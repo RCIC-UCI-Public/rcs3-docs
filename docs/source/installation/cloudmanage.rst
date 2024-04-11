@@ -174,7 +174,7 @@ Here's example output for UCI's testing environment:
 
    :bluelight:`RCS3 Docker /.rcs3/rcs3/POC/cloudadmin>` **export AWS_PROFILE=166566894905_AWSAdministratorAccess**
    :bluelight:`RCS3 Docker /.rcs3/rcs3/POC/cloudadmin>` **aws sns list-topics**
-   {
+   :gray:`{
        "Topics": [
            {
                "TopicArn": "arn:aws:sns:us-west-2:166566894905:aws-controltower-SecurityNotifications"
@@ -189,7 +189,7 @@ Here's example output for UCI's testing environment:
                "TopicArn": "arn:aws:sns:us-west-2:166566894905:rcic-team-notify"
            }
        ]
-   }
+   }`
 
 The topic that was created in the previous step has the Amazon Resource Name (ARN) of
 :fname:`arn:aws:sns:us-west-2:166566894905:panteater-labstorage-uci-notify`.  To see the details of the particular topic,
@@ -198,7 +198,7 @@ one uses the ``list-subscriptions-by-topic`` subcommand of ``sns``:
 .. parsed-literal::
 
    :bluelight:`RCS3 Docker /.rcs3/rcs3/POC/cloudadmin>` **aws sns list-subscriptions-by-topic --topic-arn=arn:aws:sns:us-west-2:166566894905:panteater-labstorage-uci-notify**
-   {
+   :gray:`{
        "Subscriptions": [
            {
                "SubscriptionArn": "arn:aws:sns:us-west-2:166566894905:panteater-labstorage-uci-notify:7ae82878-ae6e-4721-8c38-b03fc53eb244",
@@ -208,7 +208,7 @@ one uses the ``list-subscriptions-by-topic`` subcommand of ``sns``:
                "TopicArn": "arn:aws:sns:us-west-2:166566894905:panteater-labstorage-uci-notify"
            }
        ]
-   }
+   }`
 
 
 Setting Quotas and Alarms
@@ -223,7 +223,9 @@ backups that are not running on a regular basis.
 The file  :fname:`templates/quotas.csv` contains UCI's current quota settings and must be copied to
 :fname:`config/quotas.csv` and edited to meet your quota specification.   The CSV format is simple:
 
-  ``ID,System,Object Quota (Millions),Storage Quota (TB)``
+.. parsed-literal::
+
+   :bluelight:`ID, System, Object Quota (Millions), Storage Quota (TB)`
 
 The ``#`` is a comment line and blank lines are
 skipped.  A valid quota file for setting the panteater's labstorage system to 1M objects and 10TB is:
@@ -246,16 +248,16 @@ The header line *must* remain.   To set quotas for all systems in the :fname:`qu
 .. parsed-literal::
 
    :bluelight:`RCS3 Docker /.rcs3/rcs3/POC>` **cloudadmin/set-quotas.py**
-   Putting Alarm:  panteater-labstorage exceeded number objects quota into cloudwatch
+   :gray:`Putting Alarm:  panteater-labstorage exceeded number objects quota into cloudwatch
    Putting Alarm:  panteater-labstorage excessive daily activity into cloudwatch
    Putting Alarm:  panteater-labstorage exceeded storage quota into cloudwatch
    Putting Alarm:  panteater-labstorage no activity into cloudwatch
    Putting Alarm:  lopez-fedaykin exceeded number objects quota into cloudwatch
    Putting Alarm:  lopez-fedaykin excessive daily activity into cloudwatch
    Putting Alarm:  lopez-fedaykin exceeded storage quota into cloudwatch
-   Putting Alarm:  lopez-fedaykin no activity into cloudwatch
+   Putting Alarm:  lopez-fedaykin no activity into cloudwatch`
 
-It will tell you that the four alarms specific to the labstorage server have been successfully 
+It will tell you that the four alarms specific to the lab storage server have been successfully
 uploaded into cloudwatch.
 
 .. note::
@@ -275,8 +277,8 @@ of :fname:`quotas.csv`.  Simply issue the command ``cloudadmin/set-cloudwatch-co
 .. parsed-literal::
 
     :bluelight:`RCS3 Docker /.rcs3/rcs3/POC>` **cloudadmin/set-cloudwatch-composite-dashboards.py**
-    Putting Dashboard:  Cost-Estimates-Bucket into cloudwatch
-    Putting Dashboard:  System-Alarms into cloudwatch
+    :gray:`Putting Dashboard:  Cost-Estimates-Bucket into cloudwatch
+    Putting Dashboard:  System-Alarms into cloudwatch`
 
 
 The next screenshot shows the cost estimates dashboard by bucket. In this case we have numerous buckets, and their
@@ -289,8 +291,8 @@ and percentage overhead of snapshots.  One can customize the timeframe (4 weeks 
 .. parsed-literal::
 
     :bluelight:`RCS3 Docker /.rcs3/rcs3/POC>` **cloudadmin/set-cloudwatch-composite-dashboards.py**
-    Putting Dashboard:  Cost-Estimates-Bucket into cloudwatch
-    Putting Dashboard:  System-Alarms into cloudwatch
+    :gray:`Putting Dashboard:  Cost-Estimates-Bucket into cloudwatch
+    Putting Dashboard:  System-Alarms into cloudwatch`
 
 Interpreting Dashboards and Storage Lens
 ----------------------------------------
