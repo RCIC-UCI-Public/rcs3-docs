@@ -54,20 +54,20 @@ technologies.
    installation/requirements
    installation/sysadmin
    installation/cloudadmin
-   installation/cloudmanage
 
 .. toctree::
    :maxdepth: 1
-   :caption: Admin
+   :caption: Cloud Admininstration
 
+   installation/cloudmanage
    admin/central
    admin/deletion
 
 .. toctree::
    :maxdepth: 1
-   :caption: Client
+   :caption: Client Configuration
 
-   client/usage
+   client/clientconfig
 
 .. toctree::
    :maxdepth: 1
