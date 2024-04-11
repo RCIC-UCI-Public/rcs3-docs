@@ -24,6 +24,9 @@ and that your time-limited credentials are current as described in :ref:`Get You
     6. Digging into a few AWS Console capabilities  
     7. Emptying and Deleting a backup bucket
 
+
+.. _server onboard:
+
 On-board a new server 
 ------------------------
 
