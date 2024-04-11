@@ -131,9 +131,8 @@ You can see the that this container is running by executing ``docker ps`` on the
 .. parsed-literal::
 
     **docker ps**
-    **CONTAINER ID IMAGE               COMMAND                CREATED       STATUS       PORTS NAMES**
-    **76ed12ab78c0 rcs3uci/rcs3-rocky8 "/bin/sh -c '/sbin/c…" 6 minutes ago Up 6 minutes       rcs3-backup**
-
+    :gray:`CONTAINER ID IMAGE               COMMAND                CREATED       STATUS       PORTS NAMES`
+    :gray:`76ed12ab78c0 rcs3uci/rcs3-rocky8 "/bin/sh -c '/sbin/c…" 6 minutes ago Up 6 minutes       rcs3-backup`
 
 .. _sysadmin docker shell running:
 
