@@ -22,6 +22,8 @@ All RCS3 configuration and implementation is performed with text-based tools wit
 3. Copy your organization's :fname:`aws-settings.yaml`  to specific directory
 4. Start the Docker container 
 
+.. _sysadmin ready:
+
 1. Ready a local system
 -----------------------
 
@@ -78,6 +80,8 @@ When you type ``exit`` at the :bluelight:`RCS3 Docker />` prompt, the container 
      Examples in this guide will assume that you are using our Docker image running under either Singularity
      or Docker and that you have mapped a persistent storage areas into the path.
 
+.. _sysadmin clone:
+
 2. Clone the rcs3 repository
 ----------------------------
 
@@ -90,6 +94,8 @@ At the command prompt of the container, clone the rcs3 github repository:
    **git clone https://github.com/RCIC-UCI-Public/rcs3**
 
 Please see :ref:`more details of folder structure<cloudadmin clone>` in the :silver:`cloudadmin` guide.
+
+.. _sysadmin copy:
 
 3. Copy your Organization's aws-settings.yaml
 ---------------------------------------------

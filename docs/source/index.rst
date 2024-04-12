@@ -45,7 +45,12 @@ technologies.
    :caption: About RCS3
 
    about/preface
-   about/architecture
+
+.. toctree::
+   :maxdepth: 1
+   :caption: Quickstart
+
+   about/quickstart
 
 .. toctree::
    :maxdepth: 1
@@ -60,8 +65,6 @@ technologies.
    :caption: Cloud Admininstration
 
    installation/cloudmanage
-   admin/central
-   admin/deletion
 
 .. toctree::
    :maxdepth: 1

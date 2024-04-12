@@ -21,6 +21,8 @@ as the *storage server*. This guide assumes that you have completed the :ref:`cl
 4. Install cron entries to regularly perform *sync* and *top-up* backups 
 5. Start the initial seeding of your backup 
 
+.. _localize: 
+
 2. Localize the Storage Server
 ------------------------------
 
@@ -62,6 +64,8 @@ backup-bucket.  Both files have permissions changed so that only the owner (usua
   The cloudadmin can regenerate credentials for the specific AWS "service account" that performs the backup. If these 
   credentials are lost (or compromised), the backup can still be made accessible. 
 
+
+.. _define jobs:
 
 3. Create jobs.yaml
 -------------------
@@ -114,6 +118,8 @@ Let's describe the major portions of the file
 
 :bluelight:`excludes`:
    This is a bullet list of patterns (defined as rclone filters) to *not backup*.
+
+.. _job testing:
 
 4. Initial Testing of jobs.yaml
 -------------------------------
@@ -202,6 +208,8 @@ For the *backup1* job:
    rclone's log of when it runs is shown with the `--log-file` (e.g. :fname:`/tmp/backup1.log`) argument. 
 
 
+.. _cron:
+
 5. Install Cron Entries 
 -----------------------
 
@@ -248,6 +256,8 @@ the owner and system name.  You can change time and days of the week that your b
 of cron entries.
 
 
+
+.. _seed:
 
 6. Run the Initial Backup 
 -------------------------
