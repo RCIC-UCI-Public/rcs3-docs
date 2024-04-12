@@ -84,7 +84,7 @@ To clone the repo:
 The following table briefly describes the repo directory structure under :fname:`rcs3/POC`:
 
 .. table::
-   :widths: 30 70
+   :widths: 20 80
    :class: noscroll-table
 
    +---------------------------+-----------------------------------------------------------------------+
@@ -110,6 +110,7 @@ The following table briefly describes the repo directory structure under :fname:
    +---------------------------+-----------------------------------------------------------------------+
 
 .. _cloudadmin onetime:
+
 3. One time Configuration
 -------------------------
 
