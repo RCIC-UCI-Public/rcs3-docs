@@ -261,6 +261,7 @@ the owner and system name.  You can change time and days of the week that your b
 `the crontab man page <https://linux.die.net/man/5/crontab>`_ for more details on the format and meaning
 of cron entries.
 
+.. _seed backup:
 
 6. Run the Initial Backup 
 -------------------------
