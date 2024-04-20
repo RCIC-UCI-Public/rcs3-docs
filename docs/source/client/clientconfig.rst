@@ -258,7 +258,7 @@ Execute the command
 
 and paste the contents of the sample crontab setup. Edit to reflect both
 the owner and system name.  You can change time and days of the week that your backups run. Please see 
-`the crontab man page <https://linux.die.net/man/5/crontab>`_ for more details on the format and meaning
+the `crontab man page <https://linux.die.net/man/5/crontab>`_ for more details on the format and meaning
 of cron entries.
 
 .. _seed backup:
@@ -275,7 +275,7 @@ Instead, run the **sync** version of the backup, exactly as it is written in you
    **(/.rcs3/rcs3/POC/sysadmin/gen-backup.py --threads=2 --checkers=32 \\
     --owner=panteater --system=labstorage run >> /var/log/gen-backup.log 2>&1) &**
 
-You can follow the progress of the backup by tailing rclone's log file. E.g.,
+You can follow the progress of the backup by tailing rclone's log file, e.g:
 
 .. parsed-literal::
 
@@ -291,7 +291,7 @@ You can follow the progress of the backup by tailing rclone's log file. E.g.,
 7. Advanced Options
 -------------------
 
-In this section we describe two advanced options:  *client-side encryption* and *using rclone directly*.
+In this section we describe two advanced options: *using rclone directly* and *client-side encryption*.
 
 
 .. _rclone direct:
@@ -299,8 +299,8 @@ In this section we describe two advanced options:  *client-side encryption* and 
 7.1 Using Rclone Directly
 ^^^^^^^^^^^^^^^^^^^^^^^^^
 
-:fname:`gen-backup.py` ultimately spins off rclone via python's `subprocess` module. Calling 
-`gen-backup.py` with the `rclone` command will print out rclone and all flags utilized.  E.g.
+:fname:`gen-backup.py` ultimately spins off ``rclone`` via python's `subprocess` module. Calling 
+:fname:`gen-backup.py` with the ``rclone`` argument will print out rclone command and all flags utilized. E.g.:
 
 
 .. parsed-literal::
@@ -311,7 +311,7 @@ In this section we describe two advanced options:  *client-side encryption* and 
    --metadata --links --transfers 2 --checkers 32
 
 You could cut and paste this directly, but a more convenient method is shown in the example below 
-where rclone's ``listremotes`` is used:
+where rclone's ``listremotes`` command is used:
 
 .. parsed-literal::
 
@@ -332,14 +332,14 @@ alternate port.  An example of serving data to localhost over port 8080 in a rea
 
    **$(./gen-backup.py rclone) serve http --read-only --addr localhost:8080 s3-backup:**
 
-Point your browser to ``http://localhost:8080`` to view the contents of your backup.
+Point your browser to :fname:`http://localhost:8080` to view the contents of your backup.
 If you are familiar with `ssh tunneling <https://www.ssh.com/academy/ssh/tunneling>`_, it's not
 difficult to view remotely.  
 
 :bluelight:`Windows`
 
 The windows installation uses fully-localized versions of git, python, aws, and rclone. RCS3 provides the
-wrapper Powershell script :fname:`rclone.ps1`  The ``listremotes`` example above in Powershell looks like
+wrapper Powershell script :fname:`rclone.ps1`.  The ``listremotes`` example above in Powershell looks like:
 
 .. parsed-literal::
 
@@ -372,85 +372,81 @@ a :bluelight:`private encryption key`.    There are some important facts when us
 * Encrypted and unencrypted files can co-exist in the same backup bucket
 
 
-Setup is a few steps:
+**Setup is a few steps:**
 
-1. Use clone natively to define an encryption key on the the ``s3-crypt`` endpoint
-2. :bluelight:`Recommended:` adjust the jobname in :fname:`jobs.yaml` to reflect that a particular backup job is encrypted
-3. Invoke :fname:`gen-backup.py` with the ``--endpoint=s3-crypt`` argument to override the default of ``s3-backup``. 
+  In the examples below use your :ref:`system specific method <rclone direct>` for invoking rclone directly.
+  The examples, when appropriate show the Linux variant. The assumption is that you are in the :fname:`sysadmin` 
+  directory.
 
-In the examples that follow use your :ref:`system specific method <rclone direct>` for invoking rclone directly.
-The examples, when appropriate show the Linux variant. The assmumption is that you are in the :fname:`sysadmin` 
-directory.
+  :bluelight:`1. Define encryption key`
+     Use clone natively to define an encryption key on the ``s3-crypt`` endpoint.
 
-:bluelight:`1. Define encryption key`
-   | ``$(./gen-backup.py rclone) config update s3-crypt --all``
-   | Take defaults for all questions, have rclone generate the password and the salt, do NOT edit advanced config. The 
-   | rclone page on `crypted remotes <https://rclone.org/crypt/>`_ provides details. 
-   | **Remember to record both the generated password and salt password** 
+     .. parsed-literal::
 
-:bluelight:`2. Recommended: Rename your backup job`.  
-   | Edit :fname:`jobs.yaml` to reflect a different backup name.  Choose a name like `backup1-encrypted`. 
+        **$(./gen-backup.py rclone) config update s3-crypt --all**
 
-:bluelight:`3. Change the remote that gen-backup.py uses`.  
-   | Add the ``--endpoint=s3-crypt`` to your invocation of :fname:`gen-backup-py`. Don't forget 
-   | to update your crontab (or Windows Scheduled Task)  entries.
+     | Take defaults for all questions, have rclone generate the password and the salt,
+     | do NOT edit advanced config. The rclone page on `crypted remotes <https://rclone.org/crypt/>`_ provides details. 
+     | **Remember to record both the generated password and salt password** 
+
+     .. warning::
+        | Save the passwords that were generated in a safe place like BitWarden or 1Password.
+        | If you lose this password, no one can restore your data. 
+
+  :bluelight:`2. Recommended: Rename your backup job`.  
+     Edit :fname:`jobs.yaml` and adjust the jobname  to reflect that a particular backup job is encrypted.
+     Choose a name like `backup1-encrypted`. 
+
+     The following shows the changed contents of an example  :fname:`jobs.yaml` 
+     to rename the existing backup job `backup1` to `backup1-encrypted`:
+
+     .. table::
+        :class: noscroll-table
+
+        +---------------------------------+------------------------------------+
+        |  Before editing                 | After editing                      |
+        +=================================+====================================+
+        | .. parsed-literal::             | .. parsed-literal::                |
+        |                                 |                                    |
+        |   jobs:                         |    jobs:                           |
+        |     - name: **backup1**         |      - name: **backup1-encrypted** |
+        |       subdirectories:           |        subdirectories:             |
+        |         - Users/phili/Documents |          - Users/phili/Documents   |
+        +---------------------------------+------------------------------------+
+
+  :bluelight:`3. Change the remote that gen-backup.py uses`.  
+     Add the ``--endpoint=s3-crypt`` argument to your invocation of :fname:`gen-backup-py` command
+     to override the default of ``s3-backup``. Don't forget 
+     to update your crontab (or Windows Scheduled Task)  entries.
 
 With the steps above, your data will be encrypted at the source with the passwords that were generated. 
 
-.. warning::
 
-   Save the passwords that were generated in a safe place like BitWarden or 1Password.  If you lose this password,
-   no one can restore your data. 
-
-
-The following shows the changed contents of an example  :fname:`jobs.yaml` 
-to rename the existing backup job `backup1` to `backup1-encrypted`.
-
-:bluelight:`Before`
+Here's an example session:
 
 .. parsed-literal::
 
-  jobs:
-    - name: **backup1**
-      subdirectories:
-        - Users/phili/Documents
-
-:bluelight:`After`
-
-.. parsed-literal::
-
-  jobs:
-    - name: **backup1-encrypted**
-      subdirectories:
-        - Users/phili/Documents
-
-Here's an example
-
-* Listing the top-level directories of the backup *prior* to performing an encrypted backup 
-* Backup data in an encrypted manner
-* Listing the top-level directories of the backup *after* the performing the encrypted backup
-
-.. parsed-literal::
-
-   **$(./gen-backup.py rclone) lsd s3-backup:**
+   **$(./gen-backup.py rclone) lsd s3-backup:**        :bluelight:`(1)`
            0 1999-12-31 16:00:00        -1 backup1
            0 1999-12-31 16:00:00        -1 rcs3config
-   **./gen-backup.py  --endpoint=s3-crypt run**
+   **./gen-backup.py  --endpoint=s3-crypt run**        :bluelight:`(2)`
    === rcs3config sync started at 2024-04-18 15:43:54.933541
    === backup1-encrypted sync started at 2024-04-18 15:43:54.933541
    === rcs3config completed at 2024-04-18 15:43:56.029525
    === backup1-encrypted completed at 2024-04-18 15:44:42.001963
    All tasks completed.
-   **$(./gen-backup.py rclone) lsd s3-backup:**
+   **$(./gen-backup.py rclone) lsd s3-backup:**        :bluelight:`(3)`
            0 1999-12-31 16:00:00        -1 backup1-encrypted
            0 1999-12-31 16:00:00        -1 backup
            0 1999-12-31 16:00:00        -1 rcs3config
 
+| :bluelight:`(1)`  Listing the top-level directories of the backup *prior* to performing an encrypted backup 
+| :bluelight:`(2)`  Backup data in an encrypted manner
+| :bluelight:`(3)`  Listing the top-level directories of the backup *after* the performing the encrypted backup
+
 .. note::
   
-   Please notice the dates of `1999-12-31` on the "directories."  This is an artifact of S3 in that 
-   directories are not objects but are just "string prefixes" with no metadata. Rclone is building support
+   Please notice the dates of `1999-12-31` on the directories.  This is an artifact of S3 in that 
+   directories are not objects but are just `string prefixes` with no metadata. Rclone is building support
    for full metadata on directories at the expense of storing another object. 
-
-
 
