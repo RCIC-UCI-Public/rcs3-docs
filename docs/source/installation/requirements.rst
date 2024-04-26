@@ -80,7 +80,7 @@ to different targets.  We've successfully run on:
   - RHEL Linux and its derivatives
   - Ubuntu Linux and Debian-derived
   - Synology NAS appliances (via Docker on x86-based hardware only)
-  - TrueNAS Linux (FreeBSD-based)
+  - TrueNAS CORE (FreeBSD-based) and TrueNAS SCALE (Debian-based)
   - Microsoft Windows 11
 
 Basic Config High-level Overview 
