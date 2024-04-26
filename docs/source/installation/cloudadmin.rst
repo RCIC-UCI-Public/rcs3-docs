@@ -84,7 +84,7 @@ To clone the repo:
 The following table briefly describes the repo directory structure under :fname:`rcs3/POC`:
 
 .. table::
-   :widths: 30 70
+   :widths: 20 80
    :class: noscroll-table
 
    +---------------------------+-----------------------------------------------------------------------+
@@ -108,6 +108,8 @@ The following table briefly describes the repo directory structure under :fname:
    |                           | by configuration scripts. These include backup job templates,         |
    |                           | lifecycle rules, templates for dashboards, policy templates and more. |
    +---------------------------+-----------------------------------------------------------------------+
+
+.. _cloudadmin onetime:
 
 3. One time Configuration
 -------------------------
@@ -239,6 +241,8 @@ UCI and should be changed to reflect your institution:
       - "128.195.0.0/16"
       - "192.5.19.0/24"
 
+
+.. _cloudadmin publish:
 
 3.6. Make your aws-settings.yaml file available
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^

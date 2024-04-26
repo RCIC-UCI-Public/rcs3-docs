@@ -36,9 +36,8 @@ It utilizes some of the following features/technologies
 
 Logically, control of the backup storage is split into at least two for security separation
 
-:Client:
+:Sysadmin:
   Can upload/download files. Can Delete Files (but not specific versions)
-:Central Admin:
-  Can Create Buckets, Service Accounts, IAM Roles, Apply Lifecycle rules (MFA Required)
-:Deletion Admin:
+:Cloud Admin:
+  Can Create Buckets, Service Accounts, IAM Roles, Apply Lifecycle rules
   Can Delete Buckets, Create Lifecycle Rules, Permanently Delete Data, Permanently Delete Objects (MFA Required)
