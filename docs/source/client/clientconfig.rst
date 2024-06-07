@@ -6,8 +6,8 @@ Client Configuration and Backup
 .. contents::
    :local:
 
-1. Overview
------------
+Overview
+--------
 
 The :silver:`sysadmin` controls the configuration of the system to-be-backed-up, which is termed generically
 as the *storage server*. This guide assumes that you have completed the :ref:`client installation
@@ -23,8 +23,8 @@ as the *storage server*. This guide assumes that you have completed the :ref:`cl
 
 .. _localize: 
 
-2. Localize the Storage Server
-------------------------------
+Localize the Storage Server
+---------------------------
 
 This step needs to be done *in lockstep* with the :silver:`cloudadmin`. The :silver:`cloudadmin` :ref:`on boards <server onboard>` and
 transmits critical *username* and *password information*.  The :silver:`cloudadmin` and :silver:`sysadmin` need to have identical 
@@ -77,8 +77,8 @@ owner (usually root) can access them.
 
 .. _define jobs:
 
-3. Create jobs.yaml
--------------------
+Create jobs.yaml
+----------------
 
 While *rclone* is the workhorse software that performs that backup, the program :fname:`gen-backup.py` is used to
 handle some of the more arcane command-line parameters, create *rclone filters* to select and exclude files/directories
@@ -95,7 +95,7 @@ first step is to copy a template :fname:`jobs.yaml` file and then edit to reflec
 The file :fname:`config/jobs.yaml` (or just :fname:`jobs.yaml`) is excluded from git so that your local changes can never
 be overwritten by a git pull (update of rcs3 itself). The following template is an example file:
 
-.. literalinclude:: /admin/files/jobs.yaml
+.. literalinclude:: /files/jobs.yaml
 
 :fname:`jobs.yaml` is yaml-formatted with all of the specialized-formatting requirements. There should be no tabs in the file
 and indentation is very specific. 
@@ -131,8 +131,8 @@ Let's describe the major portions of the file
 
 .. _job testing:
 
-4. Initial Testing of jobs.yaml
--------------------------------
+Initial Testing of jobs.yaml
+----------------------------
 
 :bluelight:`list`
 
@@ -225,8 +225,8 @@ There are some key items to take note:
 
 .. _cron:
 
-5. Install Cron Entries 
------------------------
+Install Cron Entries 
+--------------------
 
 The :fname:`templates/crond.sample` is starting point that should be customized to your desires a sample
 below with lines broken up for readability:
@@ -285,8 +285,8 @@ Note that the following two items in the sync entry *should have been* changed w
 * `--owner=panteater`.  Change *panteater* to the owner of the system being backed up
 * `--system=labstorage`.  Change *labstorage* to the name of the system being backed up
 
-5.1 Install the Crontab
-^^^^^^^^^^^^^^^^^^^^^^^
+Install the Crontab
+^^^^^^^^^^^^^^^^^^^
 
 Execute the command 
 
@@ -301,8 +301,8 @@ of cron entries.
 
 .. _seed backup:
 
-6. Run the Initial Backup 
--------------------------
+Run the Initial Backup 
+----------------------
 
 You could stop at step 5.1 above and simply wait until cron performed its first sync, but that is not recommended.
 Instead, run the **sync** version of the backup
@@ -325,16 +325,16 @@ You can follow the progress of the backup by tailing rclone's log file, e.g:
    performance, network connectivity to AWS, total volume of data, and total number of files to backup.  The 
    rclone log file shows transfer performance every minute.  You can use this to estimate expected duration.
   
-7. Advanced Options
--------------------
+Advanced Options
+----------------
 
 In this section we describe two advanced options: *using rclone directly* and *client-side encryption*.
 
 
 .. _rclone direct:
 
-7.1 Using Rclone Directly
-^^^^^^^^^^^^^^^^^^^^^^^^^
+Using Rclone Directly
+^^^^^^^^^^^^^^^^^^^^^
 
 :fname:`gen-backup.py` ultimately spins off ``rclone`` via python's `subprocess` module. Calling 
 :fname:`gen-backup.py` with the ``rclone`` argument will print out rclone command and all flags utilized. E.g.:
@@ -388,8 +388,8 @@ wrapper Powershell script :fname:`rclone.ps1`.  The ``listremotes`` example abov
 
 In the examples above, you can replace ``$(./gen-backup.py rclone)`` with ``./rclone.ps1``
 
-7.2 Client Side Encryption
-^^^^^^^^^^^^^^^^^^^^^^^^^^
+Client Side Encryption
+^^^^^^^^^^^^^^^^^^^^^^
 
 Data is stored in S3 in such a way that :silver:`cloudadmins` can view (through download) the contents of 
 any file stored in S3.  At most universities, existing policy bars them from doing that *without* the 
@@ -486,4 +486,3 @@ Here's an example session:
    Please notice the dates of `1999-12-31` on the directories.  This is an artifact of S3 in that 
    directories are not objects but are just `string prefixes` with no metadata. Rclone is building support
    for full metadata on directories at the expense of storing another object. 
-

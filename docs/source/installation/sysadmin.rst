@@ -24,8 +24,8 @@ All RCS3 configuration and implementation is performed with text-based tools wit
 
 .. _sysadmin ready:
 
-1. Ready a local system
------------------------
+Ready a local system
+--------------------
 
 We maintain a docker image ``rcs3uci/rcs3-rocky8``  on  `DockerHub <https://hub.docker.com/r/rcs3uci/rcs3-rocky8>`_ that
 can be used on backup servers.  
@@ -37,8 +37,8 @@ The image default is :fname:`RCS3_ROOT=/.rcs3`.
 
 :ref:`More Details <cloudadmin ready>` on running under Singularity or Docker are provided in the :silver:`cloudadmin`'s setup.
 
-1.1 Map Persistent Storage 
-^^^^^^^^^^^^^^^^^^^^^^^^^^
+Map Persistent Storage 
+^^^^^^^^^^^^^^^^^^^^^^
 
 A Docker image is both stateless and read-only. This means that when stopped and then restarted, 
 it behaves as if the image has been reinstalled from scratch. This means that any configuration to define
@@ -82,8 +82,8 @@ When you type ``exit`` at the :bluegray:`RCS3 Docker />` prompt, the container w
 
 .. _sysadmin clone:
 
-2. Clone the rcs3 repository
-----------------------------
+Clone the rcs3 repository
+-------------------------
 
 The `rcs3 repository <https://github.com/RCIC-UCI-Public/rcs3>`_ is how software is currently being distributed.
 At the command prompt of the container, clone the rcs3 github repository:
@@ -97,8 +97,8 @@ Please see :ref:`more details of folder structure<cloudadmin clone>` in the :sil
 
 .. _sysadmin copy:
 
-3. Copy your Organization's aws-settings.yaml
----------------------------------------------
+Copy your Organization's aws-settings.yaml
+------------------------------------------
 
 .. attention:: Before you can backup data, the
              :silver:`cloudadmin` **MUST** provide to you a customized 
@@ -112,8 +112,8 @@ You need to copy your organization's customized :fname:`aws-settings.yaml` file 
 
 .. warning:: Do *NOT* use the template setttings file *as is*. Unless you are at UCI, your backup will never work.
 
-4. Start the Docker Container 
------------------------------
+Start the Docker Container 
+--------------------------
 
 The Docker container needs to run *all the time*.  It will consume significant CPU resources only when a backup 
 is processing. The default "entry point" for the container is to run :fname:`crond`, Linux's service daemon that runs

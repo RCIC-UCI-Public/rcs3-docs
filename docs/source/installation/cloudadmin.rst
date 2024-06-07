@@ -28,8 +28,8 @@ enables admins to look at various dashboards.
 
 .. _cloudadmin ready:
 
-1. Ready a local system
------------------------
+Ready a local system
+--------------------
 
 We maintain a docker image ``rcs3uci/rcs3-rocky8``  on  `DockerHub <https://hub.docker.com/r/rcs3uci/rcs3-rocky8>`_ that
 can be used on both backup servers and for the :silver:`cloudadmin`. For the :silver:`cloudadmin`, this same image can be used under
@@ -69,8 +69,8 @@ command above with the docker command):
 
 .. _cloudadmin clone:
 
-2. Clone the rcs3 repository
-----------------------------
+Clone the rcs3 repository
+-------------------------
 
 The `rcs3 repository <https://github.com/RCIC-UCI-Public/rcs3>`_ is how software is currently being distributed.
 To clone the repo:
@@ -110,8 +110,8 @@ The following table briefly describes the repo directory structure under :fname:
 
 .. _cloudadmin onetime:
 
-3. One time Configuration
--------------------------
+One time Configuration
+----------------------
 
 .. attention:: Before any preparation of your AWS environment can be made, the
              :silver:`cloudadmin` **MUST** change various settings in
@@ -124,8 +124,8 @@ A template settings file is in the
              name, bucket postfix, and others) **CANNOT** be changed later. A large number of AWS services and
              names rely on static strings. For example you cannot change the name of a bucket once created. 
 
-3.1. Set your Institution Name
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Set your Institution Name
+^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Replace :rcicorange:`uci`  with your Institution Name in the AWS settings file.
 AWS S3 requires all bucket names to have globally unique names. Our approach is to suffix every bucket with
@@ -151,8 +151,8 @@ The next subsections call out the specific areas of the :fname:`aws-settings.yam
 
 .. _aws credentials:
 
-3.2. Get your AWS Credentials
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Get your AWS Credentials
+^^^^^^^^^^^^^^^^^^^^^^^^
 
 Login into your AWS Console for Credentials
 It is beyond the scope of this guide to explain how to access your AWS web-based console. You should be
@@ -177,9 +177,8 @@ Your :fname:`$RCS3_ROOT/.aws/credentials` file should look similar to the follow
    aws_session_token=IQoJb3JpZ2luX2VjEIP//////////wEaCXVzLXdlc3QtMiJIMEYCIQCG/lvaXGYZuzSZcYooOlmeOfXe9saVApHJKy+ ...
 
 
-
-3.3. Update your AWS Identifying Accounts
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Update your AWS Identifying Accounts
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 You must replace your AWS account and region, the original looks similar to:
 
@@ -210,8 +209,8 @@ region for your circumstances.
    The tokens are time-limited (often valid for 60 minutes).  It's good practice to get fresh tokens and paste
    them into :fname:`$RCS3_ROOT/.aws/credentials` file before you begin any administrative actions. 
 
-3.4. Update the admin team notifications
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Update the admin team notifications
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 RCS3 uses AWS's  `SNS (Simple Notification Service) <https://aws.amazon.com/sns/>`_ to send email alerts.
 The admin team name should reflect something meaningful to you.  Replace
@@ -223,8 +222,8 @@ The admin team name should reflect something meaningful to you.  Replace
    admin_notify: "rcic-team-notify"
 
 
-3.5. Update *trusted* IP addresses
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Update *trusted* IP addresses
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 There are numerous locks and safeguards that can be put in place to limit access to backup buckets. The default
 is that only a per-server service account and the admins can access a server's backup bucket.  We've added IP address
@@ -243,8 +242,8 @@ UCI and should be changed to reflect your institution:
 
 .. _cloudadmin publish:
 
-3.6. Make your aws-settings.yaml file available
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Make your aws-settings.yaml file available
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 :red:`You must make your aws-settings.yaml file available to the systems that you want to backup`.
 
@@ -254,8 +253,8 @@ How you make it available is up to you. Source code repositories, private cloud 
 work.
 
 
-3.7. Initialize the Cloud Backup Environment
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Initialize the Cloud Backup Environment
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Once you have settled on the precise configuration of :fname:`aws-settings.yaml` file and made it available to your
 community, the next step is to initialize the cloud backup environment.  These are one-time actions that put essential

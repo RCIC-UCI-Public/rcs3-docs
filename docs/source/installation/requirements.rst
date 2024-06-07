@@ -3,9 +3,6 @@
 Requirements
 =============
 
-Prerequisites
---------------
-
 RCS3 requires some very common support software to work properly.  On Windows, we provide a Powershell script 
 that downloads local versions of all requirements so that RCS3 is fully self-contained. For Synology, we provide a 
 docker image with appropriate software pre-installed.  For generic Linux, the system versions of **Python3** and **Git** are
@@ -60,9 +57,10 @@ of RCS3 reference a specific version and location for rclone and not rely on sys
    With just one tool to download and configure, you can control multiple AWS services from the command line and 
    automate them through scripts.
 
+.. _install overview:
 
 Install Overview
-----------------
+================
 
 There are two "halves" of RCS3: the :silver:`sysdamin` and the :silver:`cloudadmin`. 
 
