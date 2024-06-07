@@ -63,18 +63,18 @@ readability:
 
 .. parsed-literal::
 
-   **docker run -it \\
+   :bluelight:`docker run -it \\
               --volume /volume1:/volume1 \\
               --volume /backup-config:/.rcs3 \\
               --volume /backup-config/crontab:/var/spool/cron \\
-              rcs3uci/rcs3-rocky8 /bin/bash**
-   :bluelight:`RCS3 Docker />`   # you should see this Docker prompt
+              rcs3uci/rcs3-rocky8 /bin/bash`
+   :bluegray:`RCS3 Docker />`   # you should see this Docker prompt
 
 | 1 :sup:`st` ``--volume`` map makes your real data available to the container
 | 2 :sup:`nd` ``--volume`` map provides the space for the git repository and configuration (maps to :fname:`/.rcs3`)
 | 3 :sup:`rd` ``--volume`` map provides the space for the crontab configuration (maps to :fname:`/var/spool/cron`)
 
-When you type ``exit`` at the :bluelight:`RCS3 Docker />` prompt, the container will stop running.
+When you type ``exit`` at the :bluegray:`RCS3 Docker />` prompt, the container will stop running.
 
 .. note::
      Examples in this guide will assume that you are using our Docker image running under either Singularity
@@ -90,8 +90,8 @@ At the command prompt of the container, clone the rcs3 github repository:
 
 .. parsed-literal::
 
-   **cd $RCS3_ROOT**
-   **git clone https://github.com/RCIC-UCI-Public/rcs3**
+   :bluelight:`cd $RCS3_ROOT`
+   :bluelight:`git clone https://github.com/RCIC-UCI-Public/rcs3`
 
 Please see :ref:`more details of folder structure<cloudadmin clone>` in the :silver:`cloudadmin` guide.
 
@@ -121,11 +121,11 @@ commands on a scheduled basis.  The command is very similar to :ref:`the interac
 
 .. parsed-literal::
 
-   **docker run** :red:`--name rcs3-backup` \\
-              **--volume /volume1:/volume1 \\
+   :bluelight:`docker run` :red:`--name rcs3-backup` \\
+              :bluelight:`--volume /volume1:/volume1 \\
               --volume /backup-config:/.rcs3 \\
               --volume /backup-config/crontab:/var/spool/cron \\
-              rcs3uci/rcs3-rocky8** :red:`&`
+              rcs3uci/rcs3-rocky8` :red:`&`
 
 The notable changes from the interactive prompt, are
 
@@ -136,7 +136,7 @@ You can see the that this container is running by executing ``docker ps`` on the
 
 .. parsed-literal::
 
-    **docker ps**
+    :bluelight:`docker ps`
     :gray:`CONTAINER ID IMAGE               COMMAND                CREATED       STATUS       PORTS NAMES`
     :gray:`76ed12ab78c0 rcs3uci/rcs3-rocky8 "/bin/sh -c '/sbin/c…" 6 minutes ago Up 6 minutes       rcs3-backup`
 
@@ -149,8 +149,8 @@ You can obtain a shell prompt within this *runnning* docker container:
 
 .. parsed-literal::
 
-    **docker exec -it rcs3-backup /bin/bash**
-    :bluelight:`RCS3 Docker />`
+    :bluelight:`docker exec -it rcs3-backup /bin/bash`
+    :bluegray:`RCS3 Docker />`
 
 
 .. attention::

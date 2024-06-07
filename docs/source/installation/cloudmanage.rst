@@ -50,8 +50,8 @@ Suppose the owner *panteater* has the system *labstorage*, the :silver:`cloudadm
 
 .. parsed-literal::
 
-   **cd $RCS3_ROOT/rcs3/POC/cloudadmin**
-   **./create-bucket-with-inventory.sh panteater labstorage**
+   :bluelight:`cd $RCS3_ROOT/rcs3/POC/cloudadmin`
+   :bluelight:`./create-bucket-with-inventory.sh panteater labstorage`
 
 The output from this script is fairly terse. Here's the full output onboarding :bluelight:`panteater's labstorage` 
 system in UCI's staging environment.  
@@ -133,13 +133,13 @@ address will be denied.
 
 .. parsed-literal::
 
-   **create-bucket-with-inventory.sh -n 129.195.216.147/32 panteater labstorage**
+   :bluelight:`create-bucket-with-inventory.sh -n 129.195.216.147/32 panteater labstorage`
 
 You can validate this restriction by logging on to your AWS web console, accessing the IAM service dashboard, and 
 selecting user-defined policies. In this example, it is the policy named 
-:bluelight:`panteater-labstorage-uci-bkup-policy`.  The summary view of this policy shows explict Deny and Allow 
+:fname:`panteater-labstorage-uci-bkup-policy`  The summary view of this policy shows explict Deny and Allow 
 Sections. Please take note of the *SourceIP| IP address* restriction that has been properly set to 
-:bluelight:`129.195.216.147/32`. The policy also allows the *service account* to publish to a very particular SNS
+:fname:`129.195.216.147/32` The policy also allows the *service account* to publish to a very particular SNS
 Notification Stream, if it exists.
 
 .. image:: /images/cloudadmin/IP-Policy-Restriction.png
@@ -154,7 +154,7 @@ The script :fname:`cloudadmin/create-sns-topic.py`  is used to create a notifica
 
 .. parsed-literal::
 
-   :bluelight:`RCS3 Docker /.rcs3/rcs3/POC/cloudadmin>` **./create-sns-topic.py panteater labstorage -e ppapadop@uci.edu**
+   :bluegray:`RCS3 Docker /.rcs3/rcs3/POC/cloudadmin>` :bluelight:`./create-sns-topic.py panteater labstorage -e ppapadop@uci.edu`
 
 You can supply multiple emails and/or make multiple invocations of :fname:`create-sns-topic.py`.  The recipient of the SNS
 notification must *confirm their subscription*. They will be sent an e-mail from AWS that is similar to:
@@ -172,8 +172,8 @@ Here's example output for UCI's testing environment:
 
 .. parsed-literal::
 
-   :bluelight:`RCS3 Docker /.rcs3/rcs3/POC/cloudadmin>` **export AWS_PROFILE=166566894905_AWSAdministratorAccess**
-   :bluelight:`RCS3 Docker /.rcs3/rcs3/POC/cloudadmin>` **aws sns list-topics**
+   :bluegray:`RCS3 Docker /.rcs3/rcs3/POC/cloudadmin>` :bluelight:`export AWS_PROFILE=166566894905_AWSAdministratorAccess`
+   :bluegray:`RCS3 Docker /.rcs3/rcs3/POC/cloudadmin>` :bluelight:`aws sns list-topics`
    :gray:`{
        "Topics": [
            {
@@ -197,7 +197,7 @@ one uses the ``list-subscriptions-by-topic`` subcommand of ``sns``:
 
 .. parsed-literal::
 
-   :bluelight:`RCS3 Docker /.rcs3/rcs3/POC/cloudadmin>` **aws sns list-subscriptions-by-topic --topic-arn=arn:aws:sns:us-west-2:166566894905:panteater-labstorage-uci-notify**
+   :bluegray:`RCS3 Docker /.rcs3/rcs3/POC/cloudadmin>` :bluelight:`aws sns list-subscriptions-by-topic --topic-arn=arn:aws:sns:us-west-2:166566894905:panteater-labstorage-uci-notify`
    :gray:`{
        "Subscriptions": [
            {
@@ -225,7 +225,7 @@ The file  :fname:`templates/quotas.csv` contains UCI's current quota settings an
 
 .. parsed-literal::
 
-   :bluelight:`ID, System, Object Quota (Millions), Storage Quota (TB)`
+   **ID, System, Object Quota (Millions), Storage Quota (TB)**
 
 The ``#`` is a comment line and blank lines are
 skipped.  A valid quota file for setting the panteater's labstorage system to 1M objects and 10TB is:
@@ -242,12 +242,12 @@ skipped.  A valid quota file for setting the panteater's labstorage system to 1M
    panteater,labstorage,1,10
    lopez,fedaykin,1,1
 
-The header line *must* remain.   To set quotas for all systems in the :fname:`quotas.csv` file, just issue the 
-``set-quotas.py`` command as in the following example:
+The header line *must* remain.   To set quotas for all systems in the :fname:`quotas.csv` file, just issue the command
+``set-quotas.py`` as in the following example:
 
 .. parsed-literal::
 
-   :bluelight:`RCS3 Docker /.rcs3/rcs3/POC>` **cloudadmin/set-quotas.py**
+   :bluegray:`RCS3 Docker /.rcs3/rcs3/POC>` :bluelight:`cloudadmin/set-quotas.py`
    :gray:`Putting Alarm:  panteater-labstorage exceeded number objects quota into cloudwatch
    Putting Alarm:  panteater-labstorage excessive daily activity into cloudwatch
    Putting Alarm:  panteater-labstorage exceeded storage quota into cloudwatch
@@ -276,7 +276,7 @@ of :fname:`quotas.csv`.  Simply issue the command ``cloudadmin/set-cloudwatch-co
 
 .. parsed-literal::
 
-    :bluelight:`RCS3 Docker /.rcs3/rcs3/POC>` **cloudadmin/set-cloudwatch-composite-dashboards.py**
+    :bluegray:`RCS3 Docker /.rcs3/rcs3/POC>` :bluelight:`cloudadmin/set-cloudwatch-composite-dashboards.py`
     :gray:`Putting Dashboard:  Cost-Estimates-Bucket into cloudwatch
     Putting Dashboard:  System-Alarms into cloudwatch`
 
@@ -290,7 +290,7 @@ and percentage overhead of snapshots.  One can customize the timeframe (4 weeks 
 
 .. parsed-literal::
 
-    :bluelight:`RCS3 Docker /.rcs3/rcs3/POC>` **cloudadmin/set-cloudwatch-composite-dashboards.py**
+    :bluegray:`RCS3 Docker /.rcs3/rcs3/POC>` :bluelight:`cloudadmin/set-cloudwatch-composite-dashboards.py`
     :gray:`Putting Dashboard:  Cost-Estimates-Bucket into cloudwatch
     Putting Dashboard:  System-Alarms into cloudwatch`
 

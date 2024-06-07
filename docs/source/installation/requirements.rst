@@ -110,9 +110,9 @@ Roughly speaking, both :silver:`sysadmin` and :silver:`cloudadmin` follow a simi
 
 2. Clone the git repository
 
-   .. code-block:: console
+   .. parsed-literal::
 
-      git clone https://github.com/RCIC-UCI-Public/rcs3.git
+      :bluelight:`git clone https://github.com/RCIC-UCI-Public/rcs3.git`
 
 3. Configure a system for backup. There is a :silver:`cloudadmin`-specific setup and a :silver:`sysadmin`-specific setup).
 4. Run the backup the first time.

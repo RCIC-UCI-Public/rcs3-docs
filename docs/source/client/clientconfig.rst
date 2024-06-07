@@ -42,10 +42,10 @@ To enroll your system to backup into AWS, the :silver:`sysadmin` uses the :fname
 
 .. parsed-literal::
 
-   **cd $RCS3_ROOT/rcs3/POC/sysadmin**
-   **./localize.py panteater labstorage**
-   Enter AWS Access Key:
-   Enter AWS Secret Access Key: 
+   :bluelight:`cd $RCS3_ROOT/rcs3/POC/sysadmin`
+   :bluelight:`./localize.py panteater labstorage`
+   :bluegray:`Enter AWS Access Key:`
+   :bluegray:`Enter AWS Secret Access Key:`
 
 The :silver:`cloudadmin` will provide you the AWS Access Key and Secret Access Key. These are generated specifically for your
 server when the :silver:`cloudadmin` on boards your server.
@@ -89,8 +89,8 @@ first step is to copy a template :fname:`jobs.yaml` file and then edit to reflec
 
 .. parsed-literal::
 
-   **cd $RCS3_ROOT/rcs3/POC**
-   **cp templates/jobs.yaml config/jobs.yaml**
+   :bluelight:`cd $RCS3_ROOT/rcs3/POC`
+   :bluelight:`cp templates/jobs.yaml config/jobs.yaml`
 
 The file :fname:`config/jobs.yaml` (or just :fname:`jobs.yaml`) is excluded from git so that your local changes can never
 be overwritten by a git pull (update of rcs3 itself). The following template is an example file:
@@ -141,7 +141,7 @@ The `list` command in ``gen-backup.py`` will provide the set of jobs that will b
 
 .. parsed-literal::
 
-   **$RCS3_ROOT/rcs3/POC/sysadmin/gen-backup.py list**
+   :bluelight:`$RCS3_ROOT/rcs3/POC/sysadmin/gen-backup.py list`
    rcs3config /.rcs3/rcs3/POC/config
    backup1 /
 
@@ -160,7 +160,7 @@ executed:
 
 .. parsed-literal::
 
-   **$RCS3_ROOT/rcs3/POC/sysadmin/gen-backup.py detail**
+   :bluelight:`$RCS3_ROOT/rcs3/POC/sysadmin/gen-backup.py detail`
    :gray:`rcs3config /.rcs3/rcs3/POC/config
    == filter contents (output to: /tmp/rcs3config.filter) ==
    + jobs.yaml
@@ -243,35 +243,37 @@ This is the first exposure to **sync** vs **top-up** backups and the difference 
 and improving performance.  When :fname:`localize.py` was executed the weekly and daily backup scripts were created.
 The scripts can be *edited* to modify parameters to :fname:`gen-backup.py`
 
-The :fname:`weekly-backup` contains a line very similar to:
+Weekly-backup:
+  The :fname:`weekly-backup` contains a line very similar to:
 
-.. parsed-literal::
+  .. parsed-literal::
 
-    /.rcs3/rcs3/POC/sysadmin/gen-backup.py --threads=2 --checkers=32 \\ 
-     --owner=panteater --system=labstorage run > /var/log/gen-backup.log 2>&1
+     :bluelight:`/.rcs3/rcs3/POC/sysadmin/gen-backup.py --threads=2 --checkers=32 \\ 
+      --owner=panteater --system=labstorage run > /var/log/gen-backup.log 2>&1`
 
-The weekly backup is a *sync*
+  The weekly backup is a *sync*
 
-   :bluelight:`sync`
-       This **compares the contents of the server and the backup**. Updated/New files are uploaded. Deleted files are
-       removed from the backup. This translates to an AWS API call (head) for every single file in the backup. For
-       time efficiency, rclone can have multiple outstanding "check requests" in flight. That number is governed
-       by the `--checkers`.  For backups with tens of millions of files, setting to larger number  `--checkers=128`
-       results in roughly 2000 file checks/second (about 1M checks/10 minutes)  
+    :bluelight:`sync`
+      This **compares the contents of the server and the backup**. Updated/New files are uploaded. Deleted files are
+      removed from the backup. This translates to an AWS API call (head) for every single file in the backup. For
+      time efficiency, rclone can have multiple outstanding "check requests" in flight. That number is governed
+      by the `--checkers`.  For backups with tens of millions of files, setting to larger number  `--checkers=128`
+      results in roughly 2000 file checks/second (about 1M checks/10 minutes)  
 
-:fname:`daily-backup` looks very similar but one important difference
+Daily-backup:
+  The :fname:`daily-backup` looks very similar but one important difference
 
-.. parsed-literal::
+  .. parsed-literal::
 
-    /.rcs3/rcs3/POC/sysadmin/gen-backup.py --threads=2 --checkers=32 \\
-    --owner=panteater --system=labstorage :bluelight:`--top-up=24h` run >> /var/log/gen-backup.log 2>&1
+     :bluelight:`/.rcs3/rcs3/POC/sysadmin/gen-backup.py --threads=2 --checkers=32 \\
+     --owner=panteater --system=labstorage` :red:`--top-up=24h` :bluelight:`run >> /var/log/gen-backup.log 2>&1`
 
-Daily adds the parameter `--top-up`:
+  Daily adds the parameter `--top-up`:
  
    :bluelight:`top-up`
-       This scans the local file system only for any new/changed files in the top-up window (*24 hours* in the example)
-       Deleted files are *NOT* removed from the backup. This is inexpensive becuase (1) only new data is uploaded
-       (2) the head API call of *sync* is **not** made on all existing files. 
+     This scans the local file system only for any new/changed files in the top-up window (*24 hours* in the example)
+     Deleted files are *NOT* removed from the backup. This is inexpensive becuase (1) only new data is uploaded
+     (2) the head API call of *sync* is **not** made on all existing files. 
 
 
 The two sample cron entries have comments as to day and time-of-day that *sync* (once per week) and *top-up* (6 days/week) will run.
@@ -290,7 +292,7 @@ Execute the command
 
 .. parsed-literal::
 
-   **crontab -e**
+   :bluelight:`crontab -e`
 
 and paste the contents of the sample crontab setup. 
 You can change time and days of the week that your backups run. Please see 
@@ -308,13 +310,13 @@ Instead, run the **sync** version of the backup
 
 .. parsed-literal::
 
-   ** /.rcs3/rcs3/POC/config/weekly-backup & **
+   :bluelight:`/.rcs3/rcs3/POC/config/weekly-backup &`
 
 You can follow the progress of the backup by tailing rclone's log file, e.g:
 
 .. parsed-literal::
 
-   **tail -f /tmp/backup1.log**
+   :bluelight:`tail -f /tmp/backup1.log`
 
 
 .. attention::
@@ -340,7 +342,7 @@ In this section we describe two advanced options: *using rclone directly* and *c
 
 .. parsed-literal::
 
-   **./gen-backup.py rclone**
+   :bluelight:`./gen-backup.py rclone`
    rclone --config /.rcs3/rcs3/POC/config/rclone.conf \\
    --s3-shared-credentials-file /.rcs3/rcs3/POC/config/credentials \\
    --metadata --links --transfers 2 --checkers 32
@@ -350,7 +352,7 @@ where rclone's ``listremotes`` command is used:
 
 .. parsed-literal::
 
-   **$(./gen-backup.py rclone) listremotes**
+   :bluelight:`$(./gen-backup.py rclone) listremotes`
    s3-backup:
    s3-crypt:
    s3-inventory:
@@ -365,7 +367,7 @@ alternate port.  An example of serving data to localhost over port 8080 in a rea
 
 .. parsed-literal::
 
-   **$(./gen-backup.py rclone) serve http --read-only --addr localhost:8080 s3-backup:**
+   :bluelight:`$(./gen-backup.py rclone) serve http --read-only --addr localhost:8080 s3-backup:`
 
 Point your browser to :fname:`http://localhost:8080` to view the contents of your backup.
 If you are familiar with `ssh tunneling <https://www.ssh.com/academy/ssh/tunneling>`_, it's not
@@ -378,7 +380,7 @@ wrapper Powershell script :fname:`rclone.ps1`.  The ``listremotes`` example abov
 
 .. parsed-literal::
 
-   **./rclone.ps1 listremotes**
+   :bluelight:`./rclone.ps1 listremotes`
    s3-backup:
    s3-crypt:
    s3-inventory:
@@ -418,7 +420,7 @@ a :bluelight:`private encryption key`.    There are some important facts when us
 
      .. parsed-literal::
 
-        **$(./gen-backup.py rclone) config update s3-crypt --all**
+        :bluelight:`$(./gen-backup.py rclone) config update s3-crypt --all`
 
      | Take defaults for all questions, have rclone generate the password and the salt,
      | do NOT edit advanced config. The rclone page on `crypted remotes <https://rclone.org/crypt/>`_ provides details. 
@@ -461,23 +463,23 @@ Here's an example session:
 
 .. parsed-literal::
 
-   **$(./gen-backup.py rclone) lsd s3-backup:**        :bluelight:`(1)`
+   :bluelight:`$(./gen-backup.py rclone) lsd s3-backup:`             **(1)**
            0 1999-12-31 16:00:00        -1 backup1
            0 1999-12-31 16:00:00        -1 rcs3config
-   **./gen-backup.py  --endpoint=s3-crypt run**        :bluelight:`(2)`
+   :bluelight:`gen-backup.py  --endpoint=s3-crypt run`               **(2)**
    === rcs3config sync started at 2024-04-18 15:43:54.933541
    === backup1-encrypted sync started at 2024-04-18 15:43:54.933541
    === rcs3config completed at 2024-04-18 15:43:56.029525
    === backup1-encrypted completed at 2024-04-18 15:44:42.001963
    All tasks completed.
-   **$(./gen-backup.py rclone) lsd s3-backup:**        :bluelight:`(3)`
+   :bluelight:`$(./gen-backup.py rclone) lsd s3-backup:`             **(3)**
            0 1999-12-31 16:00:00        -1 backup1-encrypted
            0 1999-12-31 16:00:00        -1 backup
            0 1999-12-31 16:00:00        -1 rcs3config
 
-| :bluelight:`(1)`  Listing the top-level directories of the backup *prior* to performing an encrypted backup 
-| :bluelight:`(2)`  Backup data in an encrypted manner
-| :bluelight:`(3)`  Listing the top-level directories of the backup *after* the performing the encrypted backup
+| **(1)** Listing the top-level directories of the backup *prior* to performing an encrypted backup 
+| **(2)** Backup data in an encrypted manner
+| **(3)** Listing the top-level directories of the backup *after* the performing the encrypted backup
 
 .. note::
   

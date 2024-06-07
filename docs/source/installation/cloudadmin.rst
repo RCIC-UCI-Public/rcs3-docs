@@ -45,11 +45,10 @@ the existing directory :fname:`/my/rcs3`, use:
 
 .. parsed-literal::
 
-   **export SINGULARITYENV_PS1='RCS3 Singularity \w> '**
-   **export SINGULARITY_BIND=/my/rcs3:/.rcs3**
-   **singularity shell docker://rcs3uci/rcs3-rocky8**
-   :bluelight:`RCS3 Singularity />`   # you should see this Singularity prompt
-
+   :bluelight:`export SINGULARITYENV_PS1='RCS3 Singularity \w> '`
+   :bluelight:`export SINGULARITY_BIND=/my/rcs3:/.rcs3`
+   :bluelight:`singularity shell docker://rcs3uci/rcs3-rocky8`
+   :bluegray:`RCS3 Singularity />`   # you should see this Singularity prompt
 
 
 The *PS1* line sets a slightly more meaningful prompt by adding the working
@@ -60,8 +59,8 @@ command above with the docker command):
 
 .. parsed-literal::
 
-   **docker run -it --volume /my/rcs3:/.rcs3 rcs3uci/rcs3-rocky8 /bin/bash**
-   :bluelight:`RCS3 Docker />`   # you should see this Docker prompt
+   :bluelight:`docker run -it --volume /my/rcs3:/.rcs3 rcs3uci/rcs3-rocky8 /bin/bash`
+   :bluegray:`RCS3 Docker />`   # you should see this Docker prompt
 
 
 .. note::
@@ -78,8 +77,8 @@ To clone the repo:
 
 .. parsed-literal::
 
-   **cd $RCS3_ROOT**
-   **git clone https://github.com/RCIC-UCI-Public/rcs3**
+   :bluelight:`cd $RCS3_ROOT`
+   :bluelight:`git clone https://github.com/RCIC-UCI-Public/rcs3`
 
 The following table briefly describes the repo directory structure under :fname:`rcs3/POC`:
 
@@ -142,8 +141,8 @@ to replace :rcicorange:`uci` with :rcicorange:`ucsb-ece` placing the results in 
 
 .. parsed-literal::
 
-   **cd $RCS3_ROOT/rcs3/POC**
-   **sed 's/uci/ucsb-ece/g' templates/aws-settings.yaml > config/aws-settings.yaml**
+   :bluelight:`cd $RCS3_ROOT/rcs3/POC`
+   :bluelight:`sed 's/uci/ucsb-ece/g' templates/aws-settings.yaml > config/aws-settings.yaml`
 
 This step will get you down the road quite a ways for your local customization.  We will assume that you have completed
 the above step substituting your institutional name appropriately
@@ -198,11 +197,11 @@ For the :fname:`AWS_PROFILE`, you need to use the string between the first :rcic
 brackets pair of the credentials file.
 The full sequence using the account above is:
 
-.. code-block:: text
+.. parsed-literal::
 
-   export AWS_PROFILE=314159307276_AWSAdministratorAccess
-   export AWS_SHARED_CREDENTIALS_FILE=$RCS3_ROOT/.aws/credentials
-   aws account list-regions
+   :bluelight:`export AWS_PROFILE=314159307276_AWSAdministratorAccess`
+   :bluelight:`export AWS_SHARED_CREDENTIALS_FILE=$RCS3_ROOT/.aws/credentials`
+   :bluelight:`aws account list-regions`
 
 This will output a JSON-formatted string that lists all available regions for your account. Select the appropriate
 region for your circumstances.
@@ -272,8 +271,8 @@ to make various metrics available:
 
 .. parsed-literal::
 
-   **cd $RCS3_ROOT/rcs3/POC**
-   **cloudadmin/create-storage-lens.sh**
+   :bluelight:`cd $RCS3_ROOT/rcs3/POC`
+   :bluelight:`cloudadmin/create-storage-lens.sh`
 
 
 **Step 2: Create emails for administrative notifications**
@@ -284,8 +283,8 @@ Each invocation *adds* the emails to the full set of emails for the topic.  Dupl
 
 .. parsed-literal::
 
-   **cd $RCS3_ROOT/rcs3/POC**
-   **cloudadmin/create-admin-sns-topic.py -e <email1> [<email> ...]**
+   :bluelight:`cd $RCS3_ROOT/rcs3/POC`
+   :bluelight:`cloudadmin/create-admin-sns-topic.py -e <email1> [<email> ...]`
 
 .. note::
    There is no simple command-line method provided by AWS to *delete* an email.  It is straightforward to do this
@@ -299,8 +298,8 @@ an overview of resource usage:
 
 .. parsed-literal::
 
-   **cd $RCS3_ROOT/rcs3/POC**
-   **cloudadmin/set-cloudwatch-dashboards.py**
+   :bluelight:`cd $RCS3_ROOT/rcs3/POC`
+   :bluelight:`cloudadmin/set-cloudwatch-dashboards.py`
 
 Once you have created the dashboard above AND you have on-boarded servers for backup, you will eventually see a
 display similar to the following:
