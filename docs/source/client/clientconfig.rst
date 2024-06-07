@@ -50,18 +50,30 @@ To enroll your system to backup into AWS, the :silver:`sysadmin` uses the :fname
 The :silver:`cloudadmin` will provide you the AWS Access Key and Secret Access Key. These are generated specifically for your
 server when the :silver:`cloudadmin` on boards your server.
 
-The following two files are written only if they do not already exist.  You can redo the localization by removing these files:
+The following four files are written only if they do not already exist.  You can redo the localization by removing any
+subset of these files for which you need to re-localize:
 
     | :fname:`$RCS3_ROOT/rcs3/POC/config/credentials`
     | :fname:`$RCS3_ROOT/rcs3/POC/config/rclone.conf`
+    | :fname:`$RCS3_ROOT/rcs3/POC/config/weekly-backup`
+    | :fname:`$RCS3_ROOT/rcs3/POC/config/daily-backup`
+
 
 The credentials file holds long-term username/password so that rclone can interact with your server-specific 
-backup-bucket.  Both files have permissions changed so that only the owner (usually root) can access them. 
+backup-bucket.  Both :fname:`credentials` and :fname:`rclone.conf` have permissions changed so that only the
+owner (usually root) can access them. 
 
 .. note::
 
    The :silver:`cloudadmin` can regenerate credentials for the specific *AWS service account* that performs the backup. If these 
    credentials are lost (or compromised), the backup can still be made accessible. 
+
+
+.. note::
+   Credentials are rotated automatically after the completion of every backup job. In this sense *long-term* 
+   credentials are valid from the *conclusion* of the previous backup job through the completion of the current 
+   backup job.  These structure prevents credentials from expiring *during* an active backup session.  
+
 
 .. _define jobs:
 
@@ -222,27 +234,51 @@ below with lines broken up for readability:
 .. code-block:: bash
 
    # Run a full sync Sunday (Day 0) and 1am 
-   0 1 * * 0 (/.rcs3/rcs3/POC/sysadmin/gen-backup.py --threads=2 --checkers=32 \
-              --owner=panteater --system=labstorage run >> /var/log/gen-backup.log 2>&1) &
+   0 1 * * 0 /.rcs3/rcs3/POC/sysadmin/weekly-backup &
     
    # run top syncs M-Sa (Days 1-6)at 1am
-   0 1 * * 1-6 (/.rcs3/rcs3/POC/sysadmin/gen-backup.py --top-up=24h run >> /var/log/gen-backup.log 2>&1) &
+   0 1 * * 1-6 /.rcs3/rcs3/POC/sysadmin/daily-backup &
    
 This is the first exposure to **sync** vs **top-up** backups and the difference is critical to containing cost 
-and improving performance.
+and improving performance.  When :fname:`localize.py` was executed the weekly and daily backup scripts were created.
+The scripts can be *edited* to modify parameters to :fname:`gen-backup.py`
+
+The :fname:`weekly-backup` contains a line very similar to:
+
+.. parsed-literal::
+
+    /.rcs3/rcs3/POC/sysadmin/gen-backup.py --threads=2 --checkers=32 \\ 
+     --owner=panteater --system=labstorage run > /var/log/gen-backup.log 2>&1
+
+The weekly backup is a *sync*
 
    :bluelight:`sync`
-       This compares the contents of the server and the backup. Updated/New files are uploaded. Deleted files are
-       removed from the backup. This translates to AWS api call (head) for every single file in the backup. 
+       This **compares the contents of the server and the backup**. Updated/New files are uploaded. Deleted files are
+       removed from the backup. This translates to an AWS API call (head) for every single file in the backup. For
+       time efficiency, rclone can have multiple outstanding "check requests" in flight. That number is governed
+       by the `--checkers`.  For backups with tens of millions of files, setting to larger number  `--checkers=128`
+       results in roughly 2000 file checks/second (about 1M checks/10 minutes)  
 
+:fname:`daily-backup` looks very similar but one important difference
+
+.. parsed-literal::
+
+    /.rcs3/rcs3/POC/sysadmin/gen-backup.py --threads=2 --checkers=32 \\
+    --owner=panteater --system=labstorage :bluelight:`--top-up=24h` run >> /var/log/gen-backup.log 2>&1
+
+Daily adds the parameter `--top-up`:
+ 
    :bluelight:`top-up`
        This scans the local file system only for any new/changed files in the top-up window (*24 hours* in the example)
-       Deleted files are *NOT* removed from the backup. This is very inexpensive as only new data is uploaded. 
+       Deleted files are *NOT* removed from the backup. This is inexpensive becuase (1) only new data is uploaded
+       (2) the head API call of *sync* is **not** made on all existing files. 
+
 
 The two sample cron entries have comments as to day and time-of-day that *sync* (once per week) and *top-up* (6 days/week) will run.
 A simple lock file is written to ensure that two versions of :fname:`gen-backup.py` do not run at the same time.
 
-Note that the following two items in the sync entry *should* be changed:
+Note that the following two items in the sync entry *should have been* changed when  you
+:ref:`localized the storage server <localize>`
 
 * `--owner=panteater`.  Change *panteater* to the owner of the system being backed up
 * `--system=labstorage`.  Change *labstorage* to the name of the system being backed up
@@ -256,8 +292,8 @@ Execute the command
 
    **crontab -e**
 
-and paste the contents of the sample crontab setup. Edit to reflect both
-the owner and system name.  You can change time and days of the week that your backups run. Please see 
+and paste the contents of the sample crontab setup. 
+You can change time and days of the week that your backups run. Please see 
 the `crontab man page <https://linux.die.net/man/5/crontab>`_ for more details on the format and meaning
 of cron entries.
 
@@ -267,13 +303,12 @@ of cron entries.
 -------------------------
 
 You could stop at step 5.1 above and simply wait until cron performed its first sync, but that is not recommended.
-Instead, run the **sync** version of the backup, exactly as it is written in your crontab.
+Instead, run the **sync** version of the backup
 
 
 .. parsed-literal::
 
-   **(/.rcs3/rcs3/POC/sysadmin/gen-backup.py --threads=2 --checkers=32 \\
-    --owner=panteater --system=labstorage run >> /var/log/gen-backup.log 2>&1) &**
+   ** /.rcs3/rcs3/POC/config/weekly-backup & **
 
 You can follow the progress of the backup by tailing rclone's log file, e.g:
 
@@ -322,7 +357,7 @@ where rclone's ``listremotes`` command is used:
    s3-native:
 
 You can now use any `rclone command <https://rclone.org/commands>`_ but should only limit to commands that
-make no changes. A particulary convenvient command is ``serve http`` so that  you could use a web
+**make no changes**. A particulary convenvient command is ``serve http`` so that  you could use a web
 browser to view what is stored in the backup. 
 
 It is recommended that you only serve to localhost and use an 
