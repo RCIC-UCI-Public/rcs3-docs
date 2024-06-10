@@ -7,6 +7,7 @@
 --paleblue:#e1effa;
 --bluelight: #0092e0;
 --proposed: #00afaf;
+--section: #557799;          /* dark bluegray */
 }
 
 /* these colors can be used in roles */
@@ -48,4 +49,17 @@
 }
 .noscroll-table th {
     background-color:var(--paleblue);
+}
+
+/* for  entry page toc */
+.section1 {
+    color: var(--section) ;
+    font-weight: bold;
+    font-size: 24px;
+}
+
+.section2 {
+    color: var(--section) ;
+    font-weight: bold;
+    font-size: 14px;
 }

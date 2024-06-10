@@ -3,8 +3,7 @@
    This project is under active development.
    The documentaion pages are currently a template
 
-RCS3 Documentation
-==================
+:section1:`RCS3 Documentation`
 
 This documentation describes our setup to effectively use :term:`AWS` and :term:`Rclone`
 technologies to backup larger servers (100+TB) to *Amazon S3 Glacier Flexible Retrieval*.
@@ -51,32 +50,20 @@ technologies to backup larger servers (100+TB) to *Amazon S3 Glacier Flexible Re
 
    /references/index
 
-About RCS3
-----------
-
-:doc:`/about/index`
+:section2:`ABOUT RCS3`
+    :doc:`What is RCS3 </about/index>`
   
-Quickstart
-----------
+:section2:`QUICKSTART`
+    :doc:`Quickstart 10K Foot View </quickstart/index>`
 
-:doc:`/quickstart/index`
+:section2:`INSTALLATION`
+    :doc:`Installation details </installation/index>`
 
-Installation
-------------
+:section2:`CLOUD ADMINISTRATION`
+    :doc:`Cloud management overview </cloud/index>`
 
-:doc:`/installation/index`
+:section2:`CLIENT CONFIGURATION`
+    :doc:`Client tasks and configuration </client/index>`
 
-Cloud Administration
---------------------
-
-:doc:`/cloud/index`
-
-Client Configuration
---------------------
-
-:doc:`/client/index`
-
-References
-----------
-
-:doc:`/references/index`
+:section2:`REFERENCES`
+    :doc:`/references/index`

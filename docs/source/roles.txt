@@ -67,7 +67,8 @@
 .. role:: bluelight
 .. role:: bluegray
 .. role:: underline
-.. role:: section
+.. role:: section1
+.. role:: section2
 .. role:: silver
 .. role:: fname
 
