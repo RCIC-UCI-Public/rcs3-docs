@@ -31,11 +31,11 @@ of RCS3 reference a specific version and location for rclone and not rely on sys
        https://pypi.org/project/distro/ is an OS platform information API.
 
    .. note::
-      Python 3.8 or higher is required for the :silver:`cloudadmin` because
+      Python 3.8 or higher is required  because
       boto3 no longer supports older versions of Python.
       We use Python 3.11.x and 3.12.x with no observed issues.
 
-2. **Rclone** version 1.65 or newer
+2. **Rclone** version 1.67 or newer
 
    Rclone https://rclone.org/ does the heavy lifting for RCS3.
    Even with this version, there are some known bugs that are likely to be addressed in future rclone releases.
@@ -51,7 +51,7 @@ of RCS3 reference a specific version and location for rclone and not rely on sys
 
 
 4. **AWS Cli** version 2.11.21 or newer 
-   (for :silver:`cloudadmin` only)
+   (Required for the :silver:`cloudadmin`. Recommended for the :silver:`sysadmin`)
 
    The AWS Command Line Interface (AWS CLI) https://aws.amazon.com/cli is a unified tool to manage your AWS services. 
    With just one tool to download and configure, you can control multiple AWS services from the command line and 
