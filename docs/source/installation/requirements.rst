@@ -11,9 +11,9 @@ of RCS3 reference a specific version and location for rclone and not rely on sys
 
 1. **Python** version 3.8 or newer
 
-   The main backup driver script fname:`gen-backup.py` is Python3 only. It has a reasonably light requirement set in
+   The main backup driver script :fname:`gen-backup.py` is Python3 only. It has a reasonably light requirement set in
    terms of Python modules (e.g., installed via ``pip3`` ) that go beyond core libraries provided by the most common
-   OS-specific Python packages.  This includes:
+   OS-specific Python packages.  This set includes:
 
    :pyyaml:
        https://pypi.org/project/pyyaml features a complete YAML 1.1 parser, Unicode support, pickle support 
