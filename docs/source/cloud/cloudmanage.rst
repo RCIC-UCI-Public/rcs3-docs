@@ -370,4 +370,38 @@ console.
 Emptying and Deleting a backup bucket
 -------------------------------------
 
+Before you can delete an AWS bucket, you must completely empty if first.  If the number of
+objects is small (say less than 1M) and you don't have objects archived in Glacier or Deep Glacier
+or subject to Object Locks, then you can manually delete all objects in a bucket fairly quickly.
+
+.. _manually:
+
+:bluelight:`Manually`
+  This script requests all objects in a specific bucket and deletes them.  It processes the
+  list in batches (check the boto3 list_object_versions for the default batch size).  This can
+  cause errors in the boto3 delete_objects command, so you may need to decrease the batch size
+  if you see errors.
+
+.. parsed-literal::
+
+   :bluelight:`cd $RCS3_ROOT/rcs3/POC/cloudadmin`
+   :bluelight:`./delete-all-bucket-objects.py panteater-labstorage-uci-s-bkup-bucket`
+
+
+.. _lifecycle policy:
+
+:bluelight:`Lifecycle-Policy`
+  In a more complex situation, you can use a lifecycle policy which will delete objects over 
+  time.  You'll have to check periodically, a day or a week or a month later depending on
+  situation to check that all objects have been removed.
+
+.. parsed-literal::
+
+   :bluelight:`cd $RCS3_ROOT/rcs3/POC/cloudadmin`
+   :bluelight:`./remove-lifecycle-inventory-from-bucket.py panteater-labstorage-uci-s-bkup-bucket`
+   :bluelight:`aws s3api put-bucket-lifecycle-configuration --bucket panteater-labstorage-uci-s-bkup-bucket --lifecycle-configuration file://../templates/lifecycle/lifecycle-delete-all-objects.json`
+
+
+Again, this can be highly dependent on your environment and how you've modified your buckets.
+
 
