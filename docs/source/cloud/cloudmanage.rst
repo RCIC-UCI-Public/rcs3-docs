@@ -408,6 +408,8 @@ or subject to Object Locks, then you can manually delete all objects in a bucket
   Once all objects have been remove, you can now remove the bucket and associated service
   account and policies.
 
+.. parsed-literal::
+
    :bluelight:`cd $RCS3_ROOT/rcs3/POC/cloudadmin`
    :bluelight:`./delete-bucket-and-user.py panteater labstorage`
 
