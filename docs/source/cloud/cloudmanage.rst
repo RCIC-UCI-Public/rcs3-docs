@@ -393,13 +393,23 @@ or subject to Object Locks, then you can manually delete all objects in a bucket
 :bluelight:`Lifecycle-Policy`
   In a more complex situation, you can use a lifecycle policy which will delete objects over 
   time.  You'll have to check periodically, a day or a week or a month later depending on
-  situation to check that all objects have been removed.
+  your situation, to verify that all objects have been removed.
 
 .. parsed-literal::
 
    :bluelight:`cd $RCS3_ROOT/rcs3/POC/cloudadmin`
    :bluelight:`./remove-lifecycle-inventory-from-bucket.py panteater-labstorage-uci-s-bkup-bucket`
    :bluelight:`aws s3api put-bucket-lifecycle-configuration --bucket panteater-labstorage-uci-s-bkup-bucket --lifecycle-configuration file://../templates/lifecycle/lifecycle-delete-all-objects.json`
+
+.. _delete bucket::
+
+:bluelight:`Delete-Bucket`
+
+  Once all objects have been remove, you can now remove the bucket and associated service
+  account and policies.
+
+   :bluelight:`cd $RCS3_ROOT/rcs3/POC/cloudadmin`
+   :bluelight:`./delete-bucket-and-user.py panteater labstorage`
 
 
 Again, this can be highly dependent on your environment and how you've modified your buckets.
