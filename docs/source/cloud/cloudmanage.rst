@@ -401,11 +401,11 @@ or subject to Object Locks, then you can manually delete all objects in a bucket
    :bluelight:`./remove-lifecycle-inventory-from-bucket.py panteater-labstorage-uci-s-bkup-bucket`
    :bluelight:`aws s3api put-bucket-lifecycle-configuration --bucket panteater-labstorage-uci-s-bkup-bucket --lifecycle-configuration file://../templates/lifecycle/lifecycle-delete-all-objects.json`
 
-.. _delete bucket::
+.. _delete bucket:
 
 :bluelight:`Delete-Bucket`
 
-  Once all objects have been remove, you can now remove the bucket and associated service
+  Once all objects have been removed, you can now delete the bucket and associated service
   account and policies.
 
 .. parsed-literal::
