@@ -4,7 +4,7 @@ Configure Self-Service Restore
 ==============================
 
 .. contents::
-   :local:
+    :local:
 
 Generic Settings
 ----------------
