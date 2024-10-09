@@ -5,4 +5,5 @@ Cloud Administration
    :numbered:
 
    /cloud/cloudmanage
+   /cloud/restoreconfig
 
