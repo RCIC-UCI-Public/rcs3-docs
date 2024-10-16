@@ -16,7 +16,7 @@ at the University of California, Irvine.
    where the setup complexitiy is handled by a central admin scenario.
 
 :term:`RCS3` is a set of programs, scripts, templates, policies, and documentation for UCI's use of ``rclone``
-to backup multi-Terabyte to Petabyte-scale storage servers to *Amazon S3 Glacier Flexible Retrieval*.
+to backup multi-Terabyte to Petabyte-scale storage servers to *Amazon S3 Glacier Deep Archive*.
 
 In particular, :term:`UCI` plans to use these to backup large data servers in labs.
 Our primary target is  the in-faculty-lab storage server that is often run by a graduate student

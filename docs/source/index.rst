@@ -6,7 +6,7 @@
 :section1:`RCS3 Documentation`
 
 This documentation describes our setup to effectively use :term:`AWS` and :term:`Rclone`
-technologies to backup larger servers (100+TB) to *Amazon S3 Glacier Flexible Retrieval*.
+technologies to backup larger servers (100+TB) to *Amazon S3 Glacier Deep Archive*.
 
 .. toctree::
    :maxdepth: 2
