@@ -3,7 +3,7 @@
 # -- Project information
 
 project = u'RCS3'
-copyright = u'2019-2023, The Regents of the University of California'
+copyright = u'2019-2024, The Regents of the University of California'
 author = u'RCIC'
 
 release = '1.0'
