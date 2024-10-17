@@ -16,7 +16,7 @@ maintained so that complete data loss can only occur if both domains are comprom
   | controls the AWS-side of the infrastructure, Usually multiple people.
   | :silver:`Cloudadmins` *must be comfortable at the Linux command line prompt*. 
 
-:silver:`:sysadmin`:
+:silver:`sysadmin`:
   | controls the server to be backed up (server)
   | :silver:`Sysadmins` must be willing to perform a small set of tasks at the command line. 
 
