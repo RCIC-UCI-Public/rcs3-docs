@@ -45,7 +45,7 @@ the existing directory :fname:`/my/rcs3`, use:
 
 .. parsed-literal::
 
-   :bluelight:`export SINGULARITYENV_PS1='RCS3 Singularity \w> '`
+   :bluelight:`export SINGULARITYENV_PS1='RCS3 Singularity @\\h \\w> '`
    :bluelight:`export SINGULARITY_BIND=/my/rcs3:/.rcs3`
    :bluelight:`singularity shell docker://rcs3uci/rcs3-rocky8`
    :bluegray:`RCS3 Singularity />`   # you should see this Singularity prompt
