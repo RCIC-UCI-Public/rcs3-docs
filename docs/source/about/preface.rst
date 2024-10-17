@@ -9,7 +9,7 @@ It utilizes some of the following features/technologies
 - AWS Life Cycle Rules to transition data from S3 to Glacier Deep Archive
 - AWS Life Cycle Rules to retain versions and permanently deleted files
 - Rclone itself (Swiss army knife of data copy/sync)
-- Convenience scripts to create: IAM Roles, S3 access Policies,service accounts
+- Convenience scripts to create: IAM Roles, S3 access Policies, service accounts
 - Convenience scripts to backup data
 - Convenience scripts to restore data from a point in time
 - Some cost-optimization to perform daily uploads of modified data and weekly "syncs" (true-ups)
