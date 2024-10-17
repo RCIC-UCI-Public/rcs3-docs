@@ -14,7 +14,7 @@ It utilizes some of the following features/technologies
 - Convenience scripts to restore data from a point in time
 - Some cost-optimization to perform daily uploads of modified data and weekly "syncs" (true-ups)
 - Cost estimations for both storage capacity and ongoing API calls for backups/synchronization
-- Server-side encryption of data at rest.
+- Server-side encryption of data at rest
 
 Logically, control of the backup storage is split into at least two for security separation
 
