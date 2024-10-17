@@ -37,7 +37,7 @@ with specific retention policies provide a delay (e.g., 90 days) from delete/ove
 essentially provides "snapshots" so that restores can be accomplished from any recorded state during the
 retention period.
 
-:term`RCS3` is command-line driven and demands a small number of common
+:term:`RCS3` is command-line driven and demands a small number of common
 software prerequisites (see :ref:`requirements` for details): 
 Rclone, Python3, selected Python3 packages (e.g., boto3 tools, PyYaml, multiprocessing) installed on the to-be-backed-up server. 
 
