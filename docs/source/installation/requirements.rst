@@ -50,8 +50,8 @@ of RCS3 reference a specific version and location for rclone and not rely on sys
    helper scripts, and other items will be via git.  
 
 
-4. **AWS Cli** version 2.11.21 or newer 
-   (Required for the :silver:`cloudadmin`. Recommended for the :silver:`sysadmin`)
+4. **AWS CLI** version 2.11.21 or newer
+   (Required for the :silver:`cloudadmin`. Recommended for the :silver:`sysadmin`.)
 
    The AWS Command Line Interface (AWS CLI) https://aws.amazon.com/cli is a unified tool to manage your AWS services. 
    With just one tool to download and configure, you can control multiple AWS services from the command line and 
@@ -104,7 +104,7 @@ Roughly speaking, both :silver:`sysadmin` and :silver:`cloudadmin` follow a simi
    - **Python3** and Python packages PyYAML, boto3, psutls, distro
    - **Git**
    - **Rclone**
-   - **AWS Cli** (only for :silver:`cloudadmin`)
+   - **AWS CLI** (only for :silver:`cloudadmin`)
 
 2. Clone the git repository
 
