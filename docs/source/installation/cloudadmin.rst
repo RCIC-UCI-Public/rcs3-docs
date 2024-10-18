@@ -51,8 +51,8 @@ the existing directory :fname:`/my/rcs3`, use:
    :bluegray:`RCS3 Singularity />`   # you should see this Singularity prompt
 
 
-The *PS1* line sets a slightly more meaningful prompt by adding the working
-directory while reminding the :silver:`cloudadmins` that they are inside of the container
+The *PS1* line sets a slightly more meaningful prompt by adding the hostname (@\\h) and the working
+directory (\\w) while reminding the :silver:`cloudadmins` that they are inside of the container.
 
 Optionally, run under Docker instead of Singularity (replace the singularity
 command above with the docker command):
