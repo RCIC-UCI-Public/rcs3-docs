@@ -33,7 +33,7 @@ Ready a local system
 
 We maintain a docker image ``rcs3uci/rcs3-rocky8``  on  `DockerHub <https://hub.docker.com/r/rcs3uci/rcs3-rocky8>`_ that
 can be used on both backup servers and for the :silver:`cloudadmin`. For the :silver:`cloudadmin`, this same image can be used under
-`Singularity <https://docs.sylabs.io/guides/3.5/user-guide/introduction.html>`_.
+`Singularity <https://docs.sylabs.io/guides/4.2/user-guide/introduction.html>`_.
 
 The admin configuration needs to be held outside of the docker image. For brevity, we use the environment
 variable :fname:`RCS3_ROOT`  (persistent store). This directory holds the cloned rcs3 git repository,
