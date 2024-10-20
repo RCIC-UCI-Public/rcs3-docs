@@ -112,14 +112,17 @@ Roughly speaking, both :silver:`sysadmin` and :silver:`cloudadmin` follow a simi
 
       :bluelight:`git clone https://github.com/RCIC-UCI-Public/rcs3.git`
 
-3. Configure a system for backup. There is a :silver:`cloudadmin`-specific setup and a :silver:`sysadmin`-specific setup).
+3. Configure a system for backup. 
+
+   - There is a :silver:`cloudadmin`-specific setup and a :silver:`sysadmin`-specific setup.
+
 4. Run the backup the first time.
 5. Schedule the backup for daily and weekly updates.
 6. Optional for :silver:`cloudadmin` - set quotas and update dashboards to reflect the new system.
 
 The :silver:`cloudadmin` runs a single command for each new system that is on-boarded. This command creates backup and
 inventory buckets for the new system, creates a service account for the new system, and applies appropriate policy.
-The AWS access key and secret key created by the :silver:`cloudadmin` need to be transmitted to the :silver:`sysadmin`.
+The AWS access key and secret key created by the :silver:`cloudadmin` need to be transmitted to the :silver:`sysadmin` securely.
 
 .. note::
    The file :fname:`config/aws-settings.yaml` MUST be the same for all clients and the :silver:`cloudadmin`. 
