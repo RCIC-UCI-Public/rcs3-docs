@@ -290,17 +290,26 @@ Each invocation *adds* the emails to the full set of emails for the topic.  Dupl
    interactively in the online AWS web console. Open
    the Simple Notification Service, go to your admin topic and delete an email from there.
 
-**Step 3: Create the Custom Cost-Estimates Dashboard**
+**Step 3: Enable Monitoring**
 
 RCS3 creates a custom `Cloudwatch <https://aws.amazon.com/cloudwatch/>`_ monitoring dashboard to give
-an overview of resource usage:
+an overview of resource usage.  There is also a custom set of metrics created to the track password age of
+each server's service account.  This is implemented by an `AWS lambda function <https://aws.amazon.com/lambda/>`_ 
+with limited permissions. The lambda is then run hourly in AWS using the 
+`Event Bridge Scheduler <https://docs.aws.amazon.com/eventbridge/#amazon-eventbridge-scheduler>`_. The scheduler is
+given permission to invoke the particular lambda. The lambda, in turn, is given the permission to read the ages of
+passwords and publish the metric for Cloudwatch dashboards and alarms. For those familiar with unix, this is a 
+convoluted way of saying: "The key age metrics are generated using a cron job."
+
+The various roles, permission sets, trust relationships, and dashboard are all set up in a convenience script: 
 
 .. parsed-literal::
 
    :bluelight:`cd $RCS3_ROOT/rcs3/POC`
-   :bluelight:`cloudadmin/set-cloudwatch-dashboards.py`
+   :bluelight:`cloudadmin/enable-monitoring.sh`
 
-Once you have created the dashboard above AND you have on-boarded servers for backup, you will eventually see a
+
+Once you have run this shell script AND you have on-boarded servers for backup, you will eventually see a
 display similar to the following:
 
 .. image:: /images/cloudadmin/Cost-Estimates-Dashboard.png
