@@ -5,12 +5,12 @@ What is RCS3
 
 .. warning:: THIS is UNDER DEVELOPMENT and SHOULD NOT BE USED UNTIL 'release'
 
-**Rclone to S3 for large backup** (:term:`RCS3`)
-is developed by the `Research Cyberinfrastructure Center <https:/rcic.uci.edu>`_ (:term:`RCIC`)
-at the University of California, Irvine.
+:bluelight:`RCS3`:
+  `Rclone to S3 for large backup`
+  is developed by the `Research Cyberinfrastructure Center <https:/rcic.uci.edu>`_ (:term:`RCIC`)
+  at the University of California, Irvine (:term:`UCI`).
 
-.. admonition:: Motivation
-
+:bluelight:`Motivation`:
    Need a simple solution to backup large quantities of data from servers
    used by different groups and labs. A simple client access to a solution
    where the setup complexitiy is handled by a central admin scenario.
