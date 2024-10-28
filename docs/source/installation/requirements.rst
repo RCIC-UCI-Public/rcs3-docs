@@ -35,7 +35,7 @@ of RCS3 reference a specific version and location for rclone and not rely on sys
       boto3 no longer supports older versions of Python.
       We use Python 3.11.x and 3.12.x with no observed issues.
 
-2. **Rclone** version 1.67 or newer
+#. **Rclone** version 1.67 or newer
 
    Rclone https://rclone.org/ does the heavy lifting for RCS3.
    Even with this version, there are some known bugs that are likely to be addressed in future rclone releases.
@@ -43,17 +43,18 @@ of RCS3 reference a specific version and location for rclone and not rely on sys
    are standalone executable files.
 
 
-3. **Git**
+#. **Git**
    
    The particular version of git https://git-scm.com/ is relatively unimportant because RCS3 utilizes no real
    advanced features of git.  Until RCS3 is "close to final", updates to our small code base, templates,
    helper scripts, and other items will be via git.  
 
 
-4. **AWS CLI** version 2.11.21 or newer
-   (Required for the :silver:`cloudadmin`. Recommended for the :silver:`sysadmin`.)
+#. **AWS CLI** version 2.11.21 or newer
 
-   The AWS Command Line Interface (AWS CLI) https://aws.amazon.com/cli is a unified tool to manage your AWS services. 
+   Required for the :silver:`cloudadmin`. Recommended for the :silver:`sysadmin`.
+
+   The AWS Command Line Interface (:term:`AWS CLI`) is a unified tool to manage your AWS services. 
    With just one tool to download and configure, you can control multiple AWS services from the command line and 
    automate them through scripts.
 
@@ -62,24 +63,26 @@ of RCS3 reference a specific version and location for rclone and not rely on sys
 Install Overview
 ================
 
-There are two "halves" of RCS3: the :silver:`sysdamin` and the :silver:`cloudadmin`. 
+There are two *halves* of RCS3: 
 
-Initially, the :silver:`cloudadmin` requires more steps to setup because:
+The :silver:`cloudadmin`:
+  Initially, the :silver:`cloudadmin` requires more steps to setup because:
 
-a) RCS3 needs to be lightly customized using :fname:`config/aws-settings.yaml` to reflect a new institution 
+  a) RCS3 needs to be lightly customized using :fname:`config/aws-settings.yaml` to reflect a new institution 
+  b) Some one-time setup in AWS itself is needed to create a **StorageLens** instance and a basic 
+     **CloudWatch** dashboard for monitoring.  
 
-b) Some one-time setup in AWS itself is needed to create a **StorageLens** instance and a basic 
-   **CloudWatch** dashboard for monitoring.  
+The :silver:`sysdamin`:
+  a) The :silver:`sysadmin` is only "complex" because backup jobs need to be specified in an outline (cron) invocation of 
+     the driving python-based wrapper :fname:`gen-backup.py` that invokes ``rclone``.
+  b) The :silver:`sysadmin` side must be adaptable
+     to different targets.  We've successfully run on:
 
-The :silver:`sysadmin` is only "complex" because backup jobs need to be specified in an outline (cron) invocation of 
-the driving python-based wrapper :fname:`gen-backup.py` that invokes ``rclone``.  The :silver:`sysadmin` side must be adaptable
-to different targets.  We've successfully run on:
-
-  - RHEL Linux and its derivatives
-  - Ubuntu Linux and Debian-derived
-  - Synology NAS appliances (via Docker on x86-based hardware only)
-  - TrueNAS CORE (FreeBSD-based) and TrueNAS SCALE (Debian-based)
-  - Microsoft Windows 11
+     - RHEL Linux and its derivatives
+     - Ubuntu Linux and Debian-derived
+     - Synology NAS appliances (via Docker on x86-based hardware only)
+     - TrueNAS CORE (FreeBSD-based) and TrueNAS SCALE (Debian-based)
+     - Microsoft Windows 11
 
 Basic Config High-level Overview 
 --------------------------------
@@ -106,19 +109,19 @@ Roughly speaking, both :silver:`sysadmin` and :silver:`cloudadmin` follow a simi
    - **Rclone**
    - **AWS CLI** (only for :silver:`cloudadmin`)
 
-2. Clone the git repository
+#. Clone the git repository
 
    .. parsed-literal::
 
       :bluelight:`git clone https://github.com/RCIC-UCI-Public/rcs3.git`
 
-3. Configure a system for backup. 
+#. Configure a system for backup. 
 
-   - There is a :silver:`cloudadmin`-specific setup and a :silver:`sysadmin`-specific setup.
+   There is a :silver:`cloudadmin`-specific setup and a :silver:`sysadmin`-specific setup.
 
-4. Run the backup the first time.
-5. Schedule the backup for daily and weekly updates.
-6. Optional for :silver:`cloudadmin` - set quotas and update dashboards to reflect the new system.
+#. Run the backup the first time.
+#. Schedule the backup for daily and weekly updates.
+#. Optional for :silver:`cloudadmin` - set quotas and update dashboards to reflect the new system.
 
 The :silver:`cloudadmin` runs a single command for each new system that is on-boarded. This command creates backup and
 inventory buckets for the new system, creates a service account for the new system, and applies appropriate policy.
