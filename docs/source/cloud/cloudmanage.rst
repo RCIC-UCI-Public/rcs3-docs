@@ -382,10 +382,10 @@ or subject to Object Locks, then you can manually delete all objects in a bucket
   cause errors in the boto3 delete_objects command, so you may need to decrease the batch size
   if you see errors.
 
-.. parsed-literal::
+  .. parsed-literal::
 
-   :bluelight:`cd $RCS3_ROOT/rcs3/POC/cloudadmin`
-   :bluelight:`./delete-all-bucket-objects.py panteater-labstorage-uci-s-bkup-bucket`
+     :bluelight:`cd $RCS3_ROOT/rcs3/POC/cloudadmin`
+     :bluelight:`./delete-all-bucket-objects.py panteater-labstorage-uci-s-bkup-bucket`
 
 
 .. _lifecycle policy:
@@ -395,11 +395,11 @@ or subject to Object Locks, then you can manually delete all objects in a bucket
   time.  You'll have to check periodically, a day or a week or a month later depending on
   your situation, to verify that all objects have been removed.
 
-.. parsed-literal::
+  .. parsed-literal::
 
-   :bluelight:`cd $RCS3_ROOT/rcs3/POC/cloudadmin`
-   :bluelight:`./remove-lifecycle-inventory-from-bucket.py panteater-labstorage-uci-s-bkup-bucket`
-   :bluelight:`aws s3api put-bucket-lifecycle-configuration --bucket panteater-labstorage-uci-s-bkup-bucket --lifecycle-configuration file://../templates/lifecycle/lifecycle-delete-all-objects.json`
+     :bluelight:`cd $RCS3_ROOT/rcs3/POC/cloudadmin`
+     :bluelight:`./remove-lifecycle-inventory-from-bucket.py panteater-labstorage-uci-s-bkup-bucket`
+     :bluelight:`aws s3api put-bucket-lifecycle-configuration --bucket panteater-labstorage-uci-s-bkup-bucket --lifecycle-configuration file://../templates/lifecycle/lifecycle-delete-all-objects.json`
 
 .. _delete bucket:
 
@@ -408,10 +408,10 @@ or subject to Object Locks, then you can manually delete all objects in a bucket
   Once all objects have been removed, you can now delete the bucket and associated service
   account and policies.
 
-.. parsed-literal::
+  .. parsed-literal::
 
-   :bluelight:`cd $RCS3_ROOT/rcs3/POC/cloudadmin`
-   :bluelight:`./delete-bucket-and-user.py panteater labstorage`
+     :bluelight:`cd $RCS3_ROOT/rcs3/POC/cloudadmin`
+     :bluelight:`./delete-bucket-and-user.py panteater labstorage`
 
 
 Again, this can be highly dependent on your environment and how you've modified your buckets.
