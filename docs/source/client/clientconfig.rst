@@ -136,85 +136,84 @@ Initial Testing of jobs.yaml
 
 :bluelight:`list`
 
-It's always a good to test if :fname:`jobs.yaml` is syntactically correct and *looks reasonable*. 
-The `list` command in ``gen-backup.py`` will provide the set of jobs that will be run:
+  It's always a good to test if :fname:`jobs.yaml` is syntactically correct and *looks reasonable*. 
+  The `list` command in ``gen-backup.py`` will provide the set of jobs that will be run:
 
-.. parsed-literal::
+  .. parsed-literal::
 
-   :bluelight:`$RCS3_ROOT/rcs3/POC/sysadmin/gen-backup.py list`
-   rcs3config /.rcs3/rcs3/POC/config
-   backup1 /
+     :bluelight:`$RCS3_ROOT/rcs3/POC/sysadmin/gen-backup.py list`
+     rcs3config /.rcs3/rcs3/POC/config
+     backup1 /
 
-This indicates two backup jobs:
-  | *rcs3config* 
-  | *backup1*
+  | This indicates two backup jobs:
+  |   *rcs3config* 
+  |   *backup1*
 
-The first job is *implicit* so that the :fname:`jobs.yaml` file
-is recorded in AWS. The second job (backup1) is the name of the job defined explicitly and indicates that the path to
-be backed up is ``/``.  Note the details of what will included in *backup1* are not included in this brief listing.
+  The first job is *implicit* so that the :fname:`jobs.yaml` file
+  is recorded in AWS. The second job (backup1) is the name of the job defined explicitly and indicates that the path to
+  be backed up is ``/``.  Note the details of what will included in *backup1* are not included in this brief listing.
 
 :bluelight:`detail`
 
-This command gives the full detail of the rclone filter that will be applied and the ``rclone`` command that would be
-executed:
+  This command gives the full detail of the rclone filter that will be applied and the ``rclone`` command that would be
+  executed:
 
-.. parsed-literal::
+  .. parsed-literal::
+     :bluelight:`$RCS3_ROOT/rcs3/POC/sysadmin/gen-backup.py detail`
+     :gray:`rcs3config /.rcs3/rcs3/POC/config
+     == filter contents (output to: /tmp/rcs3config.filter) ==
+     + jobs.yaml
+     - **
+     == command ==
+     rclone --config /.rcs3/rcs3/POC/config/rclone.conf \\
+     --s3-shared-credentials-file /.rcs3/rcs3/POC/config/credentials \\
+     --metadata --links --transfers 2 --checkers 32 --log-level INFO \\
+     --log-file /tmp/rcs3config.log --filter-from /tmp/rcs3config.filter sync \\
+     /.rcs3/rcs3/POC/config s3-backup:rcs3config/.rcs3/rcs3/POC/config
+     =============
+     backup1 /
+     == filter contents (output to: /tmp/backup1.filter) ==
+     - .git/**
+     - .zfs/**
+     - .snapshot/**
+     - .vscode/**
+     - .DS_Store/**
+     - #snapshot/**
+     - #recycle/**
+     - @eaDir/**
+     - .plist/**
+     - .strings
+     - .cprestoretmp.*
+     - .part
+     - .tmp
+     - .cache/**
+     - .Trash*/**
+     - Google/Chrome/.*cache.*
+     - Google/Chrome/Safe Browsing.*
+     - iPhoto Library/iPod Photo Cache/**
+     - Mozilla/Firefox/.*cache.*
+     - Music/Subscription/.*
+     + volume1/**
+     - **
+     == command ==
+     rclone --config /.rcs3/rcs3/POC/config/rclone.conf \\
+     --s3-shared-credentials-file /.rcs3/rcs3/POC/config/credentials \\
+     --metadata --links --transfers 2 --checkers 32 --log-level INFO \\
+     --log-file /tmp/backup1.log --filter-from /tmp/backup1.filter \\
+     sync / s3-backup:backup1/
+     =============`
 
-   :bluelight:`$RCS3_ROOT/rcs3/POC/sysadmin/gen-backup.py detail`
-   :gray:`rcs3config /.rcs3/rcs3/POC/config
-   == filter contents (output to: /tmp/rcs3config.filter) ==
-   + jobs.yaml
-   - **
-   == command ==
-   rclone --config /.rcs3/rcs3/POC/config/rclone.conf \\
-   --s3-shared-credentials-file /.rcs3/rcs3/POC/config/credentials \\
-   --metadata --links --transfers 2 --checkers 32 --log-level INFO \\
-   --log-file /tmp/rcs3config.log --filter-from /tmp/rcs3config.filter sync \\
-   /.rcs3/rcs3/POC/config s3-backup:rcs3config/.rcs3/rcs3/POC/config
-   =============
-   backup1 /
-   == filter contents (output to: /tmp/backup1.filter) ==
-   - .git/**
-   - .zfs/**
-   - .snapshot/**
-   - .vscode/**
-   - .DS_Store/**
-   - #snapshot/**
-   - #recycle/**
-   - @eaDir/**
-   - .plist/**
-   - .strings
-   - .cprestoretmp.*
-   - .part
-   - .tmp
-   - .cache/**
-   - .Trash*/**
-   - Google/Chrome/.*cache.*
-   - Google/Chrome/Safe Browsing.*
-   - iPhoto Library/iPod Photo Cache/**
-   - Mozilla/Firefox/.*cache.*
-   - Music/Subscription/.*
-   + volume1/**
-   - **
-   == command ==
-   rclone --config /.rcs3/rcs3/POC/config/rclone.conf \\
-   --s3-shared-credentials-file /.rcs3/rcs3/POC/config/credentials \\
-   --metadata --links --transfers 2 --checkers 32 --log-level INFO \\
-   --log-file /tmp/backup1.log --filter-from /tmp/backup1.filter \\
-   sync / s3-backup:backup1/
-   =============`
+  There are some key items to take note:
 
-There are some key items to take note:
+  * :fname:`/tmp/backup1.filter` - is the generated rclone filter file, and its contents are displayed.
+  * :fname:`+ volume1/\*\*` - is the entry that shows path :fname:`volume1` to include under :fname:`/`.
+  * :fname:`- \*\*` - is the entry that specifies all other top-level files and directories under :fname:`/` to be excluded.
+  * :fname:`- .tmp` - are all other exclusions to  apply to any level in the selected folders.
+  * :fname:`== command ==` - is the 
+  * :fname:`== command ==` - is the final stanza shows the full ``rclone`` command that would be executed when the backup
+    job `backup1` actually runs.
 
-* :fname:`/tmp/backup1.filter` - is the generated rclone filter file, and its * contents are displayed.
-* :fname:`+ volume1/**` - is the entry that shows path :fname:`volume1` to include under :fname:`/`.
-* :fname:`- **` - is the entry that specifies all other top-level files and * directories under :fname:`/` to be excluded.
-* :fname:`- .tmp` - are all other exclusions to  apply to any level in the * selected folders.
-* :fname:`== command ==`  - the final stanza shows the full ``rclone`` command that would be executed when the backup actually runs.
-
-  For the *backup1* job:
-
-  * ``sync / s3-backup:backup1/`` is the command given to ``rclone`` where
+    For the *backup1* job, ``sync / s3-backup:backup1/`` is the command given to ``rclone`` where
 
     -  :fname:`/` - is the source path 
     -  :fname:`s3-backup:backup1/` is the destination 
