@@ -9,7 +9,7 @@ Quickstart 10K Foot View
 Overview
 --------
 
-There are two logical adminstrative domains for backup.  Privilege separation between these two domains should be 
+There are two logical administrative domains for backup.  Privilege separation between these two domains should be 
 maintained so that complete data loss can only occur if both domains are compromised. The domains are:
 
 :silver:`cloudadmin`:

@@ -202,7 +202,7 @@ blog post: https://blog.readthedocs.com/security-update-on-incoming-webhooks/.
       :alt: Update github webhook URL and secret
 
    In the "Recent deliveries" tab there will be nothing.
-   The first confirmd push delivery of the webhook will be triggered by the
+   The first confirmed push delivery of the webhook will be triggered by the
    RTD build process. 
 
 6. Go back to RTD console and trigger a build in **Admin->Builds** 

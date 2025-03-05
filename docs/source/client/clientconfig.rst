@@ -271,7 +271,7 @@ Daily-backup:
  
    :bluelight:`top-up`
      This scans the local file system only for any new/changed files in the top-up window (*24 hours* in the example)
-     Deleted files are *NOT* removed from the backup. This is inexpensive becuase (1) only new data is uploaded
+     Deleted files are *NOT* removed from the backup. This is inexpensive because (1) only new data is uploaded
      (2) the head API call of *sync* is **not** made on all existing files. 
 
 
@@ -358,7 +358,7 @@ where rclone's ``listremotes`` command is used:
    s3-native:
 
 You can now use any `rclone command <https://rclone.org/commands>`_ but should only limit to commands that
-**make no changes**. A particulary convenvient command is ``serve http`` so that  you could use a web
+**make no changes**. A particularly convenient command is ``serve http`` so that  you could use a web
 browser to view what is stored in the backup. 
 
 It is recommended that you only serve to localhost and use an 

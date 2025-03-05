@@ -91,7 +91,7 @@ RCS3 is designed around *two* different administrators: the :silver:`sysadmin` a
 :silver:`cloudadmin`.  In rare instances, this may be the same person.
 
 .. important:: In all setups, it is critical to have **completely independent root-level credentials for
-               system administrators and cloud adminstrators**. 
+               system administrators and cloud administrators**. 
                This *administrative separation prevents a single credential compromise* 
                from being able to destroy both (1) backups in S3 and (2) primary data on in-lab storage servers.
 

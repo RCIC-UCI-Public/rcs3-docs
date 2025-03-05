@@ -110,7 +110,7 @@ A template settings file is in the
 You need to copy your organization's customized :fname:`aws-settings.yaml` file into 
 :fname:`/.rcs3/rcs3/POC/config/aws-settings.yaml`.
 
-.. warning:: Do *NOT* use the template setttings file *as is*. Unless you are at UCI, your backup will never work.
+.. warning:: Do *NOT* use the template settings file *as is*. Unless you are at UCI, your backup will never work.
 
 Start the Docker Container 
 --------------------------
@@ -145,7 +145,7 @@ You can see the that this container is running by executing ``docker ps`` on the
 Shell Prompt in a Running Container
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-You can obtain a shell prompt within this *runnning* docker container: 
+You can obtain a shell prompt within this *running* docker container: 
 
 .. parsed-literal::
 

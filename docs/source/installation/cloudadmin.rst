@@ -233,7 +233,7 @@ UCI and should be changed to reflect your institution:
 .. code-block:: text
 
    # 6. Restrict service accounts to specific array of IP addresses using
-   # condition statments in policy definiations. Expected format is d.d.d.d/d
+   # condition statements in policy definitions. Expected format is d.d.d.d/d
    iprestrictions:
       - "128.200.0.0/16"
       - "128.195.0.0/16"
@@ -318,7 +318,7 @@ display similar to the following:
 :1:
   The top 7 line graphs describe total data, data in archive, data in standard, number of objects (files),
   cost of storage and API calls over time, how much data is in "snapshots" (either deleted or overwritten data),
-  and percentage overhead of snaphots.
+  and percentage overhead of snapshots.
 
 :2:
   The line graphs on the left show API cost over time

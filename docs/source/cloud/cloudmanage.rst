@@ -14,7 +14,7 @@ This guide covers some of
 ongoing management.  Your AWS cloud infrastructure must have already been initialized using :ref:`cloud admin install`
 and that your time-limited credentials are current as described in :ref:`Get Your AWS Credentials <aws credentials>` 
 
-**Common Adminstrative Tasks**
+**Common Administrative Tasks**
 
     1. On board a new server 
     2. Creating System Owner Notifications
@@ -123,7 +123,7 @@ Host IP Restrictions
 ^^^^^^^^^^^^^^^^^^^^
 
 When  :fname:`config/aws-settings.yaml` was localized, a set of valid IP subnetworks should have been declared to 
-reflect your instituion.  The effect of this is that any host on these subnets that has a copy of the service 
+reflect your institution.  The effect of this is that any host on these subnets that has a copy of the service 
 account secrets can access the backup bucket.   
 A tighter restriction is to limit specifically to the backup host IP address or its subnet. 
 
@@ -137,7 +137,7 @@ address will be denied.
 
 You can validate this restriction by logging on to your AWS web console, accessing the IAM service dashboard, and 
 selecting user-defined policies. In this example, it is the policy named 
-:fname:`panteater-labstorage-uci-bkup-policy`  The summary view of this policy shows explict Deny and Allow 
+:fname:`panteater-labstorage-uci-bkup-policy`  The summary view of this policy shows explicit Deny and Allow 
 Sections. Please take note of the *SourceIP| IP address* restriction that has been properly set to 
 :fname:`129.195.216.147/32` The policy also allows the *service account* to publish to a very particular SNS
 Notification Stream, if it exists.

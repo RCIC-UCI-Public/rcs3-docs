@@ -1,7 +1,7 @@
 
 .. warning::
    This project is under active development.
-   The documentaion pages are currently a template
+   The documentation pages are currently a template
 
 :section1:`RCS3 Documentation`
 
@@ -32,7 +32,7 @@ technologies to backup larger servers (100+TB) to *Amazon S3 Glacier Deep Archiv
 .. toctree::
    :maxdepth: 2
    :hidden:
-   :caption: Cloud Admininstration
+   :caption: Cloud Administration
 
    /cloud/index 
 
