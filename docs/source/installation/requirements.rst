@@ -3,9 +3,9 @@
 Requirements
 =============
 
-RCS3 requires some very common support software to work properly.  On Windows, we provide a Powershell script 
+RCS3 requires some very common support software to work properly.  On Windows, we provide a PowerShell script 
 that downloads local versions of all requirements so that RCS3 is fully self-contained. For Synology, we provide a 
-docker image with appropriate software pre-installed.  For generic Linux, the system versions of **Python3** and **Git** are
+docker image with appropriate software installed.  For generic Linux, the system versions of **Python3** and **Git** are
 almost-always sufficient for our needs. Because rclone is a standalone executable, we recommend that a local install
 of RCS3 reference a specific version and location for rclone and not rely on system-supplied packages.
 
@@ -98,11 +98,11 @@ RCS3 is designed around *two* different administrators: the :silver:`sysadmin` a
 To make RCS3 work, some initial configuration and setup in S3 needs to be
 completed by the :silver:`cloudadmin`.  Once that
 initial configuration is completed, new systems can be on-boarded. All configuration steps are accomplished from
-a command-line prompt (Linux for the :silver:`cloudadmin`, Linux flavors and Microsoft Windows Powershell for a :silver:`sysadmin`)
+a command-line prompt (Linux for the :silver:`cloudadmin`, Linux flavors and Microsoft Windows PowerShell for a :silver:`sysadmin`)
 
 Roughly speaking, both :silver:`sysadmin` and :silver:`cloudadmin` follow a similar path:
 
-1. Install pre-requisite software
+1. Install prerequisite software
    
    - **Python3** and Python packages PyYAML, boto3, psutls, distro
    - **Git**

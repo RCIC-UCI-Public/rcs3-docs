@@ -53,7 +53,7 @@ Suppose the owner *panteater* has the system *labstorage*, the :silver:`cloudadm
    :bluelight:`cd $RCS3_ROOT/rcs3/POC/cloudadmin`
    :bluelight:`./create-bucket-with-inventory.sh panteater labstorage`
 
-The output from this script is fairly terse. Here's the full output onboarding :bluelight:`panteater's labstorage` 
+The output from this script is fairly terse. Here's the full output of on-boarding :bluelight:`panteater's labstorage` 
 system in UCI's staging environment.  
 
 .. code-block:: json
@@ -122,7 +122,7 @@ non-current (snapshot) data or it's ability to change any bucket policy).
 Host IP Restrictions
 ^^^^^^^^^^^^^^^^^^^^
 
-When  :fname:`config/aws-settings.yaml` was localized, a set of valid IP subnetworks should have been declared to 
+When  :fname:`config/aws-settings.yaml` was localized, a set of valid IP subnets should have been declared to 
 reflect your institution.  The effect of this is that any host on these subnets that has a copy of the service 
 account secrets can access the backup bucket.   
 A tighter restriction is to limit specifically to the backup host IP address or its subnet. 
@@ -166,7 +166,7 @@ Using CLI to Verify Subscriptions
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 This section is optional, but one can view the details of subscriptions without logging on to the AWS console. 
-Both the  :silver:`cloudadmin` and the :silver:`sysadmin` can use the aws cli to list all available topics
+Both the  :silver:`cloudadmin` and the :silver:`sysadmin` can use the AWS CLI to list all available topics
 (permissions limit the sysadmin to only list their topic).  One can also view the details of a specific topic.
 Here's example output for UCI's testing environment:
 
@@ -228,7 +228,7 @@ The file  :fname:`templates/quotas.csv` contains UCI's current quota settings an
    **ID, System, Object Quota (Millions), Storage Quota (TB)**
 
 The ``#`` is a comment line and blank lines are
-skipped.  A valid quota file for setting the panteater's labstorage system to 1M objects and 10TB is:
+skipped.  A valid quota file for setting the panteater's lab storage system to 1M objects and 10TB is:
 
 .. code:: bash
 

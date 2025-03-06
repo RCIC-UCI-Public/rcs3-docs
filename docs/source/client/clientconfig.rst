@@ -93,7 +93,7 @@ first step is to copy a template :fname:`jobs.yaml` file and then edit to reflec
    :bluelight:`cp templates/jobs.yaml config/jobs.yaml`
 
 The file :fname:`config/jobs.yaml` (or just :fname:`jobs.yaml`) is excluded from git so that your local changes can never
-be overwritten by a git pull (update of rcs3 itself). The following template is an example file:
+be overwritten by a git pull (update of RCS3 itself). The following template is an example file:
 
 .. literalinclude:: /files/jobs.yaml
 
@@ -415,22 +415,22 @@ a :bluelight:`private encryption key`.    There are some important facts when us
   directory.
 
   :bluelight:`1. Define encryption key`
-     Use clone natively to define an encryption key on the ``s3-crypt`` endpoint.
+     Use rclone natively to define an encryption key on the ``s3-crypt`` endpoint.
 
      .. parsed-literal::
 
         :bluelight:`$(./gen-backup.py rclone) config update s3-crypt --all`
 
      | Take defaults for all questions, have rclone generate the password and the salt,
-     | do NOT edit advanced config. The rclone page on `crypted remotes <https://rclone.org/crypt/>`_ provides details. 
+     | do NOT edit advanced configuration. The rclone page on `crypted remotes <https://rclone.org/crypt/>`_ provides details. 
      | **Remember to record both the generated password and salt password** 
 
      .. warning::
-        | Save the passwords that were generated in a safe place like BitWarden or 1Password.
+        | Save the passwords that were generated in a safe place like Bitwarden or 1Password.
         | If you lose this password, no one can restore your data. 
 
   :bluelight:`2. Recommended: Rename your backup job`.  
-     Edit :fname:`jobs.yaml` and adjust the jobname  to reflect that a particular backup job is encrypted.
+     Edit :fname:`jobs.yaml` and adjust the job name  to reflect that a particular backup job is encrypted.
      Choose a name like `backup1-encrypted`. 
 
      The following shows the changed contents of an example  :fname:`jobs.yaml` 

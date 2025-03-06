@@ -13,7 +13,7 @@ What is RCS3
 :bluelight:`Motivation`:
    Need a simple solution to backup large quantities of data from servers
    used by different groups and labs. A simple client access to a solution
-   where the setup complexitiy is handled by a central admin scenario.
+   where the setup complexity is handled by a central admin scenario.
 
 :term:`RCS3` is a set of programs, scripts, templates, policies, and documentation for UCI's use of ``rclone``
 to backup multi-Terabyte to Petabyte-scale storage servers to *Amazon S3 Glacier Deep Archive*.

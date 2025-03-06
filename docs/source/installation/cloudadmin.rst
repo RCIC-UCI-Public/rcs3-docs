@@ -212,7 +212,7 @@ region for your circumstances.
 Update the admin team notifications
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-RCS3 uses AWS's  `SNS (Simple Notification Service) <https://aws.amazon.com/sns/>`_ to send email alerts.
+RCS3 uses AWS  `SNS (Simple Notification Service) <https://aws.amazon.com/sns/>`_ to send email alerts.
 The admin team name should reflect something meaningful to you.  Replace
 :rcicorange:`rcic-team-notify` with something that reflects your organization:
 
@@ -298,7 +298,7 @@ each server's service account.  This is implemented by an `AWS lambda function <
 with limited permissions. The lambda is then run hourly in AWS using the 
 `Event Bridge Scheduler <https://docs.aws.amazon.com/eventbridge/#amazon-eventbridge-scheduler>`_. The scheduler is
 given permission to invoke the particular lambda. The lambda, in turn, is given the permission to read the ages of
-passwords and publish the metric for Cloudwatch dashboards and alarms. For those familiar with unix, this is a 
+passwords and publish the metric for Cloudwatch dashboards and alarms. For those familiar with UNIX, this is a 
 convoluted way of saying: "The key age metrics are generated using a cron job."
 
 The various roles, permission sets, trust relationships, and dashboard are all set up in a convenience script: 
